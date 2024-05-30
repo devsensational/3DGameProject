@@ -7779,6 +7779,13 @@ MonoBehaviour:
   CameraHeight: 1
   Yaxis: 1
   Xaxis: 1
+  CameraZoomDistanceUnit: 0.2
+  MaxCameraZoomDistance: 5
+  MinCameraZoomDistance: 1
+  RotationSensitive: 3
+  SmoothTime: 0.12
+  RotationMin: -10
+  RotationMax: 80
   target: {fileID: 257942633}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

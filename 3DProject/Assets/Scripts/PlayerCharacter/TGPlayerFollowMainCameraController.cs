@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
@@ -6,48 +6,120 @@ using static UnityEngine.GraphicsBuffer;
 
 public class TGPlayerFollowMainCameraController : MonoBehaviour
 {
-    //Ä«¸Ş¶ó ¿É¼Ç
+    //ì¹´ë©”ë¼ ì˜µì…˜
     [Header("Camera Parameter")]
-
     public float CameraHeight;
     public float Yaxis;
     public float Xaxis;
 
-    public Transform target;//Player
+    public float CameraZoomDistanceUnit = 0.2f;
+    public float MaxCameraZoomDistance;
+    public float MinCameraZoomDistance;
+    [Range(0, 5)]
+    public float RotationSensitive = 3f;    //ì¹´ë©”ë¼ íšŒì „ ê°ë„
+    [Range(0, 1)]
+    public float SmoothTime = 0.12f;        //ì¹´ë©”ë¼ê°€ íšŒì „í•˜ëŠ”ë° ê±¸ë¦¬ëŠ” ì‹œê°„
+    public float RotationMin = -10f;        //ì¹´ë©”ë¼ íšŒì „ê°ë„ ìµœì†Œ
+    public float RotationMax = 80f;         //ì¹´ë©”ë¼ íšŒì „ê°ë„ ìµœëŒ€
 
-    private float rotSensitive = 3f;//Ä«¸Ş¶ó È¸Àü °¨µµ
-    private float dis = 4f;//Ä«¸Ş¶ó¿Í ÇÃ·¹ÀÌ¾î»çÀÌÀÇ °Å¸®
-    private float RotationMin = -10f;//Ä«¸Ş¶ó È¸Àü°¢µµ ÃÖ¼Ò
-    private float RotationMax = 80f;//Ä«¸Ş¶ó È¸Àü°¢µµ ÃÖ´ë
-    private float smoothTime = 0.12f;//Ä«¸Ş¶ó°¡ È¸ÀüÇÏ´Âµ¥ °É¸®´Â ½Ã°£
+    public Transform target;                //Player
+
+    private float dist = 4f;                 //ì¹´ë©”ë¼ì™€ í”Œë ˆì´ì–´ì‚¬ì´ì˜ ê±°ë¦¬
 
     private Vector3 cameraHeightVec3;
     private Vector3 targetRotation;
     private Vector3 currentVel;
 
+    private Dictionary<KeyValues, KeyCode> keyValuePairs; // KeyValuePair map ref
+
+    private bool isMouseCursorLock = false;
     private void Start()
     {
-        cameraHeightVec3 = new Vector3(0, CameraHeight, 0);
+        cameraHeightVec3    = new Vector3(0, CameraHeight, 0);
+        keyValuePairs       = TGPlayerKeyManager.Instance.KeyValuePairs;
+        MouseCursorLockSwitch();
     }
+
     private void LateUpdate()
     {
-        PlayerMainCameraControl();
+        if(isMouseCursorLock)
+        {
+            //PlayerMainCameraControl();
+            PlayerMainCameraControl2();
+            PlayerMainCameraZoomControl();
+        }
+        PlayerCameraFollow();
+
+        if (Input.GetKeyDown(keyValuePairs[KeyValues.MOUSECURSORSWITCH])) //MOUSECURSORSWITCHì— í• ë‹¹ ëœ í‚¤ê°€ ì…ë ¥ë˜ë©´ í˜¸ì¶œ
+        {
+            MouseCursorLockSwitch();
+        }
+    }
+
+    void PlayerCameraFollow()
+    {
+        transform.position = cameraHeightVec3 + target.position - transform.forward * dist;
+        //ì¹´ë©”ë¼ì˜ ìœ„ì¹˜ëŠ” í”Œë ˆì´ì–´ë³´ë‹¤ ì„¤ì •í•œ ê°’ë§Œí¼ ë–¨ì–´ì ¸ìˆê²Œ ê³„ì† ë³€ê²½ëœë‹¤.
     }
 
     void PlayerMainCameraControl()
     {
-        Yaxis = Yaxis + Input.GetAxis("Mouse X") * rotSensitive;//¸¶¿ì½º ÁÂ¿ì¿òÁ÷ÀÓÀ» ÀÔ·Â¹Ş¾Æ¼­ Ä«¸Ş¶óÀÇ YÃàÀ» È¸Àü½ÃÅ²´Ù
-        Xaxis = Xaxis - Input.GetAxis("Mouse Y") * rotSensitive;//¸¶¿ì½º »óÇÏ¿òÁ÷ÀÓÀ» ÀÔ·Â¹Ş¾Æ¼­ Ä«¸Ş¶óÀÇ XÃàÀ» È¸Àü½ÃÅ²´Ù
-        //Xaxis´Â ¸¶¿ì½º¸¦ ¾Æ·¡·Î ÇßÀ»¶§(À½¼ö°ªÀÌ ÀÔ·Â ¹Ş¾ÆÁú¶§) °ªÀÌ ´õÇØÁ®¾ß Ä«¸Ş¶ó°¡ ¾Æ·¡·Î È¸ÀüÇÑ´Ù 
+        Yaxis = Yaxis + Input.GetAxis("Mouse X") * RotationSensitive;//ë§ˆìš°ìŠ¤ ì¢Œìš°ì›€ì§ì„ì„ ì…ë ¥ë°›ì•„ì„œ ì¹´ë©”ë¼ì˜ Yì¶•ì„ íšŒì „ì‹œí‚¨ë‹¤
+        Xaxis = Xaxis - Input.GetAxis("Mouse Y") * RotationSensitive;//ë§ˆìš°ìŠ¤ ìƒí•˜ì›€ì§ì„ì„ ì…ë ¥ë°›ì•„ì„œ ì¹´ë©”ë¼ì˜ Xì¶•ì„ íšŒì „ì‹œí‚¨ë‹¤
+        //XaxisëŠ” ë§ˆìš°ìŠ¤ë¥¼ ì•„ë˜ë¡œ í–ˆì„ë•Œ(ìŒìˆ˜ê°’ì´ ì…ë ¥ ë°›ì•„ì§ˆë•Œ) ê°’ì´ ë”í•´ì ¸ì•¼ ì¹´ë©”ë¼ê°€ ì•„ë˜ë¡œ íšŒì „í•œë‹¤ 
 
         Xaxis = Mathf.Clamp(Xaxis, RotationMin, RotationMax);
-        //XÃàÈ¸ÀüÀÌ ÇÑ°èÄ¡¸¦ ³ÑÁö¾Ê°Ô Á¦ÇÑÇØÁØ´Ù.
+        //Xì¶•íšŒì „ì´ í•œê³„ì¹˜ë¥¼ ë„˜ì§€ì•Šê²Œ ì œí•œí•´ì¤€ë‹¤.
 
-        targetRotation = Vector3.SmoothDamp(targetRotation, new Vector3(Xaxis, Yaxis), ref currentVel, smoothTime);
-        this.transform.eulerAngles = targetRotation;
-        //SmoothDamp¸¦ ÅëÇØ ºÎµå·¯¿î Ä«¸Ş¶ó È¸Àü
+        targetRotation = Vector3.SmoothDamp(targetRotation, new Vector3(Xaxis, Yaxis), ref currentVel, SmoothTime);
+        transform.eulerAngles = targetRotation;
+        //SmoothDampë¥¼ í†µí•´ ë¶€ë“œëŸ¬ìš´ ì¹´ë©”ë¼ íšŒì „
+    }
 
-        transform.position = cameraHeightVec3 + target.position - transform.forward * dis;
-        //Ä«¸Ş¶óÀÇ À§Ä¡´Â ÇÃ·¹ÀÌ¾îº¸´Ù ¼³Á¤ÇÑ °ª¸¸Å­ ¶³¾îÁ®ÀÖ°Ô °è¼Ó º¯°æµÈ´Ù.
+    void PlayerMainCameraControl2()
+    {
+        // ì¹´ë©”ë¼ê°€ ë”°ë¼ê°ˆ ìœ„ì¹˜ ê³„ì‚°
+        Vector3 desiredPosition = target.position * dist;
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, SmoothTime);
+        transform.position = smoothedPosition;
+
+        // ì¹´ë©”ë¼ê°€ í•­ìƒ ëŒ€ìƒì˜ ë°©í–¥ì„ ë³´ë„ë¡ ì„¤ì •
+        transform.LookAt(target.position);
+    }
+
+
+
+    void PlayerMainCameraZoomControl()
+    {
+        // ë§ˆìš°ìŠ¤ íœ  ì¶•ì˜ ê°’ì„ ê°€ì ¸ì˜µë‹ˆë‹¤.
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+        if (scroll > 0f) // ë§ˆìš°ìŠ¤ íœ  ì—…
+        {
+            dist -= dist > MinCameraZoomDistance ? CameraZoomDistanceUnit : 0;
+        }
+        else if (scroll < 0f) // ë§ˆìš°ìŠ¤ íœ  ë‹¤ìš´
+        {
+            dist += dist < MaxCameraZoomDistance ? CameraZoomDistanceUnit : 0;
+        }
+    }
+
+    // ë§ˆìš°ìŠ¤ ì»¤ì„œ On/Off
+    void MouseCursorLockSwitch()
+    {
+        if (!isMouseCursorLock)
+        {
+            Cursor.visible = false;                         //ë§ˆìš°ìŠ¤Â ì»¤ì„œê°€Â ë³´ì´ì§€Â ì•Šê²ŒÂ í•¨
+            Cursor.lockState = CursorLockMode.Locked;       //ë§ˆìš°ìŠ¤Â ì»¤ì„œë¥¼Â ê³ ì •ì‹œí‚´
+            isMouseCursorLock = true;
+            Debug.Log("Mouse cursor lock");
+        }
+        else
+        {
+            Cursor.visible = true;                          //ë§ˆìš°ìŠ¤Â ì»¤ì„œê°€Â ë³´ì´ê²ŒÂ ì•Šê²ŒÂ í•¨
+            Cursor.lockState = CursorLockMode.Confined;     //ë§ˆìš°ìŠ¤Â ì»¤ì„œ ê³ ì • í•´ì œì‹œí‚´
+            isMouseCursorLock = false;
+            Debug.Log("Mouse cursor unlock");
+        }
     }
 }
