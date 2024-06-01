@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TGPlayerCharacterMoveController : MonoBehaviour
+public class TGPlayerCharacterController : MonoBehaviour
 {
+    // public
     // 애니메이션 재생 속도 조절
     public float animSpeed = 1.5f;
     public GameObject MainCamera;
@@ -13,9 +14,10 @@ public class TGPlayerCharacterMoveController : MonoBehaviour
     public float backwardSpeed          = 2.0f;
     public float sidestepSpeed          = 5.0f;
     public float moveSpeedMultiplier    = 1.0f;
-    //점프 높이
+    // 점프 높이
     public float jumpHeight = 3.0f;
 
+    // private
     // Capsule Colider ref
     private CapsuleCollider col;
     private Rigidbody rb;
@@ -31,8 +33,6 @@ public class TGPlayerCharacterMoveController : MonoBehaviour
     private Animator            anim;                               // 캐릭터 애니메이션 ref
     private AnimatorStateInfo   currentBaseState;                   // base layer에서 사용되는 애니메이터의 현재 상태 참조
 
-    private GameObject cameraObject;                                // Main camera ref
-
     private Dictionary<KeyValues, KeyCode>  keyValuePairs;          // KeyValuePair map ref
 
     void Start()
@@ -40,7 +40,6 @@ public class TGPlayerCharacterMoveController : MonoBehaviour
         anim            = GetComponent<Animator>();
         col             = GetComponent<CapsuleCollider>();
         rb              = GetComponent<Rigidbody>();
-        cameraObject    = GameObject.FindWithTag("MainCamera");
 
         // CapsuleCollider 컴포넌트의 Height, Center의 초기값 저장하기
         orgColHight      = col.height;
@@ -52,7 +51,7 @@ public class TGPlayerCharacterMoveController : MonoBehaviour
 
     void FixedUpdate()
     {
-        PlayerCharacterControl();
+        MoveControl();
     }
 
     private void LateUpdate()
@@ -61,7 +60,7 @@ public class TGPlayerCharacterMoveController : MonoBehaviour
     }
 
     // Rigidbody와 연결되어 있기 때문에 FixedUpdate에서 호출해야 함
-    void PlayerCharacterControl()
+    void MoveControl()
     { 
         anim.SetFloat("Speed", velocity);                       // Animator 측에서 설정한 "Speed" 파라미터에 v를 전달
         anim.SetFloat("Sidestep", sidestep);                    // Animator 측에서 설정한 "Sidestep" 파라미터에 v를 전달
@@ -102,6 +101,11 @@ public class TGPlayerCharacterMoveController : MonoBehaviour
         {
             sidestep = sidestepSpeed * moveSpeedMultiplier;
             UnitMoveControl(Vector3.right, sidestepSpeed);
+        }
+
+        if (Input.GetKey(keyValuePairs[KeyValues.ITEM1])) //아이템1 들기
+        {
+            GetComponent<TGPlayerCharacter>().CommandHandInItem(ItemType.PRIMARYWEAPON);
         }
 
         //이동 키를 누르지 않을 때 속도를 서서히 감소

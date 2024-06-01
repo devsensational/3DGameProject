@@ -13,11 +13,16 @@ public enum KeyValues
     JUMP,
     FIRE,
     AIM,
+    ITEM1,
+    ITEM2,
+    ITEM3,
+    ITEM4,
     SKILL1,
     SKILL2,
     SKILL3,
     SKILL4,
     MOUSECURSORSWITCH,
+    INTERACTION,
     //Enum end
 
     End = 300
@@ -50,6 +55,12 @@ public class TGPlayerKeyManager : UMonoSingleton<TGPlayerKeyManager>
         KeyValuePairs.Add(KeyValues.RIGHT,              KeyCode.D);
         KeyValuePairs.Add(KeyValues.FIRE,               KeyCode.Mouse0);
         KeyValuePairs.Add(KeyValues.MOUSECURSORSWITCH,  KeyCode.LeftControl);
+        KeyValuePairs.Add(KeyValues.ITEM1,              KeyCode.Alpha1);
+        KeyValuePairs.Add(KeyValues.ITEM2,              KeyCode.Alpha2);
+        KeyValuePairs.Add(KeyValues.ITEM3,              KeyCode.Alpha3);
+        KeyValuePairs.Add(KeyValues.ITEM4,              KeyCode.Alpha4);
+        KeyValuePairs.Add(KeyValues.INTERACTION,        KeyCode.F);
+
     }
 
     // 키 할당 변경 시 사용되는 메소드

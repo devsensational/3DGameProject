@@ -6,6 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class TGPlayerFollowMainCameraController : MonoBehaviour
 {
+    //public
     //카메라 옵션
     [Header("Camera Parameter")]
     public float CameraHeight;
@@ -19,11 +20,12 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
     public float CameraRotationSensitive = 3f;      //카메라 회전 감도
     [Range(0, 1)]
     public float SmoothTime = 0.12f;                //카메라가 회전하는데 걸리는 시간
-    public float RotationMin = -10f;        //카메라 회전각도 최소
-    public float RotationMax = 90f;         //카메라 회전각도 최대
+    public float RotationMin = -10f;                //카메라 회전각도 최소
+    public float RotationMax = 90f;                 //카메라 회전각도 최대
 
     public Transform target;                //Player
 
+    //private
     private float dist = 4f;                 //카메라와 플레이어사이의 거리
 
     private Vector3 cameraHeightVec3;
