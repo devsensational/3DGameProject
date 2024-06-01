@@ -22,6 +22,7 @@ public class TGPlayerCharacterMoveController : MonoBehaviour
 
     // 캐릭터 컨트롤러(Capsule Colider)의 이동량
     private float velocity = 0;
+    private float sidestep = 0;
 
     // CapsuleCollider에서 설정된 Collider의 Heiht, Center의 초기값을 담는 변수
     private float   orgColHight;
@@ -32,13 +33,7 @@ public class TGPlayerCharacterMoveController : MonoBehaviour
 
     private GameObject cameraObject;                                // Main camera ref
 
-    private Dictionary<KeyValues, KeyCode>  keyValuePairs;           // KeyValuePair map ref
-
-    // 애니메이터 Ref
-    static int idleState = Animator.StringToHash("Base Layer.Idle");
-    static int locoState = Animator.StringToHash("Base Layer.Locomotion");
-    static int jumpState = Animator.StringToHash("Base Layer.Jump");
-    static int restState = Animator.StringToHash("Base Layer.Rest");
+    private Dictionary<KeyValues, KeyCode>  keyValuePairs;          // KeyValuePair map ref
 
     void Start()
     {
@@ -67,20 +62,20 @@ public class TGPlayerCharacterMoveController : MonoBehaviour
 
     // Rigidbody와 연결되어 있기 때문에 FixedUpdate에서 호출해야 함
     void PlayerCharacterControl()
-    {
-        anim.SetFloat("Speed", velocity);                              // Animator 측에서 설정한 "Speed" 파라미터에 v를 전달
-        //anim.SetFloat("Direction", h);                          // 애니메이터 측에서 설정한 "Direction" 파라미터에 h를 전달
-        anim.speed = animSpeed;                                 // 애니메이터의 모션 재생 속도에 animSpeed 설정하기
-        currentBaseState = anim.GetCurrentAnimatorStateInfo(0); // 참조용 상태 변수에 Base Layer의 현재 상태(0)를 설정
+    { 
+        anim.SetFloat("Speed", velocity);                       // Animator 측에서 설정한 "Speed" 파라미터에 v를 전달
+        anim.SetFloat("Sidestep", sidestep);                    // Animator 측에서 설정한 "Sidestep" 파라미터에 v를 전달
+        //anim.SetFloat("Direction", h);                        // Animator 측에서 설정한 "Direction" 파라미터에 h를 전달
+        anim.speed = animSpeed;                                 // Animator 모션 재생 속도에 animSpeed 설정하기
         rb.useGravity = true;                                   // 점프하는 동안 중력 차단, 그 외의 상황에서는 중력의 영향을 받도록 함
 
-        if(velocity > 0.1f)
-        {
-
-        }
-        else if(velocity < 0.1f)
+        if(velocity < 0.1f)
         {
             velocity = 0;
+        }
+        if(sidestep < 0f)
+        {
+            sidestep = 0f;
         }
 
         if (Input.anyKey)
@@ -100,12 +95,12 @@ public class TGPlayerCharacterMoveController : MonoBehaviour
         }
         if (Input.GetKey(keyValuePairs[KeyValues.LEFT])) //왼쪽으로 이동
         {
-            velocity = sidestepSpeed * moveSpeedMultiplier;
+            sidestep = -(sidestepSpeed * moveSpeedMultiplier);
             UnitMoveControl(Vector3.left, sidestepSpeed);
         }
         if (Input.GetKey(keyValuePairs[KeyValues.RIGHT])) //오른쪽으로 이동
         {
-            velocity = sidestepSpeed * moveSpeedMultiplier;
+            sidestep = sidestepSpeed * moveSpeedMultiplier;
             UnitMoveControl(Vector3.right, sidestepSpeed);
         }
 
@@ -114,7 +109,7 @@ public class TGPlayerCharacterMoveController : MonoBehaviour
             && !Input.GetKey(keyValuePairs[KeyValues.LEFT]) && !Input.GetKey(keyValuePairs[KeyValues.RIGHT]))
         {
             velocity /= 2f;
-            
+            sidestep /= 2f;
         }
     }
 
