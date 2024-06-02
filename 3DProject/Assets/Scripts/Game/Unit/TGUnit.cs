@@ -13,10 +13,10 @@ public class TGUnit : TGObject
 
     private void Awake()
     {
-        inventory.Add(ItemType.PRIMARYWEAPON, null);
-        inventory.Add(ItemType.SECONDARYWEAPON, null);
+        inventory.Add(ItemType.PrimaryWeapon, null);
+        inventory.Add(ItemType.SecondaryWeapon, null);
 
-        
+        ChildAwake();
     }
 
 
@@ -26,11 +26,19 @@ public class TGUnit : TGObject
 
         inventory[item.itemType] = item;
         inventory[item.itemType].OnPickedUpThisItem(gameObject);        // Item이 습득 됐을 때 item instance가 실행되야 할 명령 수행
-        Debug.Log(gameObject.name + "이 " + item.name + "을 줏었습니다.");
+        Debug.Log(gameObject.name + " picked up " + item.name);
     }
 
     protected void DropItem(ItemType itemType)  // item 드랍 시도 메소드
     {
         inventory[itemType] = null;
     }
+
+    public void CommandMove(Vector3 direction, float moveSpeed)
+    {
+        transform.Translate(direction * moveSpeed * Time.deltaTime);
+    }
+
+    protected virtual void ChildAwake() {}
+
 }

@@ -4,49 +4,27 @@ using UnityEngine;
 
 public class TGPlayerCharacterController : MonoBehaviour
 {
-    // public
-    // 애니메이션 재생 속도 조절
-    public float animSpeed = 1.5f;
-    public GameObject MainCamera;
+    //public
     [Header("Movement Parameter")]
     // 캐릭터 이동 속도 최대치 설정
-    public float forwardSpeed           = 7.0f;
-    public float backwardSpeed          = 2.0f;
-    public float sidestepSpeed          = 5.0f;
-    public float moveSpeedMultiplier    = 1.0f;
+    public float forwardSpeed = 7.0f;
+    public float backwardSpeed = 2.0f;
+    public float sidestepSpeed = 5.0f;
+    public float moveSpeedMultiplier = 1.0f;
     // 점프 높이
     public float jumpHeight = 3.0f;
 
-    // private
-    // Capsule Colider ref
-    private CapsuleCollider col;
-    private Rigidbody rb;
-
-    // 캐릭터 컨트롤러(Capsule Colider)의 이동량
-    private float velocity = 0;
-    private float sidestep = 0;
-
-    // CapsuleCollider에서 설정된 Collider의 Heiht, Center의 초기값을 담는 변수
-    private float   orgColHight;
-    private Vector3 orgVectColCenter;
-
-    private Animator            anim;                               // 캐릭터 애니메이션 ref
-    private AnimatorStateInfo   currentBaseState;                   // base layer에서 사용되는 애니메이터의 현재 상태 참조
-
-    private Dictionary<KeyValues, KeyCode>  keyValuePairs;          // KeyValuePair map ref
-
+    //private
+    Dictionary<KeyValues, KeyCode>  keyValuePairs;              // KeyValuePair map ref
+    TGPlayerCharacter               playerCharacter;            // 플레이어 캐릭터 ref
+    MPlayerCharacterStats           playerStats;                // 플레이어 스탯 ref
+    
+    //Unity lifetime
     void Start()
     {
-        anim            = GetComponent<Animator>();
-        col             = GetComponent<CapsuleCollider>();
-        rb              = GetComponent<Rigidbody>();
-
-        // CapsuleCollider 컴포넌트의 Height, Center의 초기값 저장하기
-        orgColHight      = col.height;
-        orgVectColCenter = col.center;
-
-        //KeyManager ref
-        keyValuePairs = TGPlayerKeyManager.Instance.KeyValuePairs;
+        keyValuePairs               = TGPlayerKeyManager.Instance.KeyValuePairs; //KeyManager ref
+        playerCharacter             = GetComponent<TGPlayerCharacter>();
+        playerStats                 = playerCharacter.playerStat;
     }
 
     void FixedUpdate()
@@ -59,82 +37,54 @@ public class TGPlayerCharacterController : MonoBehaviour
 
     }
 
-    // Rigidbody와 연결되어 있기 때문에 FixedUpdate에서 호출해야 함
-    void MoveControl()
+
+    void MoveControl()    // Rigidbody와 연결되어 있기 때문에 FixedUpdate에서 호출해야 함
     { 
-        anim.SetFloat("Speed", velocity);                       // Animator 측에서 설정한 "Speed" 파라미터에 v를 전달
-        anim.SetFloat("Sidestep", sidestep);                    // Animator 측에서 설정한 "Sidestep" 파라미터에 v를 전달
-        //anim.SetFloat("Direction", h);                        // Animator 측에서 설정한 "Direction" 파라미터에 h를 전달
-        anim.speed = animSpeed;                                 // Animator 모션 재생 속도에 animSpeed 설정하기
-        rb.useGravity = true;                                   // 점프하는 동안 중력 차단, 그 외의 상황에서는 중력의 영향을 받도록 함
-
-        if(velocity < 0.1f)
-        {
-            velocity = 0;
-        }
-        if(sidestep < 0f)
-        {
-            sidestep = 0f;
-        }
-
+        // 카메라 방향와 캐릭터 방향 동기화
         if (Input.anyKey)
         {
-            PlayerCharacterFollowRotationCamera();
+            playerCharacter.FollowRotationCamera();
         }
 
-        if (Input.GetKey(keyValuePairs[KeyValues.FORWARD])) //앞으로 이동
+        // 이동
+        if (Input.GetKey(keyValuePairs[KeyValues.Forward])) //앞으로 이동
         {
-            velocity = forwardSpeed * moveSpeedMultiplier;
-            UnitMoveControl(Vector3.forward, forwardSpeed);
+            playerCharacter.CommandMove(Vector3.forward, forwardSpeed);
+            playerStats.velocity = forwardSpeed;
         }
-        if (Input.GetKey(keyValuePairs[KeyValues.BACKWARD])) //뒤로 이동
+        if (Input.GetKey(keyValuePairs[KeyValues.Backward])) //뒤로 이동
         {
-            velocity = -(backwardSpeed * moveSpeedMultiplier);
-            UnitMoveControl(Vector3.back, backwardSpeed);
+            playerCharacter.CommandMove(Vector3.back, forwardSpeed);
+            playerStats.velocity = -backwardSpeed;
         }
-        if (Input.GetKey(keyValuePairs[KeyValues.LEFT])) //왼쪽으로 이동
+        if (Input.GetKey(keyValuePairs[KeyValues.Left])) //왼쪽으로 이동
         {
-            sidestep = -(sidestepSpeed * moveSpeedMultiplier);
-            UnitMoveControl(Vector3.left, sidestepSpeed);
+            playerCharacter.CommandMove(Vector3.left, forwardSpeed);
+            playerStats.velocity = sidestepSpeed;
         }
-        if (Input.GetKey(keyValuePairs[KeyValues.RIGHT])) //오른쪽으로 이동
+        if (Input.GetKey(keyValuePairs[KeyValues.Right])) //오른쪽으로 이동
         {
-            sidestep = sidestepSpeed * moveSpeedMultiplier;
-            UnitMoveControl(Vector3.right, sidestepSpeed);
-        }
-
-        if (Input.GetKey(keyValuePairs[KeyValues.ITEM1])) //아이템1 들기
-        {
-            GetComponent<TGPlayerCharacter>().CommandHandInItem(ItemType.PRIMARYWEAPON);
+            playerCharacter.CommandMove(Vector3.right, forwardSpeed);
+            playerStats.velocity = sidestepSpeed;
         }
 
-        //이동 키를 누르지 않을 때 속도를 서서히 감소
-        if (!Input.GetKey(keyValuePairs[KeyValues.FORWARD]) && !Input.GetKey(keyValuePairs[KeyValues.BACKWARD])
-            && !Input.GetKey(keyValuePairs[KeyValues.LEFT]) && !Input.GetKey(keyValuePairs[KeyValues.RIGHT]))
+        if (!Input.GetKey(keyValuePairs[KeyValues.Forward]) && !Input.GetKey(keyValuePairs[KeyValues.Backward])
+            && !Input.GetKey(keyValuePairs[KeyValues.Left]) && !Input.GetKey(keyValuePairs[KeyValues.Right]))  //이동 키를 누르지 않을 때 속도를 서서히 감소
         {
-            velocity /= 2f;
-            sidestep /= 2f;
+            OnStopCharacter();
         }
+
+        // 아이템 들기
+        if (Input.GetKey(keyValuePairs[KeyValues.Item1])) //아이템1 들기
+        {
+            GetComponent<TGPlayerCharacter>().CommandHandInItem(ItemType.PrimaryWeapon);
+        }
+
     }
 
-    void PlayerCharacterFollowRotationCamera()
+    public void OnStopCharacter()
     {
-        if (MainCamera != null)
-        {
-            // 카메라의 x축 회전값 가져오기
-            float cameraRotationY = MainCamera.transform.eulerAngles.y;
-
-            // 현재 게임 오브젝트의 회전값을 가져와서 x축 회전값만 변경
-            Vector3 targetRotation = transform.rotation.eulerAngles;
-            targetRotation.y = cameraRotationY;
-
-            // 새로운 회전값을 Quaternion으로 변환하여 게임 오브젝트에 적용
-            transform.rotation = Quaternion.Euler(targetRotation);
-        }
+        playerStats.velocity /= 2f;
     }
 
-    void UnitMoveControl(Vector3 direction, float moveSpeed)
-    {
-        transform.Translate(direction * moveSpeed * Time.deltaTime);
-    }
 }

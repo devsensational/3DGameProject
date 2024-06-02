@@ -4,14 +4,14 @@ using UnityEngine;
 
 public enum ItemType
 {
-    DEFAULT = 0,
+    Default = 0,
 
     //여기서 부터 enum 작성
-    PRIMARYWEAPON,
-    SECONDARYWEAPON,
+    PrimaryWeapon,
+    SecondaryWeapon,
     //
 
-    END = 999
+    End = 999
 }
 
 public class TGItem : TGObject
@@ -25,9 +25,14 @@ public class TGItem : TGObject
     protected bool isHandIn = false;
 
     //private
+    Rigidbody rb;
+    Collider cl;
 
     private void Awake()
     {
+        rb = GetComponent<Rigidbody>();
+        cl = GetComponent<Collider>();
+
         ChildAwake();
     }
 
@@ -53,8 +58,18 @@ public class TGItem : TGObject
     {
         itemHolder = gameObject;
         isDropped = false;
+
+        //아이템을 손에 들었을 때 물리 연산이 되지 않도록 설정
+        cl.isTrigger = true;
+        rb.isKinematic = true;
+
+        // 부모 설정
         transform.SetParent(gameObject.transform.Find("HandInItemPos"));
-        GetComponent<Rigidbody>().useGravity = false;
+
+        // 위치 및 회전 초기화
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
+
     }
 
     //부모의 오리지날 메소드를 수정하지 않고 메소드 작성을 가능하게 하는 메소드들

@@ -51,7 +51,7 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
         }
         PlayerCameraFollow();
 
-        if (Input.GetKeyDown(keyValuePairs[KeyValues.MOUSECURSORSWITCH])) // MOUSECURSORSWITCH에 할당 된 키가 입력되면 호출
+        if (Input.GetKeyDown(keyValuePairs[KeyValues.Mousecursorswitch])) // MOUSECURSORSWITCH에 할당 된 키가 입력되면 호출
         {
             MouseCursorLockSwitch();
         }
