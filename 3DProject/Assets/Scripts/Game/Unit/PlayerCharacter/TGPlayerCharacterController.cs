@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 사용자 인풋을 이용하여 플레이어 캐릭터를 조종하기 위한 클래스입니다
 public class TGPlayerCharacterController : MonoBehaviour
 {
-    //public
+    // inspector
+    public GameObject MainCamera;
+
     [Header("Movement Parameter")]
     // 캐릭터 이동 속도 최대치 설정
     public float forwardSpeed = 7.0f;
@@ -17,7 +20,7 @@ public class TGPlayerCharacterController : MonoBehaviour
     //private
     Dictionary<KeyValues, KeyCode>  keyValuePairs;              // KeyValuePair map ref
     TGPlayerCharacter               playerCharacter;            // 플레이어 캐릭터 ref
-    MPlayerCharacterStats           playerStats;                // 플레이어 스탯 ref
+    MCharacterStats                 playerStats;                // 플레이어 스탯 ref
     
     //Unity lifetime
     void Start()
@@ -30,6 +33,7 @@ public class TGPlayerCharacterController : MonoBehaviour
     void FixedUpdate()
     {
         MoveControl();
+        FollowRotationCamera();
     }
 
     private void LateUpdate()
@@ -39,13 +43,7 @@ public class TGPlayerCharacterController : MonoBehaviour
 
 
     void MoveControl()    // Rigidbody와 연결되어 있기 때문에 FixedUpdate에서 호출해야 함
-    { 
-        // 카메라 방향와 캐릭터 방향 동기화
-        if (Input.anyKey)
-        {
-            playerCharacter.FollowRotationCamera();
-        }
-
+    {
         // 이동
         if (Input.GetKey(keyValuePairs[KeyValues.Forward])) //앞으로 이동
         {
@@ -82,6 +80,21 @@ public class TGPlayerCharacterController : MonoBehaviour
 
     }
 
+    private void FollowRotationCamera()
+    {
+        if (MainCamera != null)
+        {
+            // 카메라의 x축 회전값 가져오기
+            float cameraRotationY = MainCamera.transform.eulerAngles.y;
+
+            // 현재 게임 오브젝트의 회전값을 가져와서 x축 회전값만 변경
+            Vector3 targetRotation = transform.rotation.eulerAngles;
+            targetRotation.y = cameraRotationY;
+
+            // 새로운 회전값을 Quaternion으로 변환하여 게임 오브젝트에 적용
+            transform.rotation = Quaternion.Euler(targetRotation);
+        }
+    }
     public void OnStopCharacter()
     {
         playerStats.velocity /= 2f;

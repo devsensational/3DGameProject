@@ -7675,6 +7675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2eeedbb352c0a844a7066ef1170dd7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainCamera: {fileID: 0}
   forwardSpeed: 3
   backwardSpeed: 2
   sidestepSpeed: 2
@@ -7987,8 +7988,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraHeight: 1.5
-  Yaxis: 1
-  Xaxis: 1
   CameraZoomDistanceUnit: 0.2
   MaxCameraZoomDistance: 5
   MinCameraZoomDistance: 1
@@ -10778,6 +10777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2eeedbb352c0a844a7066ef1170dd7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainCamera: {fileID: 0}
   forwardSpeed: 7
   backwardSpeed: 2
   sidestepSpeed: 5
@@ -18254,6 +18254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2eeedbb352c0a844a7066ef1170dd7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainCamera: {fileID: 963194225}
   forwardSpeed: 5
   backwardSpeed: 1
   sidestepSpeed: 3
@@ -18271,7 +18272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0651f4b62d62243a3c40b011eb4616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainCamera: {fileID: 963194225}
+  HandObject: {fileID: 1761728249}
 --- !u!114 &5976494778289716983
 MonoBehaviour:
   m_ObjectHideFlags: 0

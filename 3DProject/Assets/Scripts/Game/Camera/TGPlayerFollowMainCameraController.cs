@@ -9,13 +9,11 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
     //public
     //카메라 옵션
     [Header("Camera Parameter")]
-    public float CameraHeight;
-    public float Yaxis;
-    public float Xaxis;
+    public float CameraHeight;                      //카메라 높이
 
-    public float CameraZoomDistanceUnit = 0.2f;
-    public float MaxCameraZoomDistance;
-    public float MinCameraZoomDistance;
+    public float CameraZoomDistanceUnit = 0.2f;     //카메라 줌 확대/축소 시 이동 거리
+    public float MaxCameraZoomDistance;             //카메라 줌 최대 거리
+    public float MinCameraZoomDistance;             //카메라 줌 최소 거리
     [Range(0, 5)]
     public float CameraRotationSensitive = 3f;      //카메라 회전 감도
     [Range(0, 1)]
@@ -23,10 +21,13 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
     public float RotationMin = -10f;                //카메라 회전각도 최소
     public float RotationMax = 90f;                 //카메라 회전각도 최대
 
-    public Transform target;                //Player
+    public Transform target;                        //플레이어 캐릭터 ref
 
     //private
-    private float dist = 4f;                 //카메라와 플레이어사이의 거리
+    private float Yaxis;
+    private float Xaxis;
+
+    private float dist = 4f;                        //카메라와 플레이어사이의 거리
 
     private Vector3 cameraHeightVec3;
     private Vector3 targetRotation;

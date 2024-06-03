@@ -14,13 +14,11 @@ public enum MoveDirection
     End = 999
 }
 
-public class TGPlayerCharacter : TGUnit
+// 플레이어가 직접 조종하는 캐릭터의 스탯 및 상호작용을 위한 클래스입니다
+public class TGPlayerCharacter : TGCharacter
 {
-    // inspector
-    public GameObject MainCamera;
-
     // public
-    public MPlayerCharacterStats playerStat { get; set; } // 플레이어 캐릭터 스탯
+    public MCharacterStats playerStat { get; set; } // 플레이어 캐릭터 스탯
 
     // private
     // Capsule Colider ref
@@ -33,7 +31,7 @@ public class TGPlayerCharacter : TGUnit
     //Unity lifetime
     protected override void ChildAwake()
     {
-        playerStat = new MPlayerCharacterStats();
+        playerStat = new MCharacterStats();
     }
 
     void OnCollisionStay(Collision collision) // collision과 충돌할 때 실행되는 메소드
@@ -51,7 +49,7 @@ public class TGPlayerCharacter : TGUnit
     //item 관련 method
     public void CommandDropItem(ItemType itemType) // "TGPlayerCharacterController"에서 Item 드랍을 호출했을 때 실행
     {
-        inventory[itemType].OnDropThisItem();
+        equipItems[itemType].OnDropThisItem();
         DropItem(itemType);
     }
 
@@ -59,7 +57,7 @@ public class TGPlayerCharacter : TGUnit
     {
         if(handInItem != null)
         {
-            ChangeHandInItem(handInItem, inventory[itemType]);
+            ChangeHandInItem(handInItem, equipItems[itemType]);
         } 
         else
         {
@@ -73,23 +71,5 @@ public class TGPlayerCharacter : TGUnit
             previousItem.enabled = false;
         }
         nextItem.enabled = true;
-    }
-
-    // 이동 관련 method
-
-    public void FollowRotationCamera()
-    {
-        if (MainCamera != null)
-        {
-            // 카메라의 x축 회전값 가져오기
-            float cameraRotationY = MainCamera.transform.eulerAngles.y;
-
-            // 현재 게임 오브젝트의 회전값을 가져와서 x축 회전값만 변경
-            Vector3 targetRotation = transform.rotation.eulerAngles;
-            targetRotation.y = cameraRotationY;
-
-            // 새로운 회전값을 Quaternion으로 변환하여 게임 오브젝트에 적용
-            transform.rotation = Quaternion.Euler(targetRotation);
-        }
     }
 }

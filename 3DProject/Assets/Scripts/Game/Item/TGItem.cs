@@ -54,9 +54,9 @@ public class TGItem : TGObject
     }
 
 
-    public void OnPickedUpThisItem(GameObject gameObject)    // 아이템이 주워졌을 때 호출
+    public void OnPickedUpThisItem(GameObject pickedUpCharacterObject)    // 아이템이 주워졌을 때 호출
     {
-        itemHolder = gameObject;
+        itemHolder = pickedUpCharacterObject;
         isDropped = false;
 
         //아이템을 손에 들었을 때 물리 연산이 되지 않도록 설정
@@ -64,7 +64,7 @@ public class TGItem : TGObject
         rb.isKinematic = true;
 
         // 부모 설정
-        transform.SetParent(gameObject.transform.Find("HandInItemPos"));
+        transform.SetParent(pickedUpCharacterObject.GetComponent<TGCharacter>().HandObject.transform);
 
         // 위치 및 회전 초기화
         transform.localPosition = Vector3.zero;

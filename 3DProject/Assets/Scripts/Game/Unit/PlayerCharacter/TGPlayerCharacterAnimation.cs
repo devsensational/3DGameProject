@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//플레이어 캐릭터의 애니메이션 컨트롤을 위한 클래스입니다
 public class TGPlayerCharacterAnimation : MonoBehaviour
 {
     //public
@@ -10,7 +11,7 @@ public class TGPlayerCharacterAnimation : MonoBehaviour
     //private
     //ref
     private TGPlayerCharacter       playerCharacter;
-    private MPlayerCharacterStats   playerStats;
+    private MCharacterStats   playerStats;
 
     private CapsuleCollider     col;
     private Rigidbody           rb;
