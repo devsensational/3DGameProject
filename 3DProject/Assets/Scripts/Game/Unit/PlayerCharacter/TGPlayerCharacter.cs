@@ -36,7 +36,6 @@ public class TGPlayerCharacter : TGCharacter
 
     void OnCollisionStay(Collision collision) // collision과 충돌할 때 실행되는 메소드
     {
-        Debug.Log("collisionEnter " + collision.gameObject.name);
         if (collision.gameObject.tag == "Item")
         {
             if (collision.gameObject.GetComponent<TGItem>().isDropped) //해당 무기가 떨어져 있는지 확인

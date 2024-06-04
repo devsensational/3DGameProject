@@ -21,26 +21,31 @@ public class TGPlayerCharacterController : MonoBehaviour
     Dictionary<KeyValues, KeyCode>  keyValuePairs;              // KeyValuePair map ref
     TGPlayerCharacter               playerCharacter;            // 플레이어 캐릭터 ref
     MCharacterStats                 playerStats;                // 플레이어 스탯 ref
-    
+    TGGameManager                   gameManager;                // 게임 매니저 ref      
+
+    private Vector3 targetRotation;
+    private Vector3 currentVel;
+
+    float Yaxis = 0;
+
     //Unity lifetime
     void Start()
     {
-        keyValuePairs               = TGPlayerKeyManager.Instance.KeyValuePairs; //KeyManager ref
-        playerCharacter             = GetComponent<TGPlayerCharacter>();
-        playerStats                 = playerCharacter.playerStat;
+        keyValuePairs       = TGPlayerKeyManager.Instance.KeyValuePairs; //KeyManager ref
+        gameManager         = new TGGameManager();  
+        playerCharacter     = GetComponent<TGPlayerCharacter>();
+        playerStats         = playerCharacter.playerStat;
     }
 
     void FixedUpdate()
     {
-        MoveControl();
-        FollowRotationCamera();
     }
 
     private void LateUpdate()
     {
-
+        MoveControl();
+        FollowRotationCamera();
     }
-
 
     void MoveControl()    // Rigidbody와 연결되어 있기 때문에 FixedUpdate에서 호출해야 함
     {
@@ -52,18 +57,18 @@ public class TGPlayerCharacterController : MonoBehaviour
         }
         if (Input.GetKey(keyValuePairs[KeyValues.Backward])) //뒤로 이동
         {
-            playerCharacter.CommandMove(Vector3.back, forwardSpeed);
+            playerCharacter.CommandMove(Vector3.back, backwardSpeed);
             playerStats.velocity = -backwardSpeed;
         }
         if (Input.GetKey(keyValuePairs[KeyValues.Left])) //왼쪽으로 이동
         {
-            playerCharacter.CommandMove(Vector3.left, forwardSpeed);
-            playerStats.velocity = sidestepSpeed;
+            playerCharacter.CommandMove(Vector3.left, sidestepSpeed);
+            playerStats.velocity = -sidestepSpeed;
         }
         if (Input.GetKey(keyValuePairs[KeyValues.Right])) //오른쪽으로 이동
         {
-            playerCharacter.CommandMove(Vector3.right, forwardSpeed);
-            playerStats.velocity = sidestepSpeed;
+            playerCharacter.CommandMove(Vector3.right, sidestepSpeed);
+            playerStats.velocity = -sidestepSpeed;
         }
 
         if (!Input.GetKey(keyValuePairs[KeyValues.Forward]) && !Input.GetKey(keyValuePairs[KeyValues.Backward])

@@ -11,6 +11,7 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
     [Header("Camera Parameter")]
     public float CameraHeight;                      //카메라 높이
 
+    public float cameraCurrentDistance = 0.5f;                        //카메라와 플레이어사이의 거리
     public float CameraZoomDistanceUnit = 0.2f;     //카메라 줌 확대/축소 시 이동 거리
     public float MaxCameraZoomDistance;             //카메라 줌 최대 거리
     public float MinCameraZoomDistance;             //카메라 줌 최소 거리
@@ -27,7 +28,6 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
     private float Yaxis;
     private float Xaxis;
 
-    private float dist = 4f;                        //카메라와 플레이어사이의 거리
 
     private Vector3 cameraHeightVec3;
     private Vector3 targetRotation;
@@ -60,7 +60,7 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
 
     void PlayerCameraFollow()
     {
-        transform.position = cameraHeightVec3 + target.position - transform.forward * dist; // 카메라 위치 갱신, "dist"에 따라 거리 조절
+        transform.position = cameraHeightVec3 + target.position - transform.forward * cameraCurrentDistance; // 카메라 위치 갱신, "dist"에 따라 거리 조절
 
     }
 
@@ -82,11 +82,11 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
 
         if (scroll > 0f) // 마우스 휠 업
         {
-            dist -= dist > MinCameraZoomDistance ? CameraZoomDistanceUnit : 0;
+            cameraCurrentDistance -= cameraCurrentDistance > MinCameraZoomDistance ? CameraZoomDistanceUnit : 0;
         }
         else if (scroll < 0f) // 마우스 휠 다운
         {
-            dist += dist < MaxCameraZoomDistance ? CameraZoomDistanceUnit : 0;
+            cameraCurrentDistance += cameraCurrentDistance < MaxCameraZoomDistance ? CameraZoomDistanceUnit : 0;
         }
     }
 
