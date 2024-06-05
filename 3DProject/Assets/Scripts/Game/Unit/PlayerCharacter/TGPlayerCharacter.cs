@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public enum MoveDirection
 {
@@ -26,9 +27,9 @@ public class TGPlayerCharacter : TGCharacter
     private Rigidbody       rb;
 
     //private
-    TGItem handInItem = null;   //플레이어 캐릭터가 들고 있는 아이템 ref
+    private MWeaponStats weaponStats;
 
-    //Unity lifetime
+    //Unity lifecycle
     protected override void ChildAwake()
     {
         playerStat = new MCharacterStats();
@@ -63,6 +64,7 @@ public class TGPlayerCharacter : TGCharacter
 
         }
     }
+
     private void ChangeHandInItem(TGItem previousItem, TGItem nextItem)
     {
         if (previousItem != null)
@@ -70,5 +72,6 @@ public class TGPlayerCharacter : TGCharacter
             previousItem.enabled = false;
         }
         nextItem.enabled = true;
+     
     }
 }

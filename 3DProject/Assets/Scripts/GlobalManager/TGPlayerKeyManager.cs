@@ -21,8 +21,9 @@ public enum KeyValues
     Skill2,
     Skill3,
     Skill4,
-    Mousecursorswitch,
+    MouseCursorSwitch,
     Interaction,
+    CamSwitch,
     //Enum end
 
     End = 300
@@ -54,12 +55,13 @@ public class TGPlayerKeyManager : UMonoSingleton<TGPlayerKeyManager>
         KeyValuePairs.Add(KeyValues.Left,               KeyCode.A);
         KeyValuePairs.Add(KeyValues.Right,              KeyCode.D);
         KeyValuePairs.Add(KeyValues.Fire,               KeyCode.Mouse0);
-        KeyValuePairs.Add(KeyValues.Mousecursorswitch,  KeyCode.LeftControl);
+        KeyValuePairs.Add(KeyValues.MouseCursorSwitch,  KeyCode.LeftControl);
         KeyValuePairs.Add(KeyValues.Item1,              KeyCode.Alpha1);
         KeyValuePairs.Add(KeyValues.Item2,              KeyCode.Alpha2);
         KeyValuePairs.Add(KeyValues.Item3,              KeyCode.Alpha3);
         KeyValuePairs.Add(KeyValues.Item4,              KeyCode.Alpha4);
         KeyValuePairs.Add(KeyValues.Interaction,        KeyCode.F);
+        KeyValuePairs.Add(KeyValues.CamSwitch,          KeyCode.V);
 
     }
 

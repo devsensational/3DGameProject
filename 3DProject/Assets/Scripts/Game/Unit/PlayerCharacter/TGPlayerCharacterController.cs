@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 // 사용자 인풋을 이용하여 플레이어 캐릭터를 조종하기 위한 클래스입니다
 public class TGPlayerCharacterController : MonoBehaviour
@@ -23,12 +24,12 @@ public class TGPlayerCharacterController : MonoBehaviour
     MCharacterStats                 playerStats;                // 플레이어 스탯 ref
     TGGameManager                   gameManager;                // 게임 매니저 ref      
 
-    private Vector3 targetRotation;
-    private Vector3 currentVel;
+    Vector3 targetRotation;
+    Vector3 currentVel;
 
     float Yaxis = 0;
 
-    //Unity lifetime
+    //Unity lifecycle
     void Start()
     {
         keyValuePairs       = TGPlayerKeyManager.Instance.KeyValuePairs; //KeyManager ref
@@ -39,6 +40,7 @@ public class TGPlayerCharacterController : MonoBehaviour
 
     void FixedUpdate()
     {
+
     }
 
     private void LateUpdate()
@@ -47,6 +49,7 @@ public class TGPlayerCharacterController : MonoBehaviour
         FollowRotationCamera();
     }
 
+    //이동 관련 메소드
     void MoveControl()    // Rigidbody와 연결되어 있기 때문에 FixedUpdate에서 호출해야 함
     {
         // 이동
@@ -85,7 +88,8 @@ public class TGPlayerCharacterController : MonoBehaviour
 
     }
 
-    private void FollowRotationCamera()
+    //카메라 관련 메소드
+    void FollowRotationCamera()
     {
         if (MainCamera != null)
         {
@@ -100,9 +104,9 @@ public class TGPlayerCharacterController : MonoBehaviour
             transform.rotation = Quaternion.Euler(targetRotation);
         }
     }
+
     public void OnStopCharacter()
     {
         playerStats.velocity /= 2f;
     }
-
 }

@@ -10,9 +10,12 @@ public class TGCharacter : TGObject
 
     //protected
     protected Dictionary<ItemType, TGItem> equipItems = new Dictionary<ItemType, TGItem>();
+    protected TGItem handInItem = null;   //플레이어 캐릭터가 들고 있는 아이템 ref
 
     //private
-
+    
+    
+    //Unity lifecycle
     private void Awake()
     {
         equipItems.Add(ItemType.PrimaryWeapon, null);
@@ -21,7 +24,7 @@ public class TGCharacter : TGObject
         ChildAwake();
     }
 
-
+    // item 상호작용 관련 메소드
     protected void TakeItem(TGItem item)    // item 습득 시도 메소드
     {
         if(item == null) return;                        // 선택된 item object가 null일 경우 메소드 종료
@@ -36,11 +39,19 @@ public class TGCharacter : TGObject
         equipItems[itemType] = null;
     }
 
+    // 이동 관련 메소드
     public void CommandMove(Vector3 direction, float moveSpeed)
     {
         transform.Translate(direction * moveSpeed * Time.deltaTime);
     }
 
+    // getter/setter
+    public TGItem GetHandInItem()
+    {
+        return handInItem;
+    }
+
+    // child
     protected virtual void ChildAwake() {}
 
 }

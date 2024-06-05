@@ -24,7 +24,7 @@ public class TGPlayerCharacterAnimation : MonoBehaviour
     private AnimatorStateInfo currentBaseState;                   // base layer에서 사용되는 애니메이터의 현재 상태 참조
 
 
-    //Unity lifetime
+    //Unity lifecycle
     void Start()
     {
         playerCharacter = GetComponent<TGPlayerCharacter>();
