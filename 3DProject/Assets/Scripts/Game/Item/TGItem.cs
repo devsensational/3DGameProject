@@ -21,10 +21,13 @@ public class TGItem : TGObject
     public GameObject   itemHolder { get; set; } //아이템을 주운 오브젝트
     public bool         isDropped = false; //아이템이 주울 수 있는 상태인지 확인
 
+    public MCharacterStats characterStats { get; set; }
+
     //protected
     protected bool isHandIn = false;
 
     //private
+
     Rigidbody rb;
     Collider cl;
 
@@ -46,7 +49,7 @@ public class TGItem : TGObject
         ChildUpdate();
     }
 
-
+    // 아이템 상호작용 관련 메소드
     public void OnDropThisItem()    // 아이템이 버려졌을 때 호출
     {
         itemHolder = null;
@@ -56,6 +59,7 @@ public class TGItem : TGObject
 
     public void OnPickedUpThisItem(GameObject pickedUpCharacterObject)    // 아이템이 주워졌을 때 호출
     {
+
         itemHolder = pickedUpCharacterObject;
         isDropped = false;
 
@@ -65,12 +69,15 @@ public class TGItem : TGObject
 
         // 부모 설정
         transform.SetParent(pickedUpCharacterObject.GetComponent<TGCharacter>().HandObject.transform);
+        characterStats = pickedUpCharacterObject.GetComponent<TGCharacter>().characterStat; //주운 캐릭터의 스탯 데이터 가져오기
 
         // 위치 및 회전 초기화
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
     }
+
+    public virtual void UseItem() { }
 
     //부모의 오리지날 메소드를 수정하지 않고 메소드 작성을 가능하게 하는 메소드들
     protected virtual void ChildAwake() { }     

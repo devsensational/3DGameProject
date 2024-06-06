@@ -9,8 +9,8 @@ public class TGItemWeapon : TGItem
     GameObject Muzzle;              //총알이 발사될 위치
 
     //private
-    MWeaponStats    weaponStats     { get; set; }
-    MCharacterStats characterStats  { get; set; }
+    MWeaponStats weaponStats     { get; set; }
+
     //Unity lifetime
     protected override void ChildAwake()
     {
@@ -23,12 +23,12 @@ public class TGItemWeapon : TGItem
     }
 
     // 공격 메커니즘 관련 메소드
-    protected virtual void Fire()
+    public override void UseItem()
     {
 
     }
 
-    protected virtual void Reload()
+    public virtual void Reload()
     {
 
     }

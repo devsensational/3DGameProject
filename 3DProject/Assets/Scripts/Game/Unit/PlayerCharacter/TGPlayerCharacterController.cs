@@ -35,7 +35,7 @@ public class TGPlayerCharacterController : MonoBehaviour
         keyValuePairs       = TGPlayerKeyManager.Instance.KeyValuePairs; //KeyManager ref
         gameManager         = new TGGameManager();  
         playerCharacter     = GetComponent<TGPlayerCharacter>();
-        playerStats         = playerCharacter.playerStat;
+        playerStats         = playerCharacter.characterStat;
     }
 
     void FixedUpdate()

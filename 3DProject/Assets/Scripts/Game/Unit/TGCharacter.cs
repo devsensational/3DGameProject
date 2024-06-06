@@ -5,11 +5,15 @@ using UnityEngine;
 // 현 프로젝트의 유닛을 정의하기 위한 클래스입니다.
 public class TGCharacter : TGObject
 {
-    //public
+    //Inspector
     public GameObject HandObject;   //아이템을 주웠을 때 위치를 결정할 GameObject
+
+    //public
+    public MCharacterStats characterStat { get; protected set; } // 플레이어 캐릭터 스탯
 
     //protected
     protected Dictionary<ItemType, TGItem> equipItems = new Dictionary<ItemType, TGItem>();
+
     protected TGItem handInItem = null;   //플레이어 캐릭터가 들고 있는 아이템 ref
 
     //private

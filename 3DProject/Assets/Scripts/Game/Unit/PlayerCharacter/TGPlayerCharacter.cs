@@ -19,7 +19,6 @@ public enum MoveDirection
 public class TGPlayerCharacter : TGCharacter
 {
     // public
-    public MCharacterStats playerStat { get; set; } // 플레이어 캐릭터 스탯
 
     // private
     // Capsule Colider ref
@@ -32,7 +31,7 @@ public class TGPlayerCharacter : TGCharacter
     //Unity lifecycle
     protected override void ChildAwake()
     {
-        playerStat = new MCharacterStats();
+        characterStat = new MCharacterStats();
     }
 
     void OnCollisionStay(Collision collision) // collision과 충돌할 때 실행되는 메소드

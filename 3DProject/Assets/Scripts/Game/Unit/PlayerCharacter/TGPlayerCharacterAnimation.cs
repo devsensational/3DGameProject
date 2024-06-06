@@ -28,7 +28,7 @@ public class TGPlayerCharacterAnimation : MonoBehaviour
     void Start()
     {
         playerCharacter = GetComponent<TGPlayerCharacter>();
-        playerStats     = playerCharacter.playerStat;
+        playerStats     = playerCharacter.characterStat;
         AnimationInit();
     }
 
@@ -51,7 +51,7 @@ public class TGPlayerCharacterAnimation : MonoBehaviour
     }
     private void OnMoveAnimation()
     {
-        anim.SetFloat("Speed", playerStats.velocity);                       // Animator 측에서 설정한 "Speed" 파라미터에 v를 전달
+        anim.SetFloat("Speed", playerStats.velocity);           // Animator 측에서 설정한 "Speed" 파라미터에 v를 전달
         //anim.SetFloat("Direction", h);                        // Animator 측에서 설정한 "Direction" 파라미터에 h를 전달
         anim.speed = animSpeed;                                 // Animator 모션 재생 속도에 animSpeed 설정하기
         rb.useGravity = true;                                   // 점프하는 동안 중력 차단, 그 외의 상황에서는 중력의 영향을 받도록 함
