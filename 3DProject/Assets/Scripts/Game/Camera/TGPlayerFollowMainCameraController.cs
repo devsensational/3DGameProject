@@ -26,22 +26,26 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
     public Transform FPPTarget;                     //1인칭 타겟
 
     //private
-    private float Yaxis;
-    private float Xaxis;
+    Dictionary<KeyValues, KeyCode> keyValuePairs; // KeyValuePair map ref
 
-    private Vector3 cameraHeightVec3;
-    private Vector3 targetRotation;
-    private Vector3 currentVel;
+    TGEventManager eventManager;
 
-    private Dictionary<KeyValues, KeyCode> keyValuePairs; // KeyValuePair map ref
+    Vector3 cameraHeightVec3;
+    Vector3 targetRotation;
+    Vector3 currentVel;
 
-    private bool isMouseCursorLock  = false;
-    private bool isTPP              = true;
+    float Yaxis;
+    float Xaxis;
+
+    bool isMouseCursorLock  = false;
+    bool isTPP              = true;
+
+    //Unity lifecycle
     private void Start()
     {
-        cameraHeightVec3    = new Vector3(0, CameraHeight, 0);
-        keyValuePairs       = TGPlayerKeyManager.Instance.KeyValuePairs;
-        MouseCursorLockSwitch();
+        InitReferences();
+        InitEvent();
+        ToggleMouseCursorLock(null); //게임 시작 시 마우스 커서 자동으로 잠금
     }
 
     private void LateUpdate()
@@ -61,14 +65,28 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
 
         if (Input.GetKeyDown(keyValuePairs[KeyValues.MouseCursorSwitch])) // MOUSECURSORSWITCH에 할당 된 키가 입력되면 호출
         {
-            MouseCursorLockSwitch();
+            ToggleMouseCursorLock(null);
         }
-        if (Input.GetKeyDown(keyValuePairs[KeyValues.CamSwitch]))
+        if (Input.GetKeyDown(keyValuePairs[KeyValues.ToggleCameraView]))
         {
             SwitchCameraPerspective();
         }
     }
 
+    //Init
+    void InitReferences()
+    {
+        cameraHeightVec3    = new Vector3(0, CameraHeight, 0);
+        keyValuePairs       = TGPlayerKeyManager.Instance.KeyValuePairs;
+        eventManager        = TGEventManager.Instance;
+    }
+
+    void InitEvent()
+    {
+        eventManager.StartListening(EventType.ToggleInventoryUI, ToggleMouseCursorLock);
+    }
+
+    // 카메라 컨트롤 관련 메소드
     void PlayerCameraFollow()
     {
         transform.position = cameraHeightVec3 + Target.position - transform.forward * cameraCurrentDistance; // 카메라 위치 갱신, "dist"에 따라 거리 조절
@@ -117,7 +135,7 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
     }
 
     // 마우스 커서 On/Off
-    void MouseCursorLockSwitch()
+    void ToggleMouseCursorLock(object parameters)
     {
         if (!isMouseCursorLock)
         {

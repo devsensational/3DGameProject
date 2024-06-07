@@ -19,6 +19,7 @@ public enum MoveDirection
 public class TGPlayerCharacter : TGCharacter
 {
     // public
+    public List<TGItem> lootableItems = new List<TGItem>();
 
     // private
     // Capsule Colider ref
@@ -26,7 +27,9 @@ public class TGPlayerCharacter : TGCharacter
     private Rigidbody       rb;
 
     //private
-    private MWeaponStats weaponStats;
+    TGEventManager  eventManager;
+    MWeaponStats    weaponStats;
+    
 
     //Unity lifecycle
     protected override void ChildAwake()
@@ -34,13 +37,33 @@ public class TGPlayerCharacter : TGCharacter
         characterStat = new MCharacterStats();
     }
 
-    void OnCollisionStay(Collision collision) // collision과 충돌할 때 실행되는 메소드
+    private void Start()
     {
-        if (collision.gameObject.tag == "Item")
+        eventManager = TGEventManager.Instance;
+    }
+
+    void OnTriggerEnter(Collider other) // 트리거와 충돌할 때 실행되는 메소드
+    {
+        if (other.gameObject.tag == "LootableItem")
         {
-            if (collision.gameObject.GetComponent<TGItem>().isDropped) //해당 무기가 떨어져 있는지 확인
+            TGItem itemObject = other.transform.parent.GetComponent<TGItem>();
+            if (itemObject.isDropped) //해당 무기가 떨어져 있는지 확인
             {
-                TakeItem(collision.gameObject.GetComponent<TGItem>());
+                lootableItems.Add(itemObject);
+                Debug.Log("enter to " + itemObject.objectName);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other) //트리거에서 빠져나올 때 실행되는 메소드
+    {
+        if (other.gameObject.tag == "LootableItem")
+        {
+            TGItem itemObject = other.transform.parent.GetComponent<TGItem>();
+            if (itemObject.isDropped) //해당 무기가 떨어져 있는지 확인
+            {
+                lootableItems.Remove(itemObject.GetComponent<TGItem>());
+                Debug.Log("exit from " + itemObject.objectName);
             }
         }
     }
@@ -71,6 +94,5 @@ public class TGPlayerCharacter : TGCharacter
             previousItem.enabled = false;
         }
         nextItem.enabled = true;
-     
     }
 }

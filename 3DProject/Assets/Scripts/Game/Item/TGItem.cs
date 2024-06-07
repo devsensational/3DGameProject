@@ -59,7 +59,6 @@ public class TGItem : TGObject
 
     public void OnPickedUpThisItem(GameObject pickedUpCharacterObject)    // 아이템이 주워졌을 때 호출
     {
-
         itemHolder = pickedUpCharacterObject;
         isDropped = false;
 

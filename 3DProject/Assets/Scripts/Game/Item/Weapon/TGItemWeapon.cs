@@ -36,6 +36,6 @@ public class TGItemWeapon : TGItem
     //
     private void AccurateCalc()
     {
-        float accurate = Random.Range(-characterStats.currentAccurate, characterStats.currentAccurate);
+        float accurate = Random.Range(-characterStats.currentAccuracy, characterStats.currentAccuracy);
     }
 }

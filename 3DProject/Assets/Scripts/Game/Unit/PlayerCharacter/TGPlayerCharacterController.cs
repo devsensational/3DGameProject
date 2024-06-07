@@ -8,21 +8,21 @@ public class TGPlayerCharacterController : MonoBehaviour
 {
     // inspector
     public GameObject MainCamera;
-
     [Header("Movement Parameter")]
     // 캐릭터 이동 속도 최대치 설정
-    public float forwardSpeed = 7.0f;
-    public float backwardSpeed = 2.0f;
-    public float sidestepSpeed = 5.0f;
-    public float moveSpeedMultiplier = 1.0f;
+    public float forwardSpeed           = 7.0f;
+    public float backwardSpeed          = 2.0f;
+    public float sidestepSpeed          = 5.0f;
+    public float moveSpeedMultiplier    = 1.0f;
     // 점프 높이
     public float jumpHeight = 3.0f;
 
     //private
-    Dictionary<KeyValues, KeyCode>  keyValuePairs;              // KeyValuePair map ref
-    TGPlayerCharacter               playerCharacter;            // 플레이어 캐릭터 ref
-    MCharacterStats                 playerStats;                // 플레이어 스탯 ref
-    TGGameManager                   gameManager;                // 게임 매니저 ref      
+    Dictionary<KeyValues, KeyCode>  keyValuePairs;      // KeyValuePair map ref
+    TGPlayerCharacter               playerCharacter;    // 플레이어 캐릭터 ref
+    MCharacterStats                 playerStats;        // 플레이어 스탯 ref
+    TGGameManager                   gameManager;        // 게임 매니저 ref      
+    TGEventManager                  gameEventManager;   // 이벤트 매니저 ref
 
     Vector3 targetRotation;
     Vector3 currentVel;
@@ -32,10 +32,7 @@ public class TGPlayerCharacterController : MonoBehaviour
     //Unity lifecycle
     void Start()
     {
-        keyValuePairs       = TGPlayerKeyManager.Instance.KeyValuePairs; //KeyManager ref
-        gameManager         = new TGGameManager();  
-        playerCharacter     = GetComponent<TGPlayerCharacter>();
-        playerStats         = playerCharacter.characterStat;
+        InitReferences();
     }
 
     void FixedUpdate()
@@ -43,10 +40,25 @@ public class TGPlayerCharacterController : MonoBehaviour
 
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
         MoveControl();
         FollowRotationCamera();
+    }
+
+    //Init
+    void InitReferences()
+    {
+        keyValuePairs       = TGPlayerKeyManager.Instance.KeyValuePairs;
+        gameManager         = TGGameManager.Instance;
+        playerCharacter     = GetComponent<TGPlayerCharacter>();
+        playerStats         = playerCharacter.characterStat;
+        gameEventManager    = TGEventManager.Instance;
+    }
+
+    void InitEventListner()
+    {
+
     }
 
     //이동 관련 메소드
@@ -87,6 +99,10 @@ public class TGPlayerCharacterController : MonoBehaviour
         }
 
     }
+    public void OnStopCharacter()
+    {
+        playerStats.velocity /= 2f;
+    }
 
     //카메라 관련 메소드
     void FollowRotationCamera()
@@ -103,10 +119,5 @@ public class TGPlayerCharacterController : MonoBehaviour
             // 새로운 회전값을 Quaternion으로 변환하여 게임 오브젝트에 적용
             transform.rotation = Quaternion.Euler(targetRotation);
         }
-    }
-
-    public void OnStopCharacter()
-    {
-        playerStats.velocity /= 2f;
     }
 }

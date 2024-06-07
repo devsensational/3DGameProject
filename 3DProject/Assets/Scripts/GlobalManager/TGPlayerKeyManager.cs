@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,8 @@ public enum KeyValues
     Skill4,
     MouseCursorSwitch,
     Interaction,
-    CamSwitch,
+    ToggleCameraView,
+    ToggleInventoryUI,
     //Enum end
 
     End = 300
@@ -61,7 +63,8 @@ public class TGPlayerKeyManager : UMonoSingleton<TGPlayerKeyManager>
         KeyValuePairs.Add(KeyValues.Item3,              KeyCode.Alpha3);
         KeyValuePairs.Add(KeyValues.Item4,              KeyCode.Alpha4);
         KeyValuePairs.Add(KeyValues.Interaction,        KeyCode.F);
-        KeyValuePairs.Add(KeyValues.CamSwitch,          KeyCode.V);
+        KeyValuePairs.Add(KeyValues.ToggleCameraView,   KeyCode.V);
+        KeyValuePairs.Add(KeyValues.ToggleInventoryUI,  KeyCode.Tab);
 
     }
 
