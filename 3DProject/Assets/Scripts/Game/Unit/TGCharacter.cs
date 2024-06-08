@@ -11,9 +11,11 @@ public class TGCharacter : TGObject
     //public
     public MCharacterStats characterStat { get; protected set; } // 플레이어 캐릭터 스탯
 
-    //protected
-    protected Dictionary<EItemType, TGItem> equipItems = new Dictionary<EItemType, TGItem>();
+    public Dictionary<EItemType, TGItem> equipItems = new Dictionary<EItemType, TGItem>();
 
+    public List<TGItem> inventory = new List<TGItem>(); // 주운 아이템 리스트
+
+    //protected
     protected TGItem handInItem = null;   //플레이어 캐릭터가 들고 있는 아이템 ref
 
     //private
@@ -29,7 +31,7 @@ public class TGCharacter : TGObject
     }
 
     // item 상호작용 관련 메소드
-    protected void TakeItem(TGItem item)    // item 습득 시도 메소드
+    public void TakeItem(TGItem item)    // item 습득 시도 메소드
     {
         if(item == null) return;                        // 선택된 item object가 null일 경우 메소드 종료
 
@@ -38,7 +40,7 @@ public class TGCharacter : TGObject
         Debug.Log(gameObject.name + " picked up " + item.name);
     }
 
-    protected void DropItem(EItemType itemType)  // item 드랍 시도 메소드
+    public void DropItem(EItemType itemType)  // item 드랍 시도 메소드
     {
         equipItems[itemType] = null;
     }

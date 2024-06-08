@@ -14,7 +14,7 @@ public class TGUICrosshair : MonoBehaviour
     [Range(0, 1)]
     public float accuracy; // 명중률 (0.0f ~ 1.0f 사이)
 
-    //private
+    // private
     // references
     TGPlayerCharacter   playerCharacter;
     MCharacterStats     characterStats;
@@ -64,7 +64,7 @@ public class TGUICrosshair : MonoBehaviour
         rightPart.anchoredPosition  = new Vector2(size / 2, 0);
     }
 
-    //UI On/Off 토글
+    //UI On/Off 토글, 이벤트 트리거에 의해 실행됨
     void OnToggleUI(object parameters)
     {
         gameObject.SetActive(!gameObject.activeSelf);

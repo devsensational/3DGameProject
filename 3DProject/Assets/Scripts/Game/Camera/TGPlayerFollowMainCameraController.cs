@@ -11,7 +11,7 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
     [Header("Camera Parameter")]
     public float CameraHeight;                      //카메라 높이
 
-    public float cameraCurrentDistance = 0.5f;                        //카메라와 플레이어사이의 거리
+    public float cameraCurrentDistance = 0.5f;      //카메라와 플레이어사이의 거리
     public float CameraZoomDistanceUnit = 0.2f;     //카메라 줌 확대/축소 시 이동 거리
     public float MaxCameraZoomDistance;             //카메라 줌 최대 거리
     public float MinCameraZoomDistance;             //카메라 줌 최소 거리

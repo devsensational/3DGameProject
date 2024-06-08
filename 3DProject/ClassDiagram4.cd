@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TGPlayerFollowMainCameraController" Collapsed="true">
+    <Position X="11.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAgCDUxgAASIAACKCIAgAAgAAAgAAEFAA0AAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Camera\TGPlayerFollowMainCameraController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGUIBase" Collapsed="true">
+    <Position X="13.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\GameUI\TGUIBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGUICrosshair" Collapsed="true">
+    <Position X="15" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAYQgAAgACAQAAgAAAAAAAAgAAAAAIAgAAAgAAgAAQA=</HashCode>
+      <FileName>Assets\Scripts\Game\GameUI\TGUICrosshair.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGUIInventory" Collapsed="true">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QARAAAAAAyQRAQAACAAAAAAgAAAAAAAgQAEAAAgAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\GameUI\TGUIInventory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGUILootableItemInterective" Collapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACEQAAAAAAAAAAAAAAAAAIAAAAAgAAwAAAg=</HashCode>
+      <FileName>Assets\Scripts\Game\GameUI\TGUILootableItemInterective.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGItem" Collapsed="true">
+    <Position X="2.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAQgACAAAAAEAABAAEAAAAAAAAUABAACAAEgAEA=</HashCode>
+      <FileName>Assets\Scripts\Game\Item\TGItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGItemInteractionParentSelector" Collapsed="true">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Item\TGItemInteractionParentSelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MWeaponStats" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAICgAAAAAAAAQAQAAAAAQIAAAAAAACAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Item\Weapon\MWeaponStats.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGItemWeapon" Collapsed="true">
+    <Position X="2.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAABAAAAAAAAQAAAAAAAAAAABACAgIAAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Item\Weapon\TGItemWeapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGProjectile" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwAAAACAAAAIAAAAAAAAAAAAAAAAAAIIAQBAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Item\Weapon\TGProjectile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGObject" Collapsed="true">
+    <Position X="3.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\TGObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGEnemyCharacter" Collapsed="true">
+    <Position X="7.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Unit\EnemyCharacter\TGEnemyCharacter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCharacterStats" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAARAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Unit\MCharacterStats.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGPlayerCharacter" Collapsed="true">
+    <Position X="5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABAACAQAAAEAAAAAQAAAAAAAIAgwAAIAAkAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Unit\PlayerCharacter\TGPlayerCharacter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGPlayerCharacterAnimation" Collapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAQAAiAAAAAECAAAAQIEAgAAAIBAAQAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Unit\PlayerCharacter\TGPlayerCharacterAnimation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGPlayerCharacterController" Collapsed="true">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAEAAQAgiEDAAAAMAAAMAAAAABAAJAASBAAAAgAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Unit\PlayerCharacter\TGPlayerCharacterController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGCharacter" Collapsed="true">
+    <Position X="6" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQABQAAAAEIAAAAAAAAAAAAAIAACCCAAAAEAAEA=</HashCode>
+      <FileName>Assets\Scripts\Game\Unit\TGCharacter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGEventManager" Collapsed="true">
+    <Position X="5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAEAEQAIA=</HashCode>
+      <FileName>Assets\Scripts\GlobalManager\TGEventManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGGameManager" Collapsed="true">
+    <Position X="7.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAABAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\GlobalManager\TGGameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGObjectPoolManager" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABABQAAAgBIBAAAAAAAAAAACAAFAAAA=</HashCode>
+      <FileName>Assets\Scripts\GlobalManager\TGObjectPoolManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGPlayerKeyManager" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAABBAAAAAAAAAAACAAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\GlobalManager\TGPlayerKeyManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UJsonUtility" Collapsed="true">
+    <Position X="13.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Utility\UJsonUtility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMonoSingleton&lt;T&gt;" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAABAABAAAAAQAAAAAEAAEA=</HashCode>
+      <FileName>Assets\Scripts\Utility\UMonoSingleton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="EEventType" Collapsed="true">
+    <Position X="9.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAAAAAEAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Enum\EEventType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EItemType" Collapsed="true">
+    <Position X="11.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAIAAAAAAAAAAAAAAAIAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Enum\EItemType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EKeyValues" Collapsed="true">
+    <Position X="13.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAIBAACAAoBAAAAAAYAgAAAAAAAEAAAACACQCAkAAAI=</HashCode>
+      <FileName>Assets\Scripts\Game\Enum\EKeyValues.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ETGObjectType" Collapsed="true">
+    <Position X="15" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAEAIAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Enum\ETGObjectType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MoveDirection" Collapsed="true">
+    <Position X="9.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAACAAAAAAAAAAAAAAAAAAAAAAAAACACAAAEAAAI=</HashCode>
+      <FileName>Assets\Scripts\Game\Unit\PlayerCharacter\TGPlayerCharacter.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>
