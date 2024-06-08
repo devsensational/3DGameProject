@@ -12,7 +12,7 @@ public class TGCharacter : TGObject
     public MCharacterStats characterStat { get; protected set; } // 플레이어 캐릭터 스탯
 
     //protected
-    protected Dictionary<ItemType, TGItem> equipItems = new Dictionary<ItemType, TGItem>();
+    protected Dictionary<EItemType, TGItem> equipItems = new Dictionary<EItemType, TGItem>();
 
     protected TGItem handInItem = null;   //플레이어 캐릭터가 들고 있는 아이템 ref
 
@@ -22,8 +22,8 @@ public class TGCharacter : TGObject
     //Unity lifecycle
     private void Awake()
     {
-        equipItems.Add(ItemType.PrimaryWeapon, null);
-        equipItems.Add(ItemType.SecondaryWeapon, null);
+        equipItems.Add(EItemType.PrimaryWeapon, null);
+        equipItems.Add(EItemType.SecondaryWeapon, null);
 
         ChildAwake();
     }
@@ -38,7 +38,7 @@ public class TGCharacter : TGObject
         Debug.Log(gameObject.name + " picked up " + item.name);
     }
 
-    protected void DropItem(ItemType itemType)  // item 드랍 시도 메소드
+    protected void DropItem(EItemType itemType)  // item 드랍 시도 메소드
     {
         equipItems[itemType] = null;
     }

@@ -69,13 +69,13 @@ public class TGPlayerCharacter : TGCharacter
     }
 
     //item 관련 method
-    public void CommandDropItem(ItemType itemType) // "TGPlayerCharacterController"에서 Item 드랍을 호출했을 때 실행
+    public void CommandDropItem(EItemType itemType) // "TGPlayerCharacterController"에서 Item 드랍을 호출했을 때 실행
     {
         equipItems[itemType].OnDropThisItem();
         DropItem(itemType);
     }
 
-    public void CommandHandInItem(ItemType itemType) // "TGPlayerCharacterController"에서 특정 아이템을 손에 드는 명령을 내릴때 수행
+    public void CommandHandInItem(EItemType itemType) // "TGPlayerCharacterController"에서 특정 아이템을 손에 드는 명령을 내릴때 수행
     {
         if(handInItem != null)
         {

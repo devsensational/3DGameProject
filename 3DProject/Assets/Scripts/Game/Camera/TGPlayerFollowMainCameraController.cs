@@ -26,7 +26,7 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
     public Transform FPPTarget;                     //1인칭 타겟
 
     //private
-    Dictionary<KeyValues, KeyCode> keyValuePairs; // KeyValuePair map ref
+    Dictionary<EKeyValues, KeyCode> keyValuePairs; // KeyValuePair map ref
 
     TGEventManager eventManager;
 
@@ -63,11 +63,11 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
             PlayerCameraFollow();
         }
 
-        if (Input.GetKeyDown(keyValuePairs[KeyValues.MouseCursorSwitch])) // MOUSECURSORSWITCH에 할당 된 키가 입력되면 호출
+        if (Input.GetKeyDown(keyValuePairs[EKeyValues.MouseCursorSwitch])) // MOUSECURSORSWITCH에 할당 된 키가 입력되면 호출
         {
             ToggleMouseCursorLock(null);
         }
-        if (Input.GetKeyDown(keyValuePairs[KeyValues.ToggleCameraView]))
+        if (Input.GetKeyDown(keyValuePairs[EKeyValues.ToggleCameraView]))
         {
             SwitchCameraPerspective();
         }
@@ -83,7 +83,7 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
 
     void InitEvent()
     {
-        eventManager.StartListening(EventType.ToggleInventoryUI, ToggleMouseCursorLock);
+        eventManager.StartListening(EEventType.ToggleInventoryUI, ToggleMouseCursorLock);
     }
 
     // 카메라 컨트롤 관련 메소드

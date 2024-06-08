@@ -3,40 +3,101 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
+
 public class TGObjectPoolManager : UMonoSingleton<TGObjectPoolManager>
 {
-    //private
-    Dictionary<TGObjectType, IObjectPool<GameObject>> poolDictionary = new Dictionary<TGObjectType, IObjectPool<GameObject>>();
+    // "TGObjectType"에 따라 여러 오브젝트 풀을 레퍼런싱 하기 위한 딕셔너리
+    private Dictionary<ETGObjectType, IObjectPool<GameObject>> poolDictionary = new Dictionary<ETGObjectType, IObjectPool<GameObject>>();
 
-    //Unity lifecycle
-    protected override void ChildAwake() 
+    // Unity lifecycle
+    protected override void ChildAwake()
     {
-        foreach(TGObjectType tGObject in Enum.GetValues(typeof(TGObjectType)))
+        Init();
+    }
+
+    protected override void ChildOnDestroy()
+    {
+        Clear();
+    }
+
+    //Init
+    void Init()
+    {
+        foreach (ETGObjectType tGObject in Enum.GetValues(typeof(ETGObjectType)))
         {
-            poolDictionary = new Dictionary<TGObjectType, IObjectPool<GameObject>>();
+            poolDictionary[tGObject] = null;
         }
     }
 
-    protected override void ChildOnDestroy() { }
+    void Clear()
+    {
+        foreach (var pool in poolDictionary.Values)
+        {
+            if (pool != null)
+            {
+                pool.Clear();
+            }
+        }
+    }
 
-    private void OnGetProjectile(GameObject ptrObject)
+    // Unity ObjectPool에 필요한 메소드들
+    private void OnGetTGObject(GameObject ptrObject)
     {
         ptrObject.SetActive(true);
     }
 
-    private void OnReleaseProjectile(GameObject ptrObject)
+    private void OnReleaseTGObject(GameObject ptrObject)
     {
         ptrObject.SetActive(false);
     }
 
-    private void OnDestroyProjectile(GameObject ptrObject)
+    private void OnDestroyTGObject(GameObject ptrObject)
     {
         GameObject.Destroy(ptrObject);
     }
 
-    public IObjectPool<GameObject> CreateObjectPool(TGObjectType type, GameObject ptrObject)
+    // 특정 객체 유형에 대한 객체 풀을 생성하고 가져오는 메소드
+    public IObjectPool<GameObject> CreateTGObjectPool(ETGObjectType type, GameObject prefab, int initialSize = 10, int maxSize = 100)
     {
+        if (poolDictionary[type] == null)
+        {
+            poolDictionary[type] = new ObjectPool<GameObject>(
+                createFunc: () => GameObject.Instantiate(prefab),
+                actionOnGet: OnGetTGObject,
+                actionOnRelease: OnReleaseTGObject,
+                actionOnDestroy: OnDestroyTGObject,
+                collectionCheck: false,
+                defaultCapacity: initialSize,
+                maxSize: maxSize
+            );
+        }
+
         return poolDictionary[type];
     }
 
+    // 풀에서 객체를 가져오는 메서드
+    public GameObject GetTGObject(ETGObjectType type)
+    {
+        if (poolDictionary.ContainsKey(type) && poolDictionary[type] != null)
+        {
+            return poolDictionary[type].Get();
+        }
+
+        Debug.LogError($"Pool for type {type} does not exist.");
+        return null;
+    }
+
+    // 객체를 풀에 다시 릴리즈하는 메서드
+    public void ReleaseTGObject(ETGObjectType type, GameObject ptrObject)
+    {
+        if (poolDictionary.ContainsKey(type) && poolDictionary[type] != null)
+        {
+            poolDictionary[type].Release(ptrObject);
+        }
+        else
+        {
+            Debug.LogError($"Pool for type {type} does not exist.");
+            GameObject.Destroy(ptrObject);
+        }
+    }
 }

@@ -15,6 +15,7 @@ public class TGUICrosshair : MonoBehaviour
     public float accuracy; // 명중률 (0.0f ~ 1.0f 사이)
 
     //private
+    // references
     TGPlayerCharacter   playerCharacter;
     MCharacterStats     characterStats;
     TGEventManager      eventManager;
@@ -41,7 +42,7 @@ public class TGUICrosshair : MonoBehaviour
 
     void InitEvent()
     {
-        eventManager.StartListening(EventType.ToggleInventoryUI, OnToggleUI); //인벤토리 킬 때 토글
+        eventManager.StartListening(EEventType.ToggleInventoryUI, OnToggleUI); //인벤토리 킬 때 토글
     }
 
     // 명중률 업데이트 함수
@@ -57,10 +58,10 @@ public class TGUICrosshair : MonoBehaviour
         centerSquare.sizeDelta = new Vector2(size, size);
 
         // 십자선 파츠 위치 업데이트
-        topPart.anchoredPosition = new Vector2(0, size / 2);
+        topPart.anchoredPosition    = new Vector2(0, size / 2);
         bottomPart.anchoredPosition = new Vector2(0, -size / 2);
-        leftPart.anchoredPosition = new Vector2(-size / 2, 0);
-        rightPart.anchoredPosition = new Vector2(size / 2, 0);
+        leftPart.anchoredPosition   = new Vector2(-size / 2, 0);
+        rightPart.anchoredPosition  = new Vector2(size / 2, 0);
     }
 
     //UI On/Off 토글
