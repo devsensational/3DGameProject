@@ -10,5 +10,7 @@ public enum EEventType
     ToggleInventoryUI,
     EnterInteractiveItem,
     ExitInteractiveItem,
+    PickedupItemToInventory,
+    DropItemFromInventory,
 }
 

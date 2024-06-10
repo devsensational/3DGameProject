@@ -43,6 +43,10 @@ public class TGItem : TGObject
     {
         itemHolder = null;
         isDropped = true;
+        transform.SetParent(null);
+
+        cl.isTrigger = false;
+        rb.isKinematic = false;
     }
 
 
@@ -56,13 +60,27 @@ public class TGItem : TGObject
         rb.isKinematic = true;
 
         // 부모 설정
-        transform.SetParent(pickedUpCharacterObject.GetComponent<TGCharacter>().HandObject.transform);
+        transform.SetParent(pickedUpCharacterObject.GetComponent<TGCharacter>().HandPosition.transform);
         characterStats = pickedUpCharacterObject.GetComponent<TGCharacter>().characterStat; //주운 캐릭터의 스탯 데이터 가져오기
 
         // 위치 및 회전 초기화
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
+    }
+
+    public void OnHandInThisItem()
+    {
+        if(isHandIn)
+        {
+            isHandIn = false;
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            isHandIn = true;
+            gameObject.SetActive(true);
+        }
     }
 
     public virtual void UseItem() { }

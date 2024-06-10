@@ -5,11 +5,13 @@ using UnityEngine;
 public class MWeaponStats
 {
     public string weaponName;      //무기 이름, json 식별 시에도 사용
+    public string weaponType;      //무기 타입, enum 파싱해서 사용
 
     public float damage;           //데미지
     public float fireRate;         //연사속도
     public float defaultAccurate;  //명중률
-    public float maxAccurate;      //최대 명중률, 명중률이 최대 얼마까지 낮아질 것인지 결정하는 변수
+    public float aimingAccurate;   //조준 명중률
+    public float minAccurate;      //최소 명중률, 명중률이 최대 얼마까지 낮아질 것인지 결정하는 변수
     public float bulletVelocity;   //탄속
     public float reloadTime;       //재장전시간
 

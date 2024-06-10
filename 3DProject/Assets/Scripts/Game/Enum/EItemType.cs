@@ -9,6 +9,8 @@ public enum EItemType
     //여기서 부터 enum 작성
     PrimaryWeapon,
     SecondaryWeapon,
+    LootableItem,
+
     //
 
     End = 999

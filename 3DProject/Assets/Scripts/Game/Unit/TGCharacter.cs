@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using UnityEngine;
 
 // 현 프로젝트의 유닛을 정의하기 위한 클래스입니다.
 public class TGCharacter : TGObject
 {
     //Inspector
-    public GameObject HandObject;   //아이템을 주웠을 때 위치를 결정할 GameObject
+    public GameObject HandPosition;   //아이템을 주웠을 때 위치를 결정할 GameObject
 
     //public
     public MCharacterStats characterStat { get; protected set; } // 플레이어 캐릭터 스탯
@@ -16,7 +17,7 @@ public class TGCharacter : TGObject
     public List<TGItem> inventory = new List<TGItem>(); // 주운 아이템 리스트
 
     //protected
-    protected TGItem handInItem = null;   //플레이어 캐릭터가 들고 있는 아이템 ref
+    protected EItemType handInItem = EItemType.Default;   //플레이어 캐릭터가 들고 있는 아이템 ref
 
     //private
     
@@ -42,6 +43,7 @@ public class TGCharacter : TGObject
 
     public void DropItem(EItemType itemType)  // item 드랍 시도 메소드
     {
+        equipItems[itemType].OnDropThisItem();
         equipItems[itemType] = null;
     }
 
@@ -52,7 +54,7 @@ public class TGCharacter : TGObject
     }
 
     // getter/setter
-    public TGItem GetHandInItem()
+    public EItemType GetHandInItem()
     {
         return handInItem;
     }

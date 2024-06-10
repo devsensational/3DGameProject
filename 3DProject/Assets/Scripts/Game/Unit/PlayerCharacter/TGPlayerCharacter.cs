@@ -93,14 +93,10 @@ public class TGPlayerCharacter : TGCharacter
     // "TGPlayerCharacterController"에서 특정 아이템을 손에 드는 명령을 내릴때 수행
     public void CommandHandInItem(EItemType itemType) 
     {
-        if(handInItem != null)
-        {
-            ChangeHandInItem(handInItem, equipItems[itemType]);
-        } 
-        else
+        if(handInItem != itemType)
         {
 
-        }
+        } 
     }
 
     //손에 든 아이템을 교체할 때 사용하는 메소드

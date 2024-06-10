@@ -43,6 +43,7 @@ public class TGPlayerCharacterController : MonoBehaviour
     void LateUpdate()
     {
         MoveControl();
+        EquipContorl();
         FollowRotationCamera();
     }
 
@@ -91,13 +92,6 @@ public class TGPlayerCharacterController : MonoBehaviour
         {
             OnStopCharacter();
         }
-
-        // 아이템 들기
-        if (Input.GetKey(keyValuePairs[EKeyValues.Item1])) //아이템1 들기
-        {
-            GetComponent<TGPlayerCharacter>().CommandHandInItem(EItemType.PrimaryWeapon);
-        }
-
     }
     public void OnStopCharacter()
     {
@@ -105,6 +99,7 @@ public class TGPlayerCharacterController : MonoBehaviour
     }
 
     //카메라 관련 메소드
+    //카메라와 같이 회전하는 메소드
     void FollowRotationCamera()
     {
         if (MainCamera != null)
@@ -118,6 +113,20 @@ public class TGPlayerCharacterController : MonoBehaviour
 
             // 새로운 회전값을 Quaternion으로 변환하여 게임 오브젝트에 적용
             transform.rotation = Quaternion.Euler(targetRotation);
+        }
+    }
+
+    // 아이템 관련 메소드
+    void EquipContorl()
+    {
+        // 아이템 들기
+        if (Input.GetKey(keyValuePairs[EKeyValues.Item1])) //아이템1 들기
+        {
+            GetComponent<TGPlayerCharacter>().CommandHandInItem(EItemType.PrimaryWeapon);
+        }
+        if (Input.GetKey(keyValuePairs[EKeyValues.Item2])) //아이템2 들기
+        {
+            GetComponent<TGPlayerCharacter>().CommandHandInItem(EItemType.SecondaryWeapon);
         }
     }
 }
