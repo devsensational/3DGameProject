@@ -1,0 +1,55 @@
+{
+  "default_name": {
+    "weaponName": "default_name",
+    "weaponType": "Default",
+    "damage": 0.0,
+    "fireRate": 100.0,
+    "defaultAccurate": 0.4,
+    "aimingAccurate": 0.1,
+    "minAccurate": 0.8,
+    "bulletVelocity": 100.0,
+    "reloadTime": 3.0,
+    "maxAmmo": 30,
+    "currentAmmo": 0
+  },
+  "AK47": {
+    "weaponName": "AK47",
+    "weaponType": "PrimaryWeapon",
+    "damage": 0.0,
+    "fireRate": 100.0,
+    "defaultAccurate": 0.4,
+    "aimingAccurate": 0.1,
+    "minAccurate": 0.8,
+    "bulletVelocity": 100.0,
+    "reloadTime": 3.0,
+    "maxAmmo": 30,
+    "currentAmmo": 0
+  },
+  "EAGLE": {
+    "weaponName": "EAGLE",
+    "weaponType": "SecondaryWeapon",
+    "damage": 0.0,
+    "fireRate": 100.0,
+    "defaultAccurate": 0.4,
+    "aimingAccurate": 0.1,
+    "minAccurate": 0.8,
+    "bulletVelocity": 100.0,
+    "reloadTime": 3.0,
+    "maxAmmo": 7,
+    "currentAmmo": 0
+  },
+  "FAMAS": {
+    "weaponName": "FAMAS",
+    "weaponType": "PrimaryWeapon",
+    "damage": 0.0,
+    "fireRate": 100.0,
+    "defaultAccurate": 0.4,
+    "aimingAccurate": 0.1,
+    "minAccurate": 0.8,
+    "bulletVelocity": 100.0,
+    "reloadTime": 3.0,
+    "maxAmmo": 30,
+    "currentAmmo": 0
+  },
+
+}

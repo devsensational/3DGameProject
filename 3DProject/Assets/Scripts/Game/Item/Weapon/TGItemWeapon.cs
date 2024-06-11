@@ -5,16 +5,17 @@ using UnityEngine;
 public class TGItemWeapon : TGItem
 {
     //public
-    GameObject ProjectilePrefab;    //발사 시 생성될 총알 프리팹
-    GameObject Muzzle;              //총알이 발사될 위치
+    public GameObject ProjectilePrefab;    //발사 시 생성될 총알 프리팹
+    public GameObject Muzzle;              //총알이 발사될 위치
 
     //private
     MWeaponStats weaponStats     { get; set; }
 
     //Unity lifetime
-    protected override void ChildAwake()
+    protected override void ChildStart()
     {
-        weaponStats = new MWeaponStats();
+        weaponStats = TGGameManager.Instance.loadedWeaponStatDict[objectName]; // 무기 스탯 불러오기
+        itemType = weaponStats.weaponType;
     }
 
     private void TemporarySetWeaponStats()

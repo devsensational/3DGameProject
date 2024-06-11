@@ -3,18 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Progress;
 
-public enum MoveDirection
-{
-    None = 0,
-
-    Forward,
-    Backward,
-    Left,
-    Right,
-
-    End = 999
-}
-
 // 플레이어가 직접 조종하는 캐릭터의 스탯 및 상호작용을 위한 클래스입니다
 public class TGPlayerCharacter : TGCharacter
 {
@@ -27,14 +15,17 @@ public class TGPlayerCharacter : TGCharacter
      Rigidbody       rb;
 
     //References
-    TGEventManager  eventManager;
     MWeaponStats    weaponStats;
 
     //Unity lifecycle
     protected override void ChildAwake()
     {
         InitReferences();
-        InitEvent();
+    }
+
+    protected override void ChildOnDestroy()
+    {
+        eventManager.StopListening(EEventType.DropItemFromInventory, CommandDropItem);
     }
 
     private void Start()
@@ -50,7 +41,7 @@ public class TGPlayerCharacter : TGCharacter
             if (itemObject.isDropped) //해당 무기가 떨어져 있는지 확인
             {
                 //lootableItems.Add(itemObject);
-                eventManager.TriggerEvent(EEventType.EnterInteractiveItem, itemObject);
+                eventManager.TriggerEvent(EEventType.UIEnterInteractiveItem, itemObject);
                 Debug.Log("enter to " + itemObject.objectName);
             }
         }
@@ -64,50 +55,54 @@ public class TGPlayerCharacter : TGCharacter
             if (itemObject.isDropped) //해당 무기가 떨어져 있는지 확인
             {
                 //lootableItems.Remove(itemObject.GetComponent<TGItem>());
-                eventManager.TriggerEvent(EEventType.ExitInteractiveItem, itemObject);
+                eventManager.TriggerEvent(EEventType.UIExitInteractiveItem, itemObject);
                 Debug.Log("exit from " + itemObject.objectName);
             }
         }
     }
 
     //Init
-    void InitReferences()
+    protected override void InitReferences()
     {
+        base.InitReferences();
+
         characterStat   = new MCharacterStats();
         eventManager    = TGEventManager.Instance;
     }
 
-    void InitEvent()
+    protected override void InitEvent()
     {
-       
+        base.InitEvent();
+
+        eventManager.StartListening(EEventType.DropItemFromInventory, CommandDropItem);
+        eventManager.StartListening(EEventType.PickedupItemToInventory, CommandTakeItem);
     }
 
     //item 관련 method
     // "TGPlayerCharacterController"에서 Item 드랍을 호출했을 때 실행
-    public void CommandDropItem(EItemType itemType) 
+    public void CommandDropItem(object parameter) 
     {
-        equipItems[itemType].OnDropThisItem();
-        DropItem(itemType);
+        TGItem parameterObj = (TGItem)parameter;
+
+        DropItem(parameterObj.itemType);
     }
 
     // "TGPlayerCharacterController"에서 특정 아이템을 손에 드는 명령을 내릴때 수행
     public void CommandHandInItem(EItemType itemType) 
     {
+        if (equipItems[itemType] == null) return;
+
         if(handInItem != itemType)
         {
-
+            ChangeHandInItem(equipItems[handInItem], equipItems[itemType]);
         } 
     }
 
-    //손에 든 아이템을 교체할 때 사용하는 메소드
-    private void ChangeHandInItem(TGItem previousItem, TGItem nextItem)
-    {
-        if (previousItem != null)
-        {
-            previousItem.enabled = false;
-        }
-        nextItem.enabled = true;
-    }
 
+    public void CommandTakeItem(object parameter) 
+    { 
+        TGItem item = (TGItem)parameter;
+        TakeItem(item);
+    }
     //땅에 
 }

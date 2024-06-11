@@ -50,10 +50,10 @@ public class TGUIInventory : MonoBehaviour
 
     void InitEvent()
     {
-        eventManager.StartListening(EEventType.EnterInteractiveItem, CreateUILootableButton);
-        eventManager.StartListening(EEventType.ExitInteractiveItem, RemoveUILootableButton);
-        eventManager.StartListening(EEventType.PickedupItemToInventory, CreateUIInventoryItemButton);
-        eventManager.StartListening(EEventType.DropItemFromInventory, RemoveUIInventoryItemButton);
+        eventManager.StartListening(EEventType.UIEnterInteractiveItem, CreateUILootableButton);
+        eventManager.StartListening(EEventType.UIExitInteractiveItem, RemoveUILootableButton);
+        eventManager.StartListening(EEventType.UIPickedupItemToInventory, CreateUIInventoryItemButton);
+        eventManager.StartListening(EEventType.UIDropItemFromInventory, RemoveUIInventoryItemButton);
     }
 
     void InitObjectPool()
@@ -98,7 +98,15 @@ public class TGUIInventory : MonoBehaviour
     {
         TGItem ptrItem = (TGItem)parameters;
         TGUILootableItemInterective ptrUI = poolManager.GetTGObject(ETGObjectType.UILootableItemButton).GetComponent<TGUILootableItemInterective>(); //오브젝트 풀로 부터 꺼내옴
-        lootableItemUIDictionary.Add(ptrItem, ptrUI);
+        
+        if (!lootableItemUIDictionary.ContainsKey(ptrItem))
+        {
+            lootableItemUIDictionary.Add(ptrItem, ptrUI);
+        }
+        else
+        {
+            lootableItemUIDictionary[ptrItem] = ptrUI;
+        }
         ptrUI.transform.SetParent(LootableContent.transform);
         ptrUI.SetButton(ptrItem);
 
@@ -120,16 +128,18 @@ public class TGUIInventory : MonoBehaviour
     {
         TGUILootableItemInterective ptrUI = (TGUILootableItemInterective)parameters;
 
-        lootableItemUIDictionary.Remove(ptrUI.IntertectedItem);
+        //lootableItemUIDictionary.Remove(ptrUI.IntertectedItem);
         ptrUI.transform.SetParent(ContentDictionary[ptrUI.IntertectedItem.itemType].transform); //딕셔너리에 저장된 콘텐츠UI가 자동으로 부모가 됨
     }
 
     // 아이템 드랍 시 상호작용
     void RemoveUIInventoryItemButton(object parameters)
     {
-        TGUILootableItemInterective ptrUI = (TGUILootableItemInterective)parameters;
+        TGUILootableItemInterective ptrUI = lootableItemUIDictionary[(TGItem)parameters];
 
-        lootableItemUIDictionary.Add(ptrUI.IntertectedItem, ptrUI);
-        ptrUI.transform.SetParent(LootableContent.transform);
+        poolManager.ReleaseTGObject(ETGObjectType.UILootableItemButton, ptrUI.gameObject); //오브젝트 풀로 반환
+
+        //lootableItemUIDictionary.Add(ptrUI.IntertectedItem, ptrUI);
+        //ptrUI.transform.SetParent(LootableContent.transform);
     }
 }

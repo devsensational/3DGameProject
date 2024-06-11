@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class TGItem : TGObject
 {
+    //Inspector
+    public GameObject ItemModel;
+
     //public
     public EItemType    itemType;
     public GameObject   itemHolder { get; set; }    //아이템을 주운 오브젝트
@@ -41,12 +44,13 @@ public class TGItem : TGObject
     // 아이템 상호작용 관련 메소드
     public void OnDropThisItem()    // 아이템이 버려졌을 때 호출
     {
-        itemHolder = null;
-        isDropped = true;
-        transform.SetParent(null);
+        itemHolder = null;          //해당 아이템 소지자 초기화
+        isDropped = true;           //떨어져 있는 상태로 변경
+        transform.SetParent(null);  //부모 해제
+        ItemModel.SetActive(true);
 
-        cl.isTrigger = false;
-        rb.isKinematic = false;
+        //cl.isTrigger = false;
+        //rb.isKinematic = false;
     }
 
 
@@ -56,8 +60,8 @@ public class TGItem : TGObject
         isDropped = false;
 
         //아이템을 손에 들었을 때 물리 연산이 되지 않도록 설정
-        cl.isTrigger = true;
-        rb.isKinematic = true;
+        //cl.isTrigger = true;
+        //rb.isKinematic = true;
 
         // 부모 설정
         transform.SetParent(pickedUpCharacterObject.GetComponent<TGCharacter>().HandPosition.transform);
@@ -67,6 +71,7 @@ public class TGItem : TGObject
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
+        ItemModel.SetActive(false);
     }
 
     public void OnHandInThisItem()
@@ -74,12 +79,14 @@ public class TGItem : TGObject
         if(isHandIn)
         {
             isHandIn = false;
-            gameObject.SetActive(false);
+            ItemModel.SetActive(false);
+            Debug.Log(objectName + " hand off from " + itemHolder.name);
         }
         else
         {
             isHandIn = true;
-            gameObject.SetActive(true);
+            ItemModel.SetActive(true);
+            Debug.Log(objectName + " on hand to " + itemHolder.name);
         }
     }
 

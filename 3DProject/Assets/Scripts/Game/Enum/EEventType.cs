@@ -8,9 +8,11 @@ public enum EEventType
 
     //여기서 부터 작성
     ToggleInventoryUI,
-    EnterInteractiveItem,
-    ExitInteractiveItem,
+    UIEnterInteractiveItem,
+    UIExitInteractiveItem,
+    UIPickedupItemToInventory,
+    UIDropItemFromInventory,
     PickedupItemToInventory,
-    DropItemFromInventory,
+    DropItemFromInventory
 }
 

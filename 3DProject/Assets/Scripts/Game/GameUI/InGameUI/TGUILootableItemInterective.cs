@@ -13,6 +13,7 @@ public class TGUILootableItemInterective : MonoBehaviour
 
     //private
     TGEventManager      eventManager;
+    TGObjectPoolManager poolManager;
     TGPlayerCharacter   playerCharacter;    // 아이템을 주울 캐릭터
     TGItem              interectedItem;     // 버튼 누를 시 상호작용 될 아이템
 
@@ -21,6 +22,7 @@ public class TGUILootableItemInterective : MonoBehaviour
     private void Start()
     {
         InitReferences();
+        InitEvent();
     }
 
     //Init
@@ -28,32 +30,50 @@ public class TGUILootableItemInterective : MonoBehaviour
     {
         playerCharacter = GameObject.Find("PlayerCharacter").GetComponent<TGPlayerCharacter>();
         eventManager    = TGEventManager.Instance;
+        poolManager     = TGObjectPoolManager.Instance;
+    }
+
+    void InitEvent()
+    {
+        //eventManager.StartListening(EEventType.UIDropItemFromInventory, OnReleaseThisItem);
     }
 
     //UI 관련 메소드
     public void SetButton(TGItem interectedItem) // button 생성시 셋팅
     {
         this.interectedItem = interectedItem;
-        buttonText.text = interectedItem.name;
+        buttonText.text = interectedItem.objectName;
     }
 
+    //버튼이 눌렸을 때 호출
     public void OnClickButton()
     {
         if(isPicked)
         {
+            eventManager.TriggerEvent(EEventType.UIDropItemFromInventory, interectedItem);
+            eventManager.TriggerEvent(EEventType.DropItemFromInventory, interectedItem);
             isPicked = false;
-            interectedItem.OnDropThisItem();
-            eventManager.TriggerEvent(EEventType.DropItemFromInventory, this);
         }
         else
         {
-            playerCharacter.TakeItem(interectedItem);
-            eventManager.TriggerEvent(EEventType.PickedupItemToInventory, this);
+            eventManager.TriggerEvent(EEventType.UIPickedupItemToInventory, this);
+            eventManager.TriggerEvent(EEventType.PickedupItemToInventory, interectedItem);
             isPicked = true;
         }
     }
 
-    //
+    private void OnReleaseThisItem(object parameter)
+    {
+        TGItem ptrItem = (TGItem)parameter;   
+        if(isPicked && ptrItem == interectedItem)
+        {
+            isPicked = false;
+            poolManager.ReleaseTGObject(ETGObjectType.UILootableItemButton, gameObject);
+
+        }
+    }
+
+    // getter/setter
     public TGItem IntertectedItem
     {
         get => interectedItem;
