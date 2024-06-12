@@ -103,6 +103,4 @@ public class TGPlayerCharacter : TGCharacter
     { 
         TGItem item = (TGItem)parameter;
         TakeItem(item);
-    }
-    //¶¥¿¡ 
-}
+    }}

@@ -17,7 +17,7 @@ public class TGCharacter : TGObject
     public List<TGItem> inventory = new List<TGItem>(); // 주운 아이템 리스트
 
     //protected
-    protected EItemType handInItem = EItemType.Default;   //플레이어 캐릭터가 들고 있는 아이템 ref
+    protected EItemType handInItem = EItemType.Default;   //플레이어 캐릭터가 들고 있는 아이템 type
     protected TGEventManager eventManager;  //이벤트매니저
     //private
 
@@ -67,6 +67,10 @@ public class TGCharacter : TGObject
     {
         equipItems[itemType].OnDropThisItem();
         equipItems[itemType] = null;
+        if(handInItem == itemType)
+        {
+            handInItem = EItemType.Default;
+        }
     }
 
     // 이동 관련 메소드

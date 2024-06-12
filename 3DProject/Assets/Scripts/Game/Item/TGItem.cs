@@ -7,6 +7,7 @@ public class TGItem : TGObject
 {
     //Inspector
     public GameObject ItemModel;
+    public string groundTag = "Terrain"; // 바닥에 사용할 태그
 
     //public
     public EItemType    itemType;
@@ -19,6 +20,7 @@ public class TGItem : TGObject
     protected bool isHandIn = false;
 
     //private
+    float maxRayDistance = 100f; // Raycast의 최대 거리
 
     Rigidbody rb;
     Collider cl;
@@ -46,9 +48,11 @@ public class TGItem : TGObject
     {
         itemHolder = null;          //해당 아이템 소지자 초기화
         isDropped = true;           //떨어져 있는 상태로 변경
+        isHandIn = false;   
         transform.SetParent(null);  //부모 해제
         ItemModel.SetActive(true);
 
+        DropToGround();
         //cl.isTrigger = false;
         //rb.isKinematic = false;
     }
@@ -59,19 +63,20 @@ public class TGItem : TGObject
         itemHolder = pickedUpCharacterObject;
         isDropped = false;
 
-        //아이템을 손에 들었을 때 물리 연산이 되지 않도록 설정
-        //cl.isTrigger = true;
-        //rb.isKinematic = true;
+        TGCharacter chracterComponent = itemHolder.GetComponent<TGCharacter>();
 
         // 부모 설정
-        transform.SetParent(pickedUpCharacterObject.GetComponent<TGCharacter>().HandPosition.transform);
-        characterStats = pickedUpCharacterObject.GetComponent<TGCharacter>().characterStat; //주운 캐릭터의 스탯 데이터 가져오기
+        transform.SetParent(chracterComponent.HandPosition.transform);
+        characterStats = chracterComponent.characterStat; //주운 캐릭터의 스탯 데이터 가져오기
 
         // 위치 및 회전 초기화
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
-        ItemModel.SetActive(false);
+        if(chracterComponent.GetHandInItem() != itemType)
+        {
+            ItemModel.SetActive(false);
+        }
     }
 
     public void OnHandInThisItem()
@@ -87,6 +92,36 @@ public class TGItem : TGObject
             isHandIn = true;
             ItemModel.SetActive(true);
             Debug.Log(objectName + " on hand to " + itemHolder.name);
+        }
+    }
+
+    // 아이템이 땅 위에 
+    void DropToGround()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, maxRayDistance))
+        {
+            // Raycast가 바닥에 닿았는지 확인
+            if (hit.collider.CompareTag(groundTag))
+            {
+                // 바닥에 닿았을 경우 오브젝트의 위치를 바닥의 위치로 변경
+                Vector3 newPosition = hit.point;
+                transform.position = newPosition;
+
+
+                // 오브젝트를 X축으로 90도 회전
+                transform.rotation = Quaternion.Euler(0, 0, 90);
+
+                Debug.Log("Object dropped to ground at position: " + newPosition);
+            }
+            else
+            {
+                Debug.Log("Raycast did not hit an object with the tag: " + groundTag);
+            }
+        }
+        else
+        {
+            Debug.Log("Raycast did not hit anything.");
         }
     }
 

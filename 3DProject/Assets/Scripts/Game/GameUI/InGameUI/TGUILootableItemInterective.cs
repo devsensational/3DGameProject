@@ -16,13 +16,22 @@ public class TGUILootableItemInterective : MonoBehaviour
     TGObjectPoolManager poolManager;
     TGPlayerCharacter   playerCharacter;    // 아이템을 주울 캐릭터
     TGItem              interectedItem;     // 버튼 누를 시 상호작용 될 아이템
+    RectTransform       rectTransform;
+
+    float originalWidth;
+    float originalHeight;
 
     bool isPicked = false;
     //Unity lifecycle
-    private void Start()
+
+    void Start()
     {
         InitReferences();
         InitEvent();
+
+        // 오리지널 사이즈 저장
+        originalWidth = rectTransform.rect.width;
+        originalHeight = rectTransform.rect.height;
     }
 
     //Init
@@ -31,6 +40,7 @@ public class TGUILootableItemInterective : MonoBehaviour
         playerCharacter = GameObject.Find("PlayerCharacter").GetComponent<TGPlayerCharacter>();
         eventManager    = TGEventManager.Instance;
         poolManager     = TGObjectPoolManager.Instance;
+        rectTransform   = GetComponent<RectTransform>();
     }
 
     void InitEvent()
@@ -56,21 +66,18 @@ public class TGUILootableItemInterective : MonoBehaviour
         }
         else
         {
-            eventManager.TriggerEvent(EEventType.UIPickedupItemToInventory, this);
+            eventManager.TriggerEvent(EEventType.UIPickedupItemToInventory, interectedItem);
             eventManager.TriggerEvent(EEventType.PickedupItemToInventory, interectedItem);
             isPicked = true;
         }
     }
 
-    private void OnReleaseThisItem(object parameter)
+    // 버튼 사이즈 초기화
+    public void ResetButton()
     {
-        TGItem ptrItem = (TGItem)parameter;   
-        if(isPicked && ptrItem == interectedItem)
-        {
-            isPicked = false;
-            poolManager.ReleaseTGObject(ETGObjectType.UILootableItemButton, gameObject);
-
-        }
+        rectTransform.sizeDelta = new Vector2(originalWidth, originalHeight);
+        isPicked = false;
+        
     }
 
     // getter/setter

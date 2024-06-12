@@ -13,6 +13,7 @@ public enum EEventType
     UIPickedupItemToInventory,
     UIDropItemFromInventory,
     PickedupItemToInventory,
-    DropItemFromInventory
+    DropItemFromInventory,
+    UICreateItemButton,
 }
 

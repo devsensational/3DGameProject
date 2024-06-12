@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class TGUIInventory : MonoBehaviour
 {
     // Inspector    
+    public GameObject UIHideSpace;              // UI가 숨겨질 공간의 객체를 할당
     public GameObject LootableContent;          // Lootable list content 객체를 할당
     public GameObject InventoryContent;         // inventory Content 객체를 할당
     public GameObject PrimaryWeaponContent;     //
@@ -50,10 +51,11 @@ public class TGUIInventory : MonoBehaviour
 
     void InitEvent()
     {
-        eventManager.StartListening(EEventType.UIEnterInteractiveItem, CreateUILootableButton);
-        eventManager.StartListening(EEventType.UIExitInteractiveItem, RemoveUILootableButton);
-        eventManager.StartListening(EEventType.UIPickedupItemToInventory, CreateUIInventoryItemButton);
-        eventManager.StartListening(EEventType.UIDropItemFromInventory, RemoveUIInventoryItemButton);
+        //eventManager.StartListening(EEventType.UICreateItemButton, CreateUILootableButton);
+        eventManager.StartListening(EEventType.UIEnterInteractiveItem, OnInterectLootableItem);
+        eventManager.StartListening(EEventType.UIExitInteractiveItem, OnUIMoveToHideSpce);
+        eventManager.StartListening(EEventType.UIPickedupItemToInventory, OnUIPickedUpItem);
+        eventManager.StartListening(EEventType.UIDropItemFromInventory, OnUIMoveToHideSpce);
     }
 
     void InitObjectPool()
@@ -107,39 +109,54 @@ public class TGUIInventory : MonoBehaviour
         {
             lootableItemUIDictionary[ptrItem] = ptrUI;
         }
-        ptrUI.transform.SetParent(LootableContent.transform);
+        ptrUI.transform.SetParent(UIHideSpace.transform);
         ptrUI.SetButton(ptrItem);
 
     }
 
-    // 루팅가능한 아이템 버튼 제거 메소드
-    void RemoveUILootableButton(object parameters)
+    void CreateUILootableButton(TGItem ptrItem)
     {
-        TGItem ptrItem = (TGItem)parameters;
+        TGUILootableItemInterective ptrUI = poolManager.GetTGObject(ETGObjectType.UILootableItemButton).GetComponent<TGUILootableItemInterective>(); //오브젝트 풀로 부터 꺼내옴
+
+        if (!lootableItemUIDictionary.ContainsKey(ptrItem))
+        {
+            lootableItemUIDictionary.Add(ptrItem, ptrUI);
+        }
+        else
+        {
+            lootableItemUIDictionary[ptrItem] = ptrUI;
+        }
+        ptrUI.transform.SetParent(UIHideSpace.transform);
+        ptrUI.SetButton(ptrItem);
+    }
+    // 떨어져 있는 아이템과 가까이 접근했을 때 실행되는 메소드, 버튼을 루팅가능한 목록으로 이동시킴
+    void OnInterectLootableItem(object parameter)
+    {
+        TGItem ptrItem = (TGItem)parameter;
+        if (!lootableItemUIDictionary.ContainsKey(ptrItem))
+        {
+            CreateUILootableButton(ptrItem);
+        }
+        TGUILootableItemInterective ptrUI = lootableItemUIDictionary[ptrItem];
+        ptrUI.transform.SetParent(LootableContent.transform);
+    }
+
+    // 버튼을 타입에 맞는 리스트로 이동시키는 메소드
+    void OnUIPickedUpItem(object parameter)
+    {
+        TGItem ptrItem = (TGItem)parameter;
         TGUILootableItemInterective ptrUI = lootableItemUIDictionary[ptrItem];
 
-        lootableItemUIDictionary.Remove(ptrItem);
-        poolManager.ReleaseTGObject(ETGObjectType.UILootableItemButton, ptrUI.gameObject); //오브젝트 풀로 반환
-
+        ptrUI.transform.SetParent(ContentDictionary[ptrItem.itemType].transform);
     }
 
-    // 아이템 루팅 시 상호작용
-    void CreateUIInventoryItemButton(object parameters)
+    // 버튼을 Hide Space로 이동시키는 메소드, 아이템과 멀어지거나 아이템을 버릴 때 호출
+    void OnUIMoveToHideSpce(object parameter)
     {
-        TGUILootableItemInterective ptrUI = (TGUILootableItemInterective)parameters;
-
-        //lootableItemUIDictionary.Remove(ptrUI.IntertectedItem);
-        ptrUI.transform.SetParent(ContentDictionary[ptrUI.IntertectedItem.itemType].transform); //딕셔너리에 저장된 콘텐츠UI가 자동으로 부모가 됨
-    }
-
-    // 아이템 드랍 시 상호작용
-    void RemoveUIInventoryItemButton(object parameters)
-    {
-        TGUILootableItemInterective ptrUI = lootableItemUIDictionary[(TGItem)parameters];
-
-        poolManager.ReleaseTGObject(ETGObjectType.UILootableItemButton, ptrUI.gameObject); //오브젝트 풀로 반환
-
-        //lootableItemUIDictionary.Add(ptrUI.IntertectedItem, ptrUI);
-        //ptrUI.transform.SetParent(LootableContent.transform);
+        TGItem ptrItem = (TGItem)parameter;
+        TGUILootableItemInterective ptrUI = lootableItemUIDictionary[ptrItem];
+        
+        ptrUI.ResetButton();
+        ptrUI.transform.SetParent(UIHideSpace.transform);
     }
 }
