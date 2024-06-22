@@ -4,14 +4,14 @@ using UnityEngine;
 
 public enum EItemType
 {
-    Default = 0,
+    None = 0,
+    Default,
+    
+    //여기서 부터 작성
+    AK47,
+    FAMAS,
+    DEAGLE,
+    PrimaryWeaponAmmo, 
+    SecondaryWeaponAmmo,
 
-    //여기서 부터 enum 작성
-    PrimaryWeapon,
-    SecondaryWeapon,
-    LootableItem,
-
-    //
-
-    End = 999
 }

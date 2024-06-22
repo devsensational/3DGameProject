@@ -42,7 +42,7 @@ public class TGPlayerCharacter : TGCharacter
             {
                 //lootableItems.Add(itemObject);
                 eventManager.TriggerEvent(EEventType.UIEnterInteractiveItem, itemObject);
-                Debug.Log("enter to " + itemObject.objectName);
+                Debug.Log("(TGPlayerCharacter) enter to " + itemObject.objectName);
             }
         }
     }
@@ -56,7 +56,7 @@ public class TGPlayerCharacter : TGCharacter
             {
                 //lootableItems.Remove(itemObject.GetComponent<TGItem>());
                 eventManager.TriggerEvent(EEventType.UIExitInteractiveItem, itemObject);
-                Debug.Log("exit from " + itemObject.objectName);
+                Debug.Log("(TGPlayerCharacter) exit from " + itemObject.objectName);
             }
         }
     }
@@ -88,7 +88,7 @@ public class TGPlayerCharacter : TGCharacter
     }
 
     // "TGPlayerCharacterController"에서 특정 아이템을 손에 드는 명령을 내릴때 수행
-    public void CommandHandInItem(EItemType itemType) 
+    public void CommandHandInItem(EEquipmentType itemType) 
     {
         if (equipItems[itemType] == null) return;
 
@@ -98,9 +98,17 @@ public class TGPlayerCharacter : TGCharacter
         } 
     }
 
-
+    // UI를 통해 아이템을 주웠을 때 
     public void CommandTakeItem(object parameter) 
     { 
         TGItem item = (TGItem)parameter;
         TakeItem(item);
-    }}
+    }
+
+    public void CommandUseHandInItem()
+    {
+        if (equipItems[handInItem] == null) return;
+
+        equipItems[handInItem].UseItem();
+    }
+}

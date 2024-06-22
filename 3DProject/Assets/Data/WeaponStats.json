@@ -2,6 +2,7 @@
   "default_name": {
     "weaponName": "default_name",
     "weaponType": "Default",
+    "ammoType": "Default",
     "damage": 0.0,
     "fireRate": 100.0,
     "defaultAccurate": 0.4,
@@ -13,8 +14,9 @@
     "currentAmmo": 0
   },
   "AK47": {
-    "weaponName": "AK47",
+    "weaponName": "AK	47",
     "weaponType": "PrimaryWeapon",
+    "ammoType": "PrimaryWeaponAmmo",
     "damage": 0.0,
     "fireRate": 100.0,
     "defaultAccurate": 0.4,
@@ -28,6 +30,7 @@
   "EAGLE": {
     "weaponName": "EAGLE",
     "weaponType": "SecondaryWeapon",
+    "ammoType": "SecondaryWeaponAmmo",
     "damage": 0.0,
     "fireRate": 100.0,
     "defaultAccurate": 0.4,
@@ -41,6 +44,7 @@
   "FAMAS": {
     "weaponName": "FAMAS",
     "weaponType": "PrimaryWeapon",
+    "ammoType": "PrimaryWeaponAmmo",
     "damage": 0.0,
     "fireRate": 100.0,
     "defaultAccurate": 0.4,

@@ -22,8 +22,8 @@ public class TGUILootableItemInterective : MonoBehaviour
     float originalHeight;
 
     bool isPicked = false;
-    //Unity lifecycle
 
+    //Unity lifecycle
     void Start()
     {
         InitReferences();
@@ -52,36 +52,46 @@ public class TGUILootableItemInterective : MonoBehaviour
     public void SetButton(TGItem interectedItem) // button 생성시 셋팅
     {
         this.interectedItem = interectedItem;
-        buttonText.text = interectedItem.objectName;
+        SetItemName();
     }
 
-    //버튼이 눌렸을 때 호출
-    public void OnClickButton()
+    public void OnClickButton()    //버튼이 눌렸을 때 호출
     {
         if(isPicked)
         {
             eventManager.TriggerEvent(EEventType.UIDropItemFromInventory, interectedItem);
             eventManager.TriggerEvent(EEventType.DropItemFromInventory, interectedItem);
+            SetItemName();
             isPicked = false;
         }
         else
         {
             eventManager.TriggerEvent(EEventType.UIPickedupItemToInventory, interectedItem);
             eventManager.TriggerEvent(EEventType.PickedupItemToInventory, interectedItem);
+            SetItemName();
             isPicked = true;
         }
     }
 
-    // 버튼 사이즈 초기화
-    public void ResetButton()
+    public void ResetButton()    // 버튼 사이즈 초기화
     {
         rectTransform.sizeDelta = new Vector2(originalWidth, originalHeight);
         isPicked = false;
         
     }
 
-    // getter/setter
-    public TGItem IntertectedItem
+    void SetItemName() // 아이템의 갯수 반영
+    {
+        if(interectedItem.equipmentType == EEquipmentType.None)
+        {
+            buttonText.text = $"{interectedItem.objectName} ({interectedItem.itemCount})";
+            return;
+        }
+        buttonText.text = $"{interectedItem.objectName}";
+    }
+
+
+    public TGItem IntertectedItem     // getter/setter
     {
         get => interectedItem;
     }

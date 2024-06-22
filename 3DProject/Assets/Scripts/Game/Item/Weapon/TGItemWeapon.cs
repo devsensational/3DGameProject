@@ -11,16 +11,15 @@ public class TGItemWeapon : TGItem
     //private
     MWeaponStats weaponStats     { get; set; }
 
+    WaitForSeconds reloadWaitForSeconds;
+
     //Unity lifetime
     protected override void ChildStart()
     {
         weaponStats = TGGameManager.Instance.loadedWeaponStatDict[objectName]; // 무기 스탯 불러오기
-        itemType = weaponStats.weaponType;
-    }
 
-    private void TemporarySetWeaponStats()
-    {
-
+        equipmentType = weaponStats.weaponType;
+        reloadWaitForSeconds = new WaitForSeconds(weaponStats.reloadTime); // 재장전 시간 코루틴용
     }
 
     // 공격 메커니즘 관련 메소드
@@ -29,9 +28,15 @@ public class TGItemWeapon : TGItem
 
     }
 
-    public virtual void Reload()
+    public virtual void CommandReload()
     {
 
+    }
+
+    private IEnumerator Reload()
+    {
+        yield return reloadWaitForSeconds;
+        
     }
 
     //

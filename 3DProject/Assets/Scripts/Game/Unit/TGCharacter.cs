@@ -12,12 +12,12 @@ public class TGCharacter : TGObject
     //public
     public MCharacterStats characterStat { get; protected set; } // 플레이어 캐릭터 스탯
 
-    public Dictionary<EItemType, TGItem> equipItems = new Dictionary<EItemType, TGItem>();
+    public Dictionary<EEquipmentType, TGItem> equipItems = new Dictionary<EEquipmentType, TGItem>();
 
-    public List<TGItem> inventory = new List<TGItem>(); // 주운 아이템 리스트
+    public Dictionary<EItemType, TGItem> inventory = new Dictionary<EItemType, TGItem>(); // 주운 아이템 리스트
 
     //protected
-    protected EItemType handInItem = EItemType.Default;   //플레이어 캐릭터가 들고 있는 아이템 type
+    protected EEquipmentType handInItem = EEquipmentType.Default;   //플레이어 캐릭터가 들고 있는 아이템 type
     protected TGEventManager eventManager;  //이벤트매니저
     //private
 
@@ -25,9 +25,10 @@ public class TGCharacter : TGObject
     //Unity lifecycle
     private void Awake()
     {
-        equipItems.Add(EItemType.Default, null);
-        equipItems.Add(EItemType.PrimaryWeapon, null);
-        equipItems.Add(EItemType.SecondaryWeapon, null);
+        equipItems.Add(EEquipmentType.None, null);
+        equipItems.Add(EEquipmentType.Default, null);
+        equipItems.Add(EEquipmentType.PrimaryWeapon, null);
+        equipItems.Add(EEquipmentType.SecondaryWeapon, null);
 
         ChildAwake();
         InitEvent();
@@ -52,35 +53,54 @@ public class TGCharacter : TGObject
     protected void TakeItem(TGItem item)    // item 습득 시도 메소드
     {
         if (item == null) return;                        // 선택된 item object가 null일 경우 메소드 종료
-        if(equipItems[item.itemType] != null)
+
+        if (item.equipmentType != EEquipmentType.None)  // 장비 타입일 경우
         {
-            eventManager.TriggerEvent(EEventType.UIDropItemFromInventory, equipItems[item.itemType]);
-            DropItem(item.itemType);
+            if (equipItems[item.equipmentType] != null)
+            {
+                eventManager.TriggerEvent(EEventType.UIDropItemFromInventory, equipItems[item.equipmentType]);
+                DropItem(equipItems[item.equipmentType].itemType);
+            }
+            equipItems[item.equipmentType] = item;
+            equipItems[item.equipmentType].OnPickedUpThisItem(gameObject);        // Item이 습득 됐을 때 item instance가 실행되야 할 명령 수행
         }
 
-        equipItems[item.itemType] = item;
-        equipItems[item.itemType].OnPickedUpThisItem(gameObject);        // Item이 습득 됐을 때 item instance가 실행되야 할 명령 수행
-        Debug.Log(gameObject.name + " picked up " + item.name);
+        if(!inventory.ContainsKey(item.itemType)) // 인벤토리 딕셔너리에 키가 없을 시 생성
+        {
+            inventory.Add(item.itemType, item);
+            Debug.Log("(TGCharacter:TakeItem) Inventroy dictionary added: " + item.itemType);
+        }
+        inventory[item.itemType].itemCount += item.itemCount;
+        item.OnPickedUpThisItem(gameObject);        // Item이 습득 됐을 때 item instance가 실행되야 할 명령 수행
+
+        Debug.Log("(TGCharacter:TakeItem) " + gameObject.name + " picked up " + item.name);
     }
 
     protected void DropItem(EItemType itemType)  // item 드랍 시도 메소드
     {
-        equipItems[itemType].OnDropThisItem();
-        equipItems[itemType] = null;
-        if(handInItem == itemType)
-        {
-            handInItem = EItemType.Default;
-        }
-    }
+        TGItem ptrItem = inventory[itemType];
 
-    // 이동 관련 메소드
-    public void CommandMove(Vector3 direction, float moveSpeed)
+        if (ptrItem.equipmentType != EEquipmentType.None) //장비 아이템일 경우 장비아이템 해제
+        {
+            equipItems[ptrItem.equipmentType] = null;
+            if (handInItem == ptrItem.equipmentType)
+            {
+                handInItem = EEquipmentType.None; // 손에 들고 있는 장비일 경우 handInItem 해제
+            }
+        }
+
+
+
+        ptrItem.OnDropThisItem();
+    }
+    
+    public void CommandMove(Vector3 direction, float moveSpeed) // 이동 관련 메소드
     {
         transform.Translate(direction * moveSpeed * Time.deltaTime);
     }
 
-    //손에 든 아이템을 교체할 때 사용하는 메소드
-    protected void ChangeHandInItem(TGItem previousItem, TGItem nextItem)
+    
+    protected void ChangeHandInItem(TGItem previousItem, TGItem nextItem) //손에 든 아이템을 교체할 때 사용하는 메소드
     {
         if (previousItem != null)
         {
@@ -89,12 +109,12 @@ public class TGCharacter : TGObject
         if (nextItem != null)
         {
             nextItem.OnHandInThisItem();
-            handInItem = nextItem.itemType;
+            handInItem = nextItem.equipmentType;
         }
     }
 
-    // getter/setter
-    public EItemType GetHandInItem()
+    
+    public EEquipmentType GetHandInItem() // getter/setter
     {
         return handInItem;
     }

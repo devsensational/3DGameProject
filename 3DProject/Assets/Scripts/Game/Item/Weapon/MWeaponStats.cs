@@ -6,7 +6,8 @@ public class MWeaponStats
 {
     public string weaponName        = "default_name";       //무기 이름, json 식별 시에도 사용
 
-    public EItemType weaponType     = EItemType.Default;    //무기 타입
+    public EEquipmentType weaponType    = EEquipmentType.None;    //무기 타입
+    public EItemType ammoType           = EItemType.None;
 
     public float damage             = 0f;       //데미지
     public float fireRate           = 100f;     //연사속도
