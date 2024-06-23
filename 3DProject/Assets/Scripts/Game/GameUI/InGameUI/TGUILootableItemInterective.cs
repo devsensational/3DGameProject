@@ -52,6 +52,8 @@ public class TGUILootableItemInterective : MonoBehaviour
     public void SetButton(TGItem interectedItem) // button 생성시 셋팅
     {
         this.interectedItem = interectedItem;
+        interectedItem.itemButton = this;       // 버튼에 접근 가능한 레퍼런스 설정
+
         SetItemName();
     }
 
@@ -80,7 +82,7 @@ public class TGUILootableItemInterective : MonoBehaviour
         
     }
 
-    void SetItemName() // 아이템의 갯수 반영
+    public void SetItemName() // 아이템의 갯수 반영
     {
         if(interectedItem.equipmentType == EEquipmentType.None)
         {

@@ -341,7 +341,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0000009536743, y: 0.00004196167}
+  m_AnchoredPosition: {x: 0.0000009536743, y: 0.00013645012}
   m_SizeDelta: {x: 0, y: 1000}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &70436042
@@ -9433,18 +9433,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1375323134619797793, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
-      propertyPath: ItemModel
-      value: 
-      objectReference: {fileID: 1912351942}
-    - target: {fileID: 1375323134619797793, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
-      propertyPath: groundTag
-      value: Terrain
-      objectReference: {fileID: 0}
-    - target: {fileID: 1375323134619797793, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
-      propertyPath: objectName
-      value: AK47
-      objectReference: {fileID: 0}
     - target: {fileID: 1402784742316536118, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
       propertyPath: m_Name
       value: Item_Weapon_AK47
@@ -9489,13 +9477,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8913030305397602058, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5607264893292794716, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
-    - {fileID: 7972130871380095403, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -9619,7 +9601,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 305298191}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999803
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11135,11 +11117,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3475188255602446414, guid: a519f03aee53c45bebfe44df6939bd67, type: 3}
   m_PrefabInstance: {fileID: 1429414185}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1626691189 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3570901234598488458, guid: c21ebabe3b1d67b44a8f375347aa2fcf, type: 3}
-  m_PrefabInstance: {fileID: 5982353647095958659}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1633524234
 GameObject:
   m_ObjectHideFlags: 0
@@ -11210,8 +11187,9 @@ MonoBehaviour:
   ItemModel: {fileID: 2007086506}
   groundTag: Terrain
   itemCount: 30
+  itemButton: {fileID: 0}
   equipmentType: 0
-  itemType: 0
+  itemType: 5
   isDropped: 1
 --- !u!4 &1687580744
 Transform:
@@ -11313,7 +11291,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1964957244}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999803
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11389,7 +11367,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0000009536743, y: 0.00004196167}
+  m_AnchoredPosition: {x: 0.0000009536743, y: 0.00013645012}
   m_SizeDelta: {x: 0, y: 1000}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1725311653
@@ -11711,8 +11689,9 @@ MonoBehaviour:
   ItemModel: {fileID: 915945085}
   groundTag: Terrain
   itemCount: 30
+  itemButton: {fileID: 0}
   equipmentType: 0
-  itemType: 0
+  itemType: 5
   isDropped: 1
 --- !u!4 &1870103861
 Transform:
@@ -11793,11 +11772,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &1912351942 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8913030305397602058, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
-  m_PrefabInstance: {fileID: 881201344}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1944266875 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3475188255602446414, guid: a519f03aee53c45bebfe44df6939bd67, type: 3}
@@ -11842,8 +11816,9 @@ MonoBehaviour:
   ItemModel: {fileID: 550987959}
   groundTag: Terrain
   itemCount: 30
+  itemButton: {fileID: 0}
   equipmentType: 0
-  itemType: 0
+  itemType: 5
   isDropped: 1
 --- !u!4 &1954253790
 Transform:
@@ -22132,7 +22107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectName: 
-  objectType: 0
+  objectType: 6
   HandPosition: {fileID: 1761728249}
 --- !u!114 &5976494778289716983
 MonoBehaviour:
@@ -22199,29 +22174,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_Weapon_EAGLE
       objectReference: {fileID: 0}
-    - target: {fileID: 5552516593646732487, guid: c21ebabe3b1d67b44a8f375347aa2fcf, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5605313684449169227, guid: c21ebabe3b1d67b44a8f375347aa2fcf, type: 3}
-      propertyPath: itemType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5605313684449169227, guid: c21ebabe3b1d67b44a8f375347aa2fcf, type: 3}
-      propertyPath: ItemModel
-      value: 
-      objectReference: {fileID: 1626691189}
-    - target: {fileID: 5605313684449169227, guid: c21ebabe3b1d67b44a8f375347aa2fcf, type: 3}
-      propertyPath: groundTag
-      value: Terrain
-      objectReference: {fileID: 0}
-    - target: {fileID: 5605313684449169227, guid: c21ebabe3b1d67b44a8f375347aa2fcf, type: 3}
-      propertyPath: objectName
-      value: EAGLE
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6854187646650378331, guid: c21ebabe3b1d67b44a8f375347aa2fcf, type: 3}
-    - {fileID: 5552516593646732487, guid: c21ebabe3b1d67b44a8f375347aa2fcf, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -22274,53 +22227,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2242706292186180126, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
-      propertyPath: m_Size.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242706292186180126, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
-      propertyPath: m_Size.y
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242706292186180126, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
-      propertyPath: m_Size.z
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242706292186180126, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3982376968561478000, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
-      propertyPath: groundTag
-      value: Terrain
-      objectReference: {fileID: 0}
-    - target: {fileID: 3982376968561478000, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
-      propertyPath: isDropped
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6199012307512027469, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6199012307512027469, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6199012307512027469, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6199012307512027469, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6735562050952014091, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
       propertyPath: m_Name
       value: Item_Weapon_FAMAS
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2242706292186180126, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
-    - {fileID: 8762004872024083403, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

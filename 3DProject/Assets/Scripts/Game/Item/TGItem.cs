@@ -12,9 +12,12 @@ public class TGItem : TGObject
     public int itemCount = 0; //아이템의 갯수
 
     //public
-    public EEquipmentType equipmentType = EEquipmentType.None;
-    public EItemType itemType;
+    public TGUILootableItemInterective  itemButton;
+    public EEquipmentType               equipmentType = EEquipmentType.None;
+    public EItemType                    itemType;
+
     public GameObject   itemHolder { get; set; }    //아이템을 주운 오브젝트
+
     public bool         isDropped = false;          //아이템이 주울 수 있는 상태인지 확인
 
     public MCharacterStats characterStats { get; set; }
@@ -82,6 +85,7 @@ public class TGItem : TGObject
         {
             ItemModel.SetActive(false);
         }
+
     }
 
     public void OnHandInThisItem()
@@ -98,6 +102,12 @@ public class TGItem : TGObject
             ItemModel.SetActive(true);
             Debug.Log($"(TGItem:OnHandInThisItem) {objectName} on hand to {itemHolder.name}");
         }
+    }
+
+    public void UpdateButtonUI()     // 해당 아이템에 해당하는 UI 버튼 갱신
+    {
+        itemButton.SetItemName();
+        Debug.Log($"(TGItem:OnHandInThisItem) Updated item button UI");
     }
 
     // 아이템이 땅 위에 
@@ -139,7 +149,7 @@ public class TGItem : TGObject
 
     public virtual void UseItem() 
     {
-        Debug.Log("(TGItem) Use this item: " + objectName);
+        Debug.Log("(TGItem:UseItem) Use this item: " + objectName);
     }
 
     //부모의 오리지날 메소드를 수정하지 않고 메소드 작성을 가능하게 하는 메소드들

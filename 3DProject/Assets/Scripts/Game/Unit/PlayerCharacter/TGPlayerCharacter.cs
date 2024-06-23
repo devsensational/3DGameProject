@@ -42,7 +42,7 @@ public class TGPlayerCharacter : TGCharacter
             {
                 //lootableItems.Add(itemObject);
                 eventManager.TriggerEvent(EEventType.UIEnterInteractiveItem, itemObject);
-                Debug.Log("(TGPlayerCharacter) enter to " + itemObject.objectName);
+                Debug.Log("(TGPlayerCharacter:OnTriggerEnter) enter to " + itemObject.objectName);
             }
         }
     }
@@ -56,7 +56,7 @@ public class TGPlayerCharacter : TGCharacter
             {
                 //lootableItems.Remove(itemObject.GetComponent<TGItem>());
                 eventManager.TriggerEvent(EEventType.UIExitInteractiveItem, itemObject);
-                Debug.Log("(TGPlayerCharacter) exit from " + itemObject.objectName);
+                Debug.Log("(TGPlayerCharacter:OnTriggerExit) exit from " + itemObject.objectName);
             }
         }
     }

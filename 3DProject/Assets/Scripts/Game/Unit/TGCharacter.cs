@@ -31,6 +31,7 @@ public class TGCharacter : TGObject
         equipItems.Add(EEquipmentType.SecondaryWeapon, null);
 
         ChildAwake();
+
         InitEvent();
     }
 
@@ -65,12 +66,20 @@ public class TGCharacter : TGObject
             equipItems[item.equipmentType].OnPickedUpThisItem(gameObject);        // Item이 습득 됐을 때 item instance가 실행되야 할 명령 수행
         }
 
-        if(!inventory.ContainsKey(item.itemType)) // 인벤토리 딕셔너리에 키가 없을 시 생성
+        if (inventory.ContainsKey(item.itemType))
+        {
+            inventory[item.itemType].itemCount += item.itemCount; //같은 종류의 아이템이 이미 존재하면 수량 증가
+            item.UpdateButtonUI();
+            return;
+        }
+
+        if (!inventory.ContainsKey(item.itemType)) // 인벤토리 딕셔너리에 키가 없을 시 생성
         {
             inventory.Add(item.itemType, item);
             Debug.Log("(TGCharacter:TakeItem) Inventroy dictionary added: " + item.itemType);
         }
-        inventory[item.itemType].itemCount += item.itemCount;
+
+
         item.OnPickedUpThisItem(gameObject);        // Item이 습득 됐을 때 item instance가 실행되야 할 명령 수행
 
         Debug.Log("(TGCharacter:TakeItem) " + gameObject.name + " picked up " + item.name);
