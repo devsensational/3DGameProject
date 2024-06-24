@@ -50,6 +50,11 @@ public class TGItem : TGObject
         ChildUpdate();
     }
 
+    private void OnDestroy()
+    {
+        Destroy(itemButton.gameObject);
+    }
+
     // 아이템 상호작용 관련 메소드
     public void OnDropThisItem()    // 아이템이 버려졌을 때 호출
     {
@@ -81,14 +86,14 @@ public class TGItem : TGObject
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
-        if(chracterComponent.GetHandInItem() != equipmentType)
+        if(chracterComponent.GetInHandItem() != equipmentType)
         {
             ItemModel.SetActive(false);
         }
 
     }
 
-    public void OnHandInThisItem()
+    public void OnHandInThisItem() // 캐릭터가 해당 아이템을 손에 들었을 때 호출
     {
         if(isHandIn)
         {

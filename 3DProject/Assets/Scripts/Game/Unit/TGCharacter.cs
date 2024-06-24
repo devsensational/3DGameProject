@@ -17,7 +17,7 @@ public class TGCharacter : TGObject
     public Dictionary<EItemType, TGItem> inventory = new Dictionary<EItemType, TGItem>(); // 주운 아이템 리스트
 
     //protected
-    protected EEquipmentType handInItem = EEquipmentType.Default;   //플레이어 캐릭터가 들고 있는 아이템 type
+    protected EEquipmentType inHandItem = EEquipmentType.Default;   //플레이어 캐릭터가 들고 있는 아이템 type
     protected TGEventManager eventManager;  //이벤트매니저
     //private
 
@@ -63,13 +63,14 @@ public class TGCharacter : TGObject
                 DropItem(equipItems[item.equipmentType].itemType);
             }
             equipItems[item.equipmentType] = item;
-            equipItems[item.equipmentType].OnPickedUpThisItem(gameObject);        // Item이 습득 됐을 때 item instance가 실행되야 할 명령 수행
+            //equipItems[item.equipmentType].OnPickedUpThisItem(gameObject);        // Item이 습득 됐을 때 item instance가 실행되야 할 명령 수행
         }
 
-        if (inventory.ContainsKey(item.itemType))
+        if (inventory.ContainsKey(item.itemType) && inventory[item.itemType] != null)
         {
             inventory[item.itemType].itemCount += item.itemCount; //같은 종류의 아이템이 이미 존재하면 수량 증가
-            item.UpdateButtonUI();
+            inventory[item.itemType].UpdateButtonUI();
+            Destroy(item.gameObject);
             return;
         }
 
@@ -79,7 +80,7 @@ public class TGCharacter : TGObject
             Debug.Log("(TGCharacter:TakeItem) Inventroy dictionary added: " + item.itemType);
         }
 
-
+        inventory[item.itemType] = item;
         item.OnPickedUpThisItem(gameObject);        // Item이 습득 됐을 때 item instance가 실행되야 할 명령 수행
 
         Debug.Log("(TGCharacter:TakeItem) " + gameObject.name + " picked up " + item.name);
@@ -92,13 +93,13 @@ public class TGCharacter : TGObject
         if (ptrItem.equipmentType != EEquipmentType.None) //장비 아이템일 경우 장비아이템 해제
         {
             equipItems[ptrItem.equipmentType] = null;
-            if (handInItem == ptrItem.equipmentType)
+            if (inHandItem == ptrItem.equipmentType)
             {
-                handInItem = EEquipmentType.None; // 손에 들고 있는 장비일 경우 handInItem 해제
+                inHandItem = EEquipmentType.None; // 손에 들고 있는 장비일 경우 handInItem 해제
             }
         }
 
-
+        inventory[itemType] = null;
 
         ptrItem.OnDropThisItem();
     }
@@ -109,7 +110,7 @@ public class TGCharacter : TGObject
     }
 
     
-    protected void ChangeHandInItem(TGItem previousItem, TGItem nextItem) //손에 든 아이템을 교체할 때 사용하는 메소드
+    protected void ChangeInHandItem(TGItem previousItem, TGItem nextItem) //손에 든 아이템을 교체할 때 사용하는 메소드
     {
         if (previousItem != null)
         {
@@ -118,14 +119,14 @@ public class TGCharacter : TGObject
         if (nextItem != null)
         {
             nextItem.OnHandInThisItem();
-            handInItem = nextItem.equipmentType;
+            inHandItem = nextItem.equipmentType;
         }
     }
 
     
-    public EEquipmentType GetHandInItem() // getter/setter
+    public EEquipmentType GetInHandItem() // getter/setter
     {
-        return handInItem;
+        return inHandItem;
     }
 
     // child

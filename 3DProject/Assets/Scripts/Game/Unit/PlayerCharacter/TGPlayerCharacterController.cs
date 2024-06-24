@@ -122,15 +122,15 @@ public class TGPlayerCharacterController : MonoBehaviour
         // 아이템 들기
         if (Input.GetKeyDown(keyValuePairs[EKeyValues.Item1])) //아이템1 들기
         {
-            playerCharacter.CommandHandInItem(EEquipmentType.PrimaryWeapon);
+            playerCharacter.CommandChangeInHandItem(EEquipmentType.PrimaryWeapon);
         }
         if (Input.GetKeyDown(keyValuePairs[EKeyValues.Item2])) //아이템2 들기
         {
-            playerCharacter.CommandHandInItem(EEquipmentType.SecondaryWeapon);
+            playerCharacter.CommandChangeInHandItem(EEquipmentType.SecondaryWeapon);
         }
         if (Input.GetKey(keyValuePairs[EKeyValues.Fire]))
         {
-            playerCharacter.CommandUseHandInItem();
+            playerCharacter.CommandUseInHandItem();
         }
     }
 }

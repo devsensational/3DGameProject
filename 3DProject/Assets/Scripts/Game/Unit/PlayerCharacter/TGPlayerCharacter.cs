@@ -82,33 +82,48 @@ public class TGPlayerCharacter : TGCharacter
     // "TGPlayerCharacterController"에서 Item 드랍을 호출했을 때 실행
     public void CommandDropItem(object parameter) 
     {
-        TGItem parameterObj = (TGItem)parameter;
+        TGItem itemPtr = (TGItem)parameter;
 
-        DropItem(parameterObj.itemType);
+        if (itemPtr.equipmentType == inHandItem)
+        {
+            eventManager.TriggerEvent(EEventType.RemoveItemInfoUIText, null);
+        }
+
+        DropItem(itemPtr.itemType);
     }
 
     // "TGPlayerCharacterController"에서 특정 아이템을 손에 드는 명령을 내릴때 수행
-    public void CommandHandInItem(EEquipmentType itemType) 
+    public void CommandChangeInHandItem(EEquipmentType itemType) 
     {
         if (equipItems[itemType] == null) return;
 
-        if(handInItem != itemType)
+        if(inHandItem != itemType)
         {
-            ChangeHandInItem(equipItems[handInItem], equipItems[itemType]);
+            ChangeInHandItem(equipItems[inHandItem], equipItems[itemType]);
+            eventManager.TriggerEvent(EEventType.ChangeHandItem, equipItems[itemType]);
+            eventManager.TriggerEvent(EEventType.UpdateItemInfo, equipItems[itemType]);
         } 
     }
 
     // UI를 통해 아이템을 주웠을 때 
     public void CommandTakeItem(object parameter) 
     { 
-        TGItem item = (TGItem)parameter;
-        TakeItem(item);
+        TGItem itemPtr = (TGItem)parameter;
+
+        if (itemPtr.equipmentType == inHandItem)
+        {
+            eventManager.TriggerEvent(EEventType.RemoveItemInfoUIText, null);
+        }
+
+        TakeItem(itemPtr);
+
     }
 
-    public void CommandUseHandInItem()
+    public void CommandUseInHandItem()
     {
-        if (equipItems[handInItem] == null) return;
+        if (equipItems[inHandItem] == null) return;
 
-        equipItems[handInItem].UseItem();
+        equipItems[inHandItem].UseItem();
     }
+
 }

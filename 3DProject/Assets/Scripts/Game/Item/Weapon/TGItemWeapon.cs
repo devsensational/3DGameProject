@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class TGItemWeapon : TGItem
 {
-    //public
+    // Insepector
     public GameObject ProjectilePrefab;    //발사 시 생성될 총알 프리팹
     public GameObject Muzzle;              //총알이 발사될 위치
+    
+    // public
+    public MWeaponStats weaponStats { get; protected set; }
 
-    //private
-    MWeaponStats weaponStats     { get; set; }
-
+    // private
     WaitForSeconds reloadWaitForSeconds;
 
     //Unity lifetime

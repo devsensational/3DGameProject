@@ -15,5 +15,9 @@ public enum EEventType
     PickedupItemToInventory,
     DropItemFromInventory,
     UICreateItemButton,
+    ChangeHandItem,
+    UpdateItemInfo,
+    RemoveItemInfoUIText,
+
 }
 
