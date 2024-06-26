@@ -25,6 +25,7 @@ public enum EKeyValues
     Interaction,
     ToggleCameraView,
     ToggleInventoryUI,
+    Reload,
     //Enum end
 
     End = 300

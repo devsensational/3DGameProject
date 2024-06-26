@@ -157,6 +157,11 @@ public class TGItem : TGObject
         Debug.Log("(TGItem:UseItem) Use this item: " + objectName);
     }
 
+    protected virtual IEnumerator Reload()
+    {
+        yield return null;
+    }
+
     //부모의 오리지날 메소드를 수정하지 않고 메소드 작성을 가능하게 하는 메소드들
     protected virtual void ChildAwake() { }     
     protected virtual void ChildUpdate() { }

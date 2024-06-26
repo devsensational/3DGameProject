@@ -128,9 +128,13 @@ public class TGPlayerCharacterController : MonoBehaviour
         {
             playerCharacter.CommandChangeInHandItem(EEquipmentType.SecondaryWeapon);
         }
-        if (Input.GetKey(keyValuePairs[EKeyValues.Fire]))
+        if (Input.GetKeyDown(keyValuePairs[EKeyValues.Fire]))
         {
             playerCharacter.CommandUseInHandItem();
+        }
+        if (Input.GetKeyDown(keyValuePairs[EKeyValues.Reload]))
+        {
+            playerCharacter.CommandReloadInHandItem();
         }
     }
 }

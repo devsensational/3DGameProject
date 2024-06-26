@@ -18,6 +18,7 @@ public enum EEventType
     ChangeHandItem,
     UpdateItemInfo,
     RemoveItemInfoUIText,
-
+    StartCircleTimerUI,
+    HideCircleTimerUI,
 }
 

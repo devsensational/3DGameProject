@@ -95,7 +95,7 @@ public class TGCharacter : TGObject
             equipItems[ptrItem.equipmentType] = null;
             if (inHandItem == ptrItem.equipmentType)
             {
-                inHandItem = EEquipmentType.None; // 손에 들고 있는 장비일 경우 handInItem 해제
+                inHandItem = EEquipmentType.Default; // 손에 들고 있는 장비일 경우 handInItem 해제
             }
         }
 

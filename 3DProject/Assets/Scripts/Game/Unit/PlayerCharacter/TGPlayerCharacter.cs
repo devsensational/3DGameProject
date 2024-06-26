@@ -126,4 +126,18 @@ public class TGPlayerCharacter : TGCharacter
         equipItems[inHandItem].UseItem();
     }
 
+    public void CommandReloadInHandItem()
+    {
+        if (equipItems[inHandItem] == null) return;
+
+        if (equipItems[inHandItem].equipmentType != EEquipmentType.None)
+        {
+            TGItemWeapon weaponPtr = (TGItemWeapon)equipItems[inHandItem];
+            weaponPtr.CommandReload();
+            eventManager.TriggerEvent(EEventType.StartCircleTimerUI, weaponPtr.weaponStats.reloadTime);
+
+            Debug.Log("(TGPlayerCharacter:CommandReloadInHandItem) Command reload");
+        }
+    }
+
 }
