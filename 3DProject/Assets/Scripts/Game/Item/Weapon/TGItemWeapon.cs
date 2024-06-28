@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+enum EWeaponStateFlags
+{
+    None        = 0x00,
+    Reloading   = 0x01,
+    Empty       = 0x02, 
+}
+
 public class TGItemWeapon : TGItem
 {
     // Insepector
@@ -14,6 +21,8 @@ public class TGItemWeapon : TGItem
 
     // private
     WaitForSeconds reloadWaitForSeconds;
+
+    int weaponState = 0;
 
     bool isReloading = false;
 
@@ -37,18 +46,18 @@ public class TGItemWeapon : TGItem
         Debug.Log("(TGItemWeapon:UseItem) Used weapon");
     }
 
-    public virtual void CommandReload()     // 장전 메소드를 외부로 부터 호출
+    public virtual bool CommandReload()     // 장전 메소드를 외부로 부터 호출
     {
-        if (isReloading) return;                                   // 장전을 안하고 있을 때만 장전
-        if (weaponStats.currentAmmo >= weaponStats.maxAmmo) return;  // 장탄 수가 최대 장탄 수 보다 적을 때만 장전
+        if (isReloading) return false;                                   // 장전을 안하고 있을 때만 장전
+        if (weaponStats.currentAmmo >= weaponStats.maxAmmo) return false;  // 장탄 수가 최대 장탄 수 보다 적을 때만 장전
 
         TGCharacter itemHolderCharacter = itemHolder.GetComponent<TGCharacter>();
 
-        if (!itemHolderCharacter.inventory.TryGetValue(weaponStats.ammoType, out TGItem item)) return; // 키가 없으면 중단
-        if (item != null && item.itemCount > 0) // 아이템이 1개 이상 존재하면 실행
-        {
-            StartCoroutine(Reload());
-        }
+        if (!itemHolderCharacter.inventory.TryGetValue(weaponStats.ammoType, out TGItem item)) return false; // 키가 없으면 중단
+        if (item == null || item.itemCount < 0) return false; // 아이템이 1개 이상 존재하면 실행
+
+        StartCoroutine(Reload());
+        return true;
     }
 
     protected override IEnumerator Reload() // 무기 장전 메소드

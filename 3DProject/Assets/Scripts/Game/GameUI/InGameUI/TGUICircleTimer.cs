@@ -38,7 +38,7 @@ public class TGUICircleTimer : MonoBehaviour
         transform.localPosition = new Vector3(0, 1080, 0);
     }
 
-    IEnumerator TimerCoroutine() // 0.1초마다 시간을 감소시키는 타이머 코루틴
+    IEnumerator TimerCoroutine() // 타이머 코루틴
     {
         Debug.Log("(TGUICircleTimer:TimerCoroutine) Start circle timer");
         while(currentTime >= 0)

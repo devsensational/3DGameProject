@@ -40,7 +40,6 @@ public class TGPlayerCharacter : TGCharacter
             TGItem itemObject = other.transform.parent.GetComponent<TGItem>();
             if (itemObject.isDropped) //해당 무기가 떨어져 있는지 확인
             {
-                //lootableItems.Add(itemObject);
                 eventManager.TriggerEvent(EEventType.UIEnterInteractiveItem, itemObject);
                 Debug.Log("(TGPlayerCharacter:OnTriggerEnter) enter to " + itemObject.objectName);
             }
@@ -54,7 +53,6 @@ public class TGPlayerCharacter : TGCharacter
             TGItem itemObject = other.transform.parent.GetComponent<TGItem>();
             if (itemObject.isDropped) //해당 무기가 떨어져 있는지 확인
             {
-                //lootableItems.Remove(itemObject.GetComponent<TGItem>());
                 eventManager.TriggerEvent(EEventType.UIExitInteractiveItem, itemObject);
                 Debug.Log("(TGPlayerCharacter:OnTriggerExit) exit from " + itemObject.objectName);
             }
@@ -79,8 +77,7 @@ public class TGPlayerCharacter : TGCharacter
     }
 
     //item 관련 method
-    // "TGPlayerCharacterController"에서 Item 드랍을 호출했을 때 실행
-    public void CommandDropItem(object parameter) 
+    public void CommandDropItem(object parameter) // "TGPlayerCharacterController"에서 Item 드랍을 호출했을 때 실행
     {
         TGItem itemPtr = (TGItem)parameter;
 
@@ -92,8 +89,7 @@ public class TGPlayerCharacter : TGCharacter
         DropItem(itemPtr.itemType);
     }
 
-    // "TGPlayerCharacterController"에서 특정 아이템을 손에 드는 명령을 내릴때 수행
-    public void CommandChangeInHandItem(EEquipmentType itemType) 
+    public void CommandChangeInHandItem(EEquipmentType itemType) // "TGPlayerCharacterController"에서 특정 아이템을 손에 드는 명령을 내릴때 수행
     {
         if (equipItems[itemType] == null) return;
 
@@ -105,8 +101,7 @@ public class TGPlayerCharacter : TGCharacter
         } 
     }
 
-    // UI를 통해 아이템을 주웠을 때 
-    public void CommandTakeItem(object parameter) 
+    public void CommandTakeItem(object parameter)  // UI를 통해 아이템을 주웠을 때 
     { 
         TGItem itemPtr = (TGItem)parameter;
 
@@ -133,8 +128,10 @@ public class TGPlayerCharacter : TGCharacter
         if (equipItems[inHandItem].equipmentType != EEquipmentType.None)
         {
             TGItemWeapon weaponPtr = (TGItemWeapon)equipItems[inHandItem];
-            weaponPtr.CommandReload();
-            eventManager.TriggerEvent(EEventType.StartCircleTimerUI, weaponPtr.weaponStats.reloadTime);
+            if (weaponPtr.CommandReload()) // 재장전이 성공적으로 실행됐을 때 수행
+            {
+                eventManager.TriggerEvent(EEventType.StartCircleTimerUI, weaponPtr.weaponStats.reloadTime);
+            }
 
             Debug.Log("(TGPlayerCharacter:CommandReloadInHandItem) Command reload");
         }
