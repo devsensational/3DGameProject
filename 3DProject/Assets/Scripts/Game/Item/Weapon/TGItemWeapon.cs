@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -19,31 +21,54 @@ public class TGItemWeapon : TGItem
     // public
     public MWeaponStats weaponStats { get; protected set; }
 
+    // protected
+    protected TGObjectPoolManager objectPoolManager;
+
     // private
     WaitForSeconds reloadWaitForSeconds;
 
-    int weaponState = 0;
-
-    bool isReloading = false;
-
+    bool    isReloading = false;
+    int     weaponState = 0;
     //Unity lifetime
     protected override void ChildStart()
     {
-        weaponStats = TGGameManager.Instance.loadedWeaponStatDict[objectName]; // 무기 스탯 불러오기
+        InitReferences();
+        InitObjectPool();
+    }
 
-        equipmentType = weaponStats.weaponType;
-        reloadWaitForSeconds = new WaitForSeconds(weaponStats.reloadTime); // 재장전 시간 코루틴용
+    //Init
+    void InitReferences()
+    {
+        weaponStats             = TGGameManager.Instance.loadedWeaponStatDict[objectName]; // 무기 스탯 불러오기
+        objectPoolManager       = TGObjectPoolManager.Instance;
+        equipmentType           = weaponStats.weaponType;
+        reloadWaitForSeconds    = new WaitForSeconds(weaponStats.reloadTime); // 재장전 시간 코루틴용
+
+        Debug.Log($"(TGItemWeapon:Start) Weapon stat loaded! {weaponStats.weaponName}, {weaponStats.defaultAccuracy}");
+    }
+
+    void InitObjectPool()
+    {
+        objectPoolManager.CreateTGObjectPool(ETGObjectType.Projectile, ProjectilePrefab, 10, 100);
     }
 
     // 공격 메커니즘 관련 메소드
-    public override void UseItem()
+    public override void UseItem() // 아이템 사용
     {
         if (weaponStats.currentAmmo <= 0) return; // 장탄 수가 0이면 실행 안함
-        
 
         weaponStats.currentAmmo--;
+        FireWeapon();
         TGEventManager.Instance.TriggerEvent(EEventType.UpdateItemInfo, this);
         Debug.Log("(TGItemWeapon:UseItem) Used weapon");
+    }
+
+    protected virtual void FireWeapon()
+    {
+        GameObject projectilePtr = objectPoolManager.GetTGObject(ETGObjectType.Projectile); // 오브젝트 풀에서 발사체 활성화
+        projectilePtr.transform.position = Muzzle.transform.position; // 발사체의 위치를 머즐로 이동
+
+        Debug.Log($"(TGItemWeapon:FireWeapon) {objectName} Fired {projectilePtr}");
     }
 
     public virtual bool CommandReload()     // 장전 메소드를 외부로 부터 호출
@@ -73,7 +98,7 @@ public class TGItemWeapon : TGItem
         TGItem ammoItem = itemHolderCharacter.inventory[weaponStats.ammoType];
 
         int ammoCount = Mathf.Clamp(ammoItem.itemCount, 0, weaponStats.maxAmmo - weaponStats.currentAmmo); // 아이템 갯수가 감소될 수 결정
-        ammoItem.itemCount -= ammoCount;        // 최대 장탄 수 까지만 아이템 감소
+        ammoItem.ReduceItemCount(ammoCount);        // 최대 장탄 수 까지만 아이템 감소
         weaponStats.currentAmmo += ammoCount;   // 최대 장탄 수 만큼만 장전, 현재 장탄 수 보존
 
         // UI 업데이트
@@ -87,6 +112,6 @@ public class TGItemWeapon : TGItem
     //
     private void AccurateCalc()
     {
-        float accurate = Random.Range(-characterStats.currentAccuracy, characterStats.currentAccuracy);
+        float accurate = Random.Range(-weaponStats.currentAccuracy, weaponStats.currentAccuracy);
     }
 }

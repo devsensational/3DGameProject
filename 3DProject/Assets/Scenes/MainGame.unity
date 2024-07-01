@@ -762,6 +762,11 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &161259706 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 49389282621848562, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
+  m_PrefabInstance: {fileID: 881201344}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &190593129 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3475188255602446414, guid: a519f03aee53c45bebfe44df6939bd67, type: 3}
@@ -9503,6 +9508,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 831960764}
   m_CullTransparentMesh: 1
+--- !u!1 &837487066 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1173561339246337368, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
+  m_PrefabInstance: {fileID: 7515093574800161374}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &853846610
 GameObject:
   m_ObjectHideFlags: 0
@@ -9645,6 +9655,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1024913528279526773, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.071
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024913528279526773, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.382
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024913528279526773, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024913528279526773, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024913528279526773, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024913528279526773, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024913528279526773, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1375323134619797793, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
+      propertyPath: Muzzle
+      value: 
+      objectReference: {fileID: 161259706}
+    - target: {fileID: 1375323134619797793, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
+      propertyPath: ProjectilePrefab
+      value: 
+      objectReference: {fileID: 4000347302891274641, guid: 9ebe53acbff9316429d980610452a010, type: 3}
     - target: {fileID: 1402784742316536118, guid: b757d377a159bc74d93c42d9402c108a, type: 3}
       propertyPath: m_Name
       value: Item_Weapon_AK47
@@ -12135,7 +12181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e46da7756dc903a4d816edbc472e6fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: Ammo
+  objectName: PrimaryAmmo
   objectType: 3
   ItemModel: {fileID: 2007086506}
   groundTag: Terrain
@@ -12712,7 +12758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e46da7756dc903a4d816edbc472e6fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: Ammo
+  objectName: PrimaryAmmo
   objectType: 3
   ItemModel: {fileID: 915945085}
   groundTag: Terrain
@@ -12839,7 +12885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e46da7756dc903a4d816edbc472e6fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: Ammo
+  objectName: PrimaryAmmo
   objectType: 3
   ItemModel: {fileID: 550987959}
   groundTag: Terrain
@@ -23255,6 +23301,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3982376968561478000, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
+      propertyPath: Muzzle
+      value: 
+      objectReference: {fileID: 837487066}
+    - target: {fileID: 3982376968561478000, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
+      propertyPath: ProjectilePrefab
+      value: 
+      objectReference: {fileID: 4000347302891274641, guid: 9ebe53acbff9316429d980610452a010, type: 3}
     - target: {fileID: 6735562050952014091, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
       propertyPath: m_Name
       value: Item_Weapon_FAMAS

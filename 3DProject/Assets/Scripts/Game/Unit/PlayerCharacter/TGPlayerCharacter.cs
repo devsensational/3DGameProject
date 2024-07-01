@@ -28,9 +28,14 @@ public class TGPlayerCharacter : TGCharacter
         eventManager.StopListening(EEventType.DropItemFromInventory, CommandDropItem);
     }
 
-    private void Start()
+    void Start()
     {
         eventManager = TGEventManager.Instance;
+    }
+
+    private void Update()
+    {
+
     }
 
     void OnTriggerEnter(Collider other) // 트리거와 충돌할 때 실행되는 메소드

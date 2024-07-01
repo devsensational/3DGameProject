@@ -9,7 +9,7 @@ public class TGProjectile : TGObject
 
     Vector3 direction;
 
-    float velocity = 1;
+    float velocity = 20;
 
     //Unity lifecycle
     private void Update()

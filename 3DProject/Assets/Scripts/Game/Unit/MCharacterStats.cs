@@ -7,5 +7,6 @@ public class MCharacterStats
 {
     public float hp                 = 100f;
     public float velocity           = 0f;
-    public float currentAccuracy    = 1.0f;
+
+    public MWeaponStats weaponStats = null;
 }

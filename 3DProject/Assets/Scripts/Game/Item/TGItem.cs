@@ -115,8 +115,7 @@ public class TGItem : TGObject
         Debug.Log($"(TGItem:OnHandInThisItem) Updated item button UI");
     }
 
-    // 아이템이 땅 위에 
-    void DropToGround()
+    void DropToGround()     // 아이템을 땅위에 눕혀서 드랍시킬 때 사용하는 메소드
     {
         RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.down, maxRayDistance);
 
@@ -149,6 +148,18 @@ public class TGItem : TGObject
         else
         {
             Debug.Log("(TGItem) Raycast did not hit anything.");
+        }
+    }
+
+    public void ReduceItemCount(int value) // 아이템 카운트를 외부로 부터 감소시킬 때 사용
+    {
+        if (itemCount >= 1)
+        {
+            itemCount -= value;
+            if (itemCount <= 0) 
+            { 
+                Destroy(gameObject); 
+            }
         }
     }
 

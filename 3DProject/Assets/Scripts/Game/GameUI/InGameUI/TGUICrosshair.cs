@@ -11,13 +11,12 @@ public class TGUICrosshair : MonoBehaviour
     public RectTransform leftPart;
     public RectTransform rightPart;
 
-    [Range(0, 1)]
     public float accuracy; // 명중률 (0.0f ~ 1.0f 사이)
 
     // private
     // references
     TGPlayerCharacter   playerCharacter;
-    MCharacterStats     characterStats;
+    MWeaponStats        characterWeaponStats;
     TGEventManager      eventManager;
 
     //Unity lifecycle
@@ -36,13 +35,14 @@ public class TGUICrosshair : MonoBehaviour
     void InitReferences()
     {
         playerCharacter = GameObject.Find("PlayerCharacter").GetComponent<TGPlayerCharacter>();
-        characterStats = playerCharacter.characterStat;
+        characterWeaponStats = playerCharacter.characterStat.weaponStats;
         eventManager = TGEventManager.Instance;
     }
 
     void InitEvent()
     {
-        eventManager.StartListening(EEventType.ToggleInventoryUI, OnToggleUI); //인벤토리 킬 때 토글
+        eventManager.StartListening(EEventType.ToggleInventoryUI, OnToggleUI);      //인벤토리 킬 때 토글
+        eventManager.StartListening(EEventType.ChangeHandItem, OnChangeInHandItem); //InHandItem 변경 시 아이템 스탯 반영
     }
 
     // 명중률 업데이트 함수
@@ -51,10 +51,22 @@ public class TGUICrosshair : MonoBehaviour
         accuracy = Mathf.Clamp01(newAccuracy);
     }
 
+    void OnChangeInHandItem(object parameter)
+    {
+        TGItemWeapon weaponPtr = (TGItemWeapon)parameter;
+
+        characterWeaponStats = weaponPtr.weaponStats;
+        Debug.Log($"(TGUICrosshair:OnChangeInHandItem) Set weapon stats, now default accuracy: {characterWeaponStats.currentAccuracy}");
+    }
+
     void OnCrosshairUpdate()
     {
+        if (characterWeaponStats == null) return;
+
         // 명중률에 따른 크기 조정 (예: 명중률이 낮을수록 더 커짐)
-        float size = Mathf.Lerp(0, 200, 1.0f - characterStats.currentAccuracy);
+        float size = Mathf.Lerp(0, 200, characterWeaponStats.currentAccuracy);
+        accuracy = characterWeaponStats.currentAccuracy;
+
         centerSquare.sizeDelta = new Vector2(size, size);
 
         // 십자선 파츠 위치 업데이트

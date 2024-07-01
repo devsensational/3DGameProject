@@ -120,6 +120,13 @@ public class TGCharacter : TGObject
         {
             nextItem.OnHandInThisItem();
             inHandItem = nextItem.equipmentType;
+
+            TGItemWeapon weaponPtr = (TGItemWeapon)equipItems[inHandItem];
+            if (weaponPtr != null)
+            {
+                characterStat.weaponStats = weaponPtr.weaponStats; //
+                Debug.Log($"(TGCharacter:ChangeInHandItem) Weapon switch");
+            }
         }
     }
 
