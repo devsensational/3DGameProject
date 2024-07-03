@@ -6,7 +6,7 @@ using UnityEngine;
 public class TGItem : TGObject
 {
     //Inspector
-    public GameObject ItemModel;
+    public GameObject itemModel;
     public string groundTag = "Terrain"; // 바닥에 사용할 태그
 
     public int itemCount = 0; //아이템의 갯수
@@ -62,7 +62,7 @@ public class TGItem : TGObject
         isDropped = true;           //떨어져 있는 상태로 변경
         isHandIn = false;   
         transform.SetParent(null);  //부모 해제
-        ItemModel.SetActive(true);
+        itemModel.SetActive(true);
 
         DropToGround();
 
@@ -88,7 +88,7 @@ public class TGItem : TGObject
 
         if(chracterComponent.GetInHandItem() != equipmentType)
         {
-            ItemModel.SetActive(false);
+            itemModel.SetActive(false);
         }
 
     }
@@ -98,13 +98,13 @@ public class TGItem : TGObject
         if(isHandIn)
         {
             isHandIn = false;
-            ItemModel.SetActive(false);
+            itemModel.SetActive(false);
             Debug.Log($"(TGItem:OnHandInThisItem) {objectName} hand off from {itemHolder.name}");
         }
         else
         {
             isHandIn = true;
-            ItemModel.SetActive(true);
+            itemModel.SetActive(true);
             Debug.Log($"(TGItem:OnHandInThisItem) {objectName} on hand to {itemHolder.name}");
         }
     }

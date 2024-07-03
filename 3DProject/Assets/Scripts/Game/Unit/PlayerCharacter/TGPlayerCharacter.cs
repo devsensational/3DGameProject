@@ -86,7 +86,7 @@ public class TGPlayerCharacter : TGCharacter
     {
         TGItem itemPtr = (TGItem)parameter;
 
-        if (itemPtr.equipmentType == inHandItem)
+        if (itemPtr.equipmentType == HandInItem)
         {
             eventManager.TriggerEvent(EEventType.RemoveItemInfoUIText, null);
         }
@@ -98,9 +98,9 @@ public class TGPlayerCharacter : TGCharacter
     {
         if (equipItems[itemType] == null) return;
 
-        if(inHandItem != itemType)
+        if(HandInItem != itemType)
         {
-            ChangeInHandItem(equipItems[inHandItem], equipItems[itemType]);
+            ChangeInHandItem(equipItems[HandInItem], equipItems[itemType]);
             eventManager.TriggerEvent(EEventType.ChangeHandItem, equipItems[itemType]);
             eventManager.TriggerEvent(EEventType.UpdateItemInfo, equipItems[itemType]);
         } 
@@ -110,7 +110,7 @@ public class TGPlayerCharacter : TGCharacter
     { 
         TGItem itemPtr = (TGItem)parameter;
 
-        if (itemPtr.equipmentType == inHandItem)
+        if (itemPtr.equipmentType == HandInItem)
         {
             eventManager.TriggerEvent(EEventType.RemoveItemInfoUIText, null);
         }
@@ -121,18 +121,18 @@ public class TGPlayerCharacter : TGCharacter
 
     public void CommandUseInHandItem()
     {
-        if (equipItems[inHandItem] == null) return;
+        if (equipItems[HandInItem] == null) return;
 
-        equipItems[inHandItem].UseItem();
+        equipItems[HandInItem].UseItem();
     }
 
     public void CommandReloadInHandItem()
     {
-        if (equipItems[inHandItem] == null) return;
+        if (equipItems[HandInItem] == null) return;
 
-        if (equipItems[inHandItem].equipmentType != EEquipmentType.None)
+        if (equipItems[HandInItem].equipmentType != EEquipmentType.None)
         {
-            TGItemWeapon weaponPtr = (TGItemWeapon)equipItems[inHandItem];
+            TGItemWeapon weaponPtr = (TGItemWeapon)equipItems[HandInItem];
             if (weaponPtr.CommandReload()) // 재장전이 성공적으로 실행됐을 때 수행
             {
                 eventManager.TriggerEvent(EEventType.StartCircleTimerUI, weaponPtr.weaponStats.reloadTime);
@@ -141,5 +141,4 @@ public class TGPlayerCharacter : TGCharacter
             Debug.Log("(TGPlayerCharacter:CommandReloadInHandItem) Command reload");
         }
     }
-
 }

@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class TGUICircleTimer : MonoBehaviour
 {
     // Insepector
-    public TMP_Text TimerText;
-    public Image    ProgressCircle;
+    public TMP_Text timerText;
+    public Image    progressCircle;
 
     // private
     float timeValue;    // 받은 타이머 시간
@@ -28,7 +28,7 @@ public class TGUICircleTimer : MonoBehaviour
         
         timeValue = (float)parameter;
         currentTime = timeValue;
-        TimerText.text = $"{currentTime}";
+        timerText.text = $"{currentTime}";
 
         StartCoroutine(TimerCoroutine()); // 타이머 코루틴 실행
     }
@@ -47,11 +47,11 @@ public class TGUICircleTimer : MonoBehaviour
             currentTime -= Time.deltaTime;
 
             // 타이머 텍스트 업데이트
-            TimerText.text = $"{currentTime:F1}";
+            timerText.text = $"{currentTime:F1}";
 
             // Progress circle 비율 업데이트
             float fillRatio = Mathf.Clamp01(currentTime / timeValue);
-            ProgressCircle.fillAmount = fillRatio;
+            progressCircle.fillAmount = fillRatio;
         }
         Debug.Log("(TGUICircleTimer:TimerCoroutine) End circle timer");
         HideCircleTimer(null);

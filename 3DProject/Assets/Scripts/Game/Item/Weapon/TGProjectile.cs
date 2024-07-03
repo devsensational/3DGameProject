@@ -1,34 +1,54 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TGProjectile : TGObject
 {
-    //private
-    TGItemWeapon parentWeapon;
+    //Insepector
+    public float releaseTime = 10;
 
-    Vector3 direction;
+    //private
+    Rigidbody rb; // rigidbody ref
 
     float velocity = 20;
 
+    bool isFlying = false;
+
     //Unity lifecycle
-    private void Update()
+    private void Awake()
     {
-        Fly();
+        rb = GetComponent<Rigidbody>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void Update()
     {
-        if (collision != null)
+        if (isFlying)
+        {
+            //Fly();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log($"(TGProjectile:OnTriggerEnter) {transform.name}'s projectile collides with {other.gameObject.name}");
+
+        if (other != null)
         {
             OnProjectileImpact();
         }
     }
 
     //
-    public void CommandFire(Vector3 direction) // 발사가 호출됐을 때
+    public void CommandFire(Vector3 muzzlePosition, Quaternion muzzleRotation, float velocity) // 발사가 호출됐을 때
     {
-        enabled = true;
+        transform.position  = muzzlePosition;
+        transform.rotation  = muzzleRotation;
+        //rb.velocity         = transform.forward * velocity;
+        rb.velocity = transform.forward *  0f;
+        isFlying = true;
+
+        Invoke("ReleaseProjectile", releaseTime); //
     }
 
     private void Fly() // 발사체 비행
@@ -38,6 +58,13 @@ public class TGProjectile : TGObject
 
     private void OnProjectileImpact() // 날아가던 도중 게임 오브젝트에 닿아 막혔을 때
     {
+        rb.velocity = Vector3.zero;
+        isFlying = false;
+    }
+
+    private void ReleaseProjectile()
+    {
+        TGObjectPoolManager.Instance.ReleaseTGObject(ETGObjectType.Projectile, gameObject);
 
     }
 }

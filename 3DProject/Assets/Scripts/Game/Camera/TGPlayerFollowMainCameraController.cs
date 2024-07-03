@@ -9,20 +9,20 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
     //public
     //카메라 옵션
     [Header("Camera Parameter")]
-    public float CameraHeight;                      //카메라 높이
+    public float cameraHeight;                      //카메라 높이
 
     public float cameraCurrentDistance = 0.5f;      //카메라와 플레이어사이의 거리
-    public float CameraZoomDistanceUnit = 0.2f;     //카메라 줌 확대/축소 시 이동 거리
-    public float MaxCameraZoomDistance;             //카메라 줌 최대 거리
-    public float MinCameraZoomDistance;             //카메라 줌 최소 거리
-    [Range(0, 5)]
-    public float CameraRotationSensitive = 3f;      //카메라 회전 감도
+    public float cameraZoomDistanceUnit = 0.2f;     //카메라 줌 확대/축소 시 이동 거리
+    public float maxCameraZoomDistance;             //카메라 줌 최대 거리
+    public float minCameraZoomDistance;             //카메라 줌 최소 거리
+    [Range(0, 100)]
+    public float cameraRotationSensitive = 40f;      //카메라 회전 감도
     [Range(0, 1)]
-    public float SmoothTime = 0.12f;                //카메라가 회전하는데 걸리는 시간
-    public float RotationMin = -10f;                //카메라 회전각도 최소
-    public float RotationMax = 90f;                 //카메라 회전각도 최대
+    public float smoothTime = 0.12f;                //카메라가 회전하는데 걸리는 시간
+    public float rotationMin = -10f;                //카메라 회전각도 최소
+    public float rotationMax = 90f;                 //카메라 회전각도 최대
 
-    public Transform Target;                        //플레이어 캐릭터 ref
+    public Transform target;                        //플레이어 캐릭터 ref
     public Transform FPPTarget;                     //1인칭 타겟
 
     //private
@@ -34,8 +34,8 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
     Vector3 targetRotation;
     Vector3 currentVel;
 
-    float Yaxis;
-    float Xaxis;
+    float yAxis;
+    float xAxis;
 
     bool isMouseCursorLock  = false;
     bool isTPP              = true;
@@ -76,7 +76,7 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
     //Init
     void InitReferences()
     {
-        cameraHeightVec3    = new Vector3(0, CameraHeight, 0);
+        cameraHeightVec3    = new Vector3(0, cameraHeight, 0);
         keyValuePairs       = TGPlayerKeyManager.Instance.KeyValuePairs;
         eventManager        = TGEventManager.Instance;
     }
@@ -89,18 +89,18 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
     // 카메라 컨트롤 관련 메소드
     void PlayerCameraFollow()
     {
-        transform.position = cameraHeightVec3 + Target.position - transform.forward * cameraCurrentDistance; // 카메라 위치 갱신, "dist"에 따라 거리 조절
+        transform.position = cameraHeightVec3 + target.position - transform.forward * cameraCurrentDistance; // 카메라 위치 갱신, "dist"에 따라 거리 조절
 
     }
 
     void PlayerMainCameraControl()
     {
-        Yaxis += Input.GetAxis("Mouse X") * CameraRotationSensitive; // 마우스 좌우움직임을 입력받아서 카메라의 Y축을 회전
-        Xaxis -= Input.GetAxis("Mouse Y") * CameraRotationSensitive; // 마우스 상하움직임을 입력받아서 카메라의 X축을 회전
+        yAxis += Input.GetAxis("Mouse X") * cameraRotationSensitive * 10 * Time.deltaTime; // 마우스 좌우움직임을 입력받아서 카메라의 Y축을 회전
+        xAxis -= Input.GetAxis("Mouse Y") * cameraRotationSensitive * 10 * Time.deltaTime; // 마우스 상하움직임을 입력받아서 카메라의 X축을 회전
 
-        Xaxis = Mathf.Clamp(Xaxis, RotationMin, RotationMax); // X축회전 제한
+        xAxis = Mathf.Clamp(xAxis, rotationMin, rotationMax); // X축회전 제한
 
-        targetRotation = Vector3.SmoothDamp(targetRotation, new Vector3(Xaxis, Yaxis), ref currentVel, SmoothTime);
+        targetRotation = Vector3.SmoothDamp(targetRotation, new Vector3(xAxis, yAxis), ref currentVel, smoothTime);
         transform.eulerAngles = targetRotation;
     }
 
@@ -111,11 +111,11 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
 
         if (scroll > 0f) // 마우스 휠 업
         {
-            cameraCurrentDistance -= cameraCurrentDistance > MinCameraZoomDistance ? CameraZoomDistanceUnit : 0;
+            cameraCurrentDistance -= cameraCurrentDistance > minCameraZoomDistance ? cameraZoomDistanceUnit : 0;
         }
         else if (scroll < 0f) // 마우스 휠 다운
         {
-            cameraCurrentDistance += cameraCurrentDistance < MaxCameraZoomDistance ? CameraZoomDistanceUnit : 0;
+            cameraCurrentDistance += cameraCurrentDistance < maxCameraZoomDistance ? cameraZoomDistanceUnit : 0;
         }
     }
 

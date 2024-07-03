@@ -8,14 +8,14 @@ public class TGUIInventory : MonoBehaviour
 {
     // Inspector    
     public GameObject UIHideSpace;              // UI가 숨겨질 공간의 리스트를 할당
-    public GameObject LootableContent;          // 루팅 가능한 목록에 대한 Content를 할당
-    public GameObject InventoryContent;         // 루팅이 된 인벤토리 목록에 대한 Content를 할당
-    public GameObject PrimaryWeaponContent;     // 주무기 Content를 할당
-    public GameObject SecondaryWeaponContent;   // 보조무기 Content를 할당 
+    public GameObject lootableContent;          // 루팅 가능한 목록에 대한 Content를 할당
+    public GameObject inventoryContent;         // 루팅이 된 인벤토리 목록에 대한 Content를 할당
+    public GameObject primaryWeaponContent;     // 주무기 Content를 할당
+    public GameObject secondaryWeaponContent;   // 보조무기 Content를 할당 
     //추가적인 슬롯의 경우 위 Inspector에 추가하고 "InitUIType" 메소드에 Key를 추가할 것
 
     public GameObject UIPrefab; // 생성할 UI 프리팹을 할당(버튼)
-    public Dictionary<EEquipmentType, GameObject> ContentDictionary = new Dictionary<EEquipmentType, GameObject>(); // 콘텐츠UI에 아이템 타입을 할당하여 자동으로 부모가 설정되도록 하는 딕셔너리
+    public Dictionary<EEquipmentType, GameObject> contentDictionary = new Dictionary<EEquipmentType, GameObject>(); // 콘텐츠UI에 아이템 타입을 할당하여 자동으로 부모가 설정되도록 하는 딕셔너리
 
     //private
     //References
@@ -71,8 +71,8 @@ public class TGUIInventory : MonoBehaviour
 
     void InitUIType()
     {
-        ContentDictionary.Add(EEquipmentType.PrimaryWeapon,      PrimaryWeaponContent);
-        ContentDictionary.Add(EEquipmentType.SecondaryWeapon,    SecondaryWeaponContent);
+        contentDictionary.Add(EEquipmentType.PrimaryWeapon,      primaryWeaponContent);
+        contentDictionary.Add(EEquipmentType.SecondaryWeapon,    secondaryWeaponContent);
     }
 
     //키 컨트롤
@@ -126,7 +126,7 @@ public class TGUIInventory : MonoBehaviour
             CreateUILootableButton(ptrItem);
         }
         TGUILootableItemInterective ptrUI = lootableItemUIDictionary[ptrItem];
-        ptrUI.transform.SetParent(LootableContent.transform);
+        ptrUI.transform.SetParent(lootableContent.transform);
     }
 
     // 버튼을 타입에 맞는 리스트로 이동시키는 메소드
@@ -137,11 +137,11 @@ public class TGUIInventory : MonoBehaviour
 
         if(ptrItem.equipmentType != EEquipmentType.None)
         {
-            ptrUI.transform.SetParent(ContentDictionary[ptrItem.equipmentType].transform);
+            ptrUI.transform.SetParent(contentDictionary[ptrItem.equipmentType].transform);
         }
         else
         {
-            ptrUI.transform.SetParent(InventoryContent.transform);
+            ptrUI.transform.SetParent(inventoryContent.transform);
         }
     }
 

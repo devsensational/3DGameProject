@@ -7,9 +7,10 @@ using static UnityEditor.Progress;
 public class TGPlayerCharacterController : MonoBehaviour
 {
     // inspector
-    public GameObject MainCamera;
-    [Header("Movement Parameter")]
+    public GameObject mainCamera;
+
     // 캐릭터 이동 속도 최대치 설정
+    [Header("Movement Parameter")]
     public float forwardSpeed           = 7.0f;
     public float backwardSpeed          = 2.0f;
     public float sidestepSpeed          = 5.0f;
@@ -28,7 +29,7 @@ public class TGPlayerCharacterController : MonoBehaviour
     Vector3 currentVel;
 
     float Yaxis = 0;
-
+    float xRotation = 0;
     //Unity lifecycle
     void Start()
     {
@@ -45,6 +46,7 @@ public class TGPlayerCharacterController : MonoBehaviour
         MoveControl();
         EquipContorl();
         FollowRotationCamera();
+        HandInItemFollowCameraRotation();
     }
 
     //Init
@@ -102,10 +104,10 @@ public class TGPlayerCharacterController : MonoBehaviour
     //카메라와 같이 회전하는 메소드
     void FollowRotationCamera()
     {
-        if (MainCamera != null)
+        if (mainCamera != null)
         {
             // 카메라의 x축 회전값 가져오기
-            float cameraRotationY = MainCamera.transform.eulerAngles.y;
+            float cameraRotationY = mainCamera.transform.eulerAngles.y;
 
             // 현재 게임 오브젝트의 회전값을 가져와서 x축 회전값만 변경
             Vector3 targetRotation = transform.rotation.eulerAngles;
@@ -114,6 +116,16 @@ public class TGPlayerCharacterController : MonoBehaviour
             // 새로운 회전값을 Quaternion으로 변환하여 게임 오브젝트에 적용
             transform.rotation = Quaternion.Euler(targetRotation);
         }
+    }
+
+    protected void HandInItemFollowCameraRotation()
+    {
+        if (mainCamera == null) return;
+        if (playerCharacter.HandInItem == EEquipmentType.Default || playerCharacter.HandInItem == EEquipmentType.None) return;
+
+        Vector3 cameraRotation = mainCamera.transform.localEulerAngles;
+        playerCharacter.equipItems[playerCharacter.HandInItem].transform.localRotation = Quaternion.Euler(cameraRotation.x, 0f, 0f);
+
     }
 
     // 아이템 관련 메소드

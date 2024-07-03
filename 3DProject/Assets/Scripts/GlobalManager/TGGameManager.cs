@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TGGameManager : UMonoSingleton<TGGameManager>
 {
     //Inspector
-    [Range(0, 5)]
-    public float CameraRotationSensitive = 3f;      //카메라 회전 감도
+    [Range(0, 100)]
+    public float CameraRotationSensitive = 40f;      //카메라 회전 감도
     [Header("Script Files")]
     public TextAsset WeaponStatsScript = null;
 
@@ -35,5 +36,10 @@ public class TGGameManager : UMonoSingleton<TGGameManager>
     private void LoadWeaponStats()
     {
         loadedWeaponStatDict = jsonUtility.LoadJsonFile<Dictionary<string, MWeaponStats>>(WeaponStatsScript);
+    }
+
+    public float GetCameraRotationSensitive()
+    {
+        return CameraRotationSensitive * 10;
     }
 }

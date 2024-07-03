@@ -16,8 +16,9 @@ public class TGCharacter : TGObject
 
     public Dictionary<EItemType, TGItem> inventory = new Dictionary<EItemType, TGItem>(); // 주운 아이템 리스트
 
+    public EEquipmentType HandInItem = EEquipmentType.Default;   //플레이어 캐릭터가 들고 있는 아이템 type
+
     //protected
-    protected EEquipmentType inHandItem = EEquipmentType.Default;   //플레이어 캐릭터가 들고 있는 아이템 type
     protected TGEventManager eventManager;  //이벤트매니저
     //private
 
@@ -93,9 +94,9 @@ public class TGCharacter : TGObject
         if (ptrItem.equipmentType != EEquipmentType.None) //장비 아이템일 경우 장비아이템 해제
         {
             equipItems[ptrItem.equipmentType] = null;
-            if (inHandItem == ptrItem.equipmentType)
+            if (HandInItem == ptrItem.equipmentType)
             {
-                inHandItem = EEquipmentType.Default; // 손에 들고 있는 장비일 경우 handInItem 해제
+                HandInItem = EEquipmentType.Default; // 손에 들고 있는 장비일 경우 handInItem 해제
             }
         }
 
@@ -119,9 +120,9 @@ public class TGCharacter : TGObject
         if (nextItem != null)
         {
             nextItem.OnHandInThisItem();
-            inHandItem = nextItem.equipmentType;
+            HandInItem = nextItem.equipmentType;
 
-            TGItemWeapon weaponPtr = (TGItemWeapon)equipItems[inHandItem];
+            TGItemWeapon weaponPtr = (TGItemWeapon)equipItems[HandInItem];
             if (weaponPtr != null)
             {
                 characterStat.weaponStats = weaponPtr.weaponStats; //
@@ -133,7 +134,7 @@ public class TGCharacter : TGObject
     
     public EEquipmentType GetInHandItem() // getter/setter
     {
-        return inHandItem;
+        return HandInItem;
     }
 
     // child

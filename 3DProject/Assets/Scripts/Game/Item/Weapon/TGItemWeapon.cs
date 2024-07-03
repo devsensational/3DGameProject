@@ -15,8 +15,8 @@ enum EWeaponStateFlags
 public class TGItemWeapon : TGItem
 {
     // Insepector
-    public GameObject ProjectilePrefab;    //발사 시 생성될 총알 프리팹
-    public GameObject Muzzle;              //총알이 발사될 위치
+    public GameObject projectilePrefab;    //발사 시 생성될 총알 프리팹
+    public GameObject muzzle;              //총알이 발사될 위치
     
     // public
     public MWeaponStats weaponStats { get; protected set; }
@@ -49,7 +49,7 @@ public class TGItemWeapon : TGItem
 
     void InitObjectPool()
     {
-        objectPoolManager.CreateTGObjectPool(ETGObjectType.Projectile, ProjectilePrefab, 10, 100);
+        objectPoolManager.CreateTGObjectPool(ETGObjectType.Projectile, projectilePrefab, 10, 100);
     }
 
     // 공격 메커니즘 관련 메소드
@@ -65,10 +65,15 @@ public class TGItemWeapon : TGItem
 
     protected virtual void FireWeapon()
     {
-        GameObject projectilePtr = objectPoolManager.GetTGObject(ETGObjectType.Projectile); // 오브젝트 풀에서 발사체 활성화
-        projectilePtr.transform.position = Muzzle.transform.position; // 발사체의 위치를 머즐로 이동
+        TGProjectile projectilePtr = objectPoolManager.GetTGObject(ETGObjectType.Projectile).GetComponent<TGProjectile>(); // 오브젝트 풀에서 발사체 활성화
 
-        Debug.Log($"(TGItemWeapon:FireWeapon) {objectName} Fired {projectilePtr}");
+        // currentAccuracy를 반영하여 발사체의 방향을 결정
+
+        Quaternion direction = AccurateCalc(weaponStats.currentAccuracy);
+        Vector3 position = muzzle.transform.position;
+        projectilePtr.CommandFire(position, direction, weaponStats.bulletVelocity);
+
+        Debug.Log($"(TGItemWeapon:FireWeapon) {objectName} Fires {projectilePtr}");
     }
 
     public virtual bool CommandReload()     // 장전 메소드를 외부로 부터 호출
@@ -110,8 +115,13 @@ public class TGItemWeapon : TGItem
     }
 
     //
-    private void AccurateCalc()
+    private Quaternion AccurateCalc(float accuracy)
     {
-        float accurate = Random.Range(-weaponStats.currentAccuracy, weaponStats.currentAccuracy);
+        float xRotation = Random.Range(-accuracy, accuracy);
+        float yRotation = Random.Range(-accuracy, accuracy);
+
+        Quaternion deltaRotation = Quaternion.Euler(xRotation, yRotation, 0f);
+
+        return transform.rotation * deltaRotation;
     }
 }
