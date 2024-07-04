@@ -22933,6 +22933,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_Weapon_EAGLE
       objectReference: {fileID: 0}
+    - target: {fileID: 4809114564294161469, guid: c21ebabe3b1d67b44a8f375347aa2fcf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5605313684449169227, guid: c21ebabe3b1d67b44a8f375347aa2fcf, type: 3}
       propertyPath: muzzle
       value: 
@@ -23021,6 +23025,10 @@ PrefabInstance:
     - target: {fileID: 6735562050952014091, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
       propertyPath: m_Name
       value: Item_Weapon_FAMAS
+      objectReference: {fileID: 0}
+    - target: {fileID: 6735562050952014091, guid: e830f115a42a0094c86a9bf126ba1726, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

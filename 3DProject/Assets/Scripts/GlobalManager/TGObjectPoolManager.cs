@@ -75,8 +75,7 @@ public class TGObjectPoolManager : UMonoSingleton<TGObjectPoolManager>
         return poolDictionary[type];
     }
 
-    // 풀에서 객체를 가져오는 메서드
-    public GameObject GetTGObject(ETGObjectType type)
+    public GameObject GetTGObject(ETGObjectType type)    // 풀에서 객체를 가져오는 메소드
     {
         if (poolDictionary.ContainsKey(type) && poolDictionary[type] != null)
         {
@@ -87,8 +86,22 @@ public class TGObjectPoolManager : UMonoSingleton<TGObjectPoolManager>
         return null;
     }
 
-    // 객체를 풀에 다시 릴리즈하는 메서드
-    public void ReleaseTGObject(ETGObjectType type, GameObject ptrObject)
+    public GameObject GetTGObject(ETGObjectType type, Vector3 position, Quaternion rotation)
+    {
+        if (poolDictionary.ContainsKey(type) && poolDictionary[type] != null)
+        {
+            GameObject obj = poolDictionary[type].Get();
+            obj.transform.position = position;
+            obj.transform.rotation = rotation;
+
+            return obj;
+        }
+
+        Debug.LogError($"Pool for type {type} does not exist.");
+        return null;
+    }
+
+    public void ReleaseTGObject(ETGObjectType type, GameObject ptrObject)     // 객체를 풀에 다시 릴리즈하는 메소드
     {
         if (poolDictionary.ContainsKey(type) && poolDictionary[type] != null)
         {

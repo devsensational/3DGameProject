@@ -38,13 +38,16 @@ public class TGPlayerCharacterController : MonoBehaviour
 
     void FixedUpdate()
     {
-
     }
 
     void LateUpdate()
     {
-        MoveControl();
+    }
+
+    private void Update()
+    {
         EquipContorl();
+        MoveControl();
         FollowRotationCamera();
         HandInItemFollowCameraRotation();
     }

@@ -42,13 +42,14 @@ public class TGProjectile : TGObject
     //
     public void CommandFire(Vector3 muzzlePosition, Quaternion muzzleRotation, float velocity) // 발사가 호출됐을 때
     {
-        transform.position  = muzzlePosition;
         transform.rotation  = muzzleRotation;
-        //rb.velocity         = transform.forward * velocity;
-        rb.velocity = transform.forward *  0f;
+        transform.position = muzzlePosition;
+        rb.velocity         = transform.forward * velocity;
+        //rb.velocity = transform.forward *  0f;
         isFlying = true;
 
-        Invoke("ReleaseProjectile", releaseTime); //
+        Debug.Log($"(TGProjectile:CommandFire) muzzlePosition: {muzzlePosition}, ProjectilePositino: {transform.position}");
+        //Invoke("ReleaseProjectile", releaseTime); //
     }
 
     private void Fly() // 발사체 비행

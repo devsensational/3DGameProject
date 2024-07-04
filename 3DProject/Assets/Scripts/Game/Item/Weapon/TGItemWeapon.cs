@@ -29,6 +29,7 @@ public class TGItemWeapon : TGItem
 
     bool    isReloading = false;
     int     weaponState = 0;
+
     //Unity lifetime
     protected override void ChildStart()
     {
@@ -65,15 +66,19 @@ public class TGItemWeapon : TGItem
 
     protected virtual void FireWeapon()
     {
-        TGProjectile projectilePtr = objectPoolManager.GetTGObject(ETGObjectType.Projectile).GetComponent<TGProjectile>(); // 오브젝트 풀에서 발사체 활성화
+        Vector3     muzzlePosition  = muzzle.transform.position;
+        Quaternion  direction       = AccurateCalc(weaponStats.currentAccuracy);
+
+        //TGProjectile projectilePtr = objectPoolManager.GetTGObject(ETGObjectType.Projectile).GetComponent<TGProjectile>(); // 오브젝트 풀에서 발사체 활성화
+        TGProjectile projectilePtr = Instantiate(projectilePrefab, muzzlePosition, direction).GetComponent<TGProjectile>();
 
         // currentAccuracy를 반영하여 발사체의 방향을 결정
 
-        Quaternion direction = AccurateCalc(weaponStats.currentAccuracy);
-        Vector3 position = muzzle.transform.position;
-        projectilePtr.CommandFire(position, direction, weaponStats.bulletVelocity);
+        //projectilePrefab.transform.position = muzzlePosition;
+        projectilePtr.CommandFire(muzzlePosition, direction, weaponStats.bulletVelocity);
 
         Debug.Log($"(TGItemWeapon:FireWeapon) {objectName} Fires {projectilePtr}");
+        // 발사 시 총알이 가운데로 가는 문제 수정 필요 
     }
 
     public virtual bool CommandReload()     // 장전 메소드를 외부로 부터 호출
@@ -114,8 +119,7 @@ public class TGItemWeapon : TGItem
         Debug.Log($"(TGItemWeapon:Reload) End reload, current Ammo = {weaponStats.currentAmmo}");
     }
 
-    //
-    private Quaternion AccurateCalc(float accuracy)
+    private Quaternion AccurateCalc(float accuracy)    // 명중률 계산 메소드
     {
         float xRotation = Random.Range(-accuracy, accuracy);
         float yRotation = Random.Range(-accuracy, accuracy);
