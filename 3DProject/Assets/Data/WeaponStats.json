@@ -9,8 +9,9 @@
     "currentAccuracy": 0.1,
     "aimingAccuracy": 0.0,
     "minAccuracy": 0.8,
-    "bulletVelocity": 100.0,
+    "bulletVelocity": 300.0,
     "reloadTime": 3.0,
+	"range": 800.0,
     "maxAmmo": 30,
     "currentAmmo": 0
   },
@@ -24,8 +25,9 @@
     "currentAccuracy": 0.4,
     "aimingAccuracy": 0.1,
     "minAccuracy": 0.8,
-    "bulletVelocity": 5.0,
+    "bulletVelocity": 50.0,
     "reloadTime": 3.0,
+	"range": 100.0,
     "maxAmmo": 30,
     "currentAmmo": 0
   },
@@ -41,6 +43,7 @@
     "minAccuracy": 0.8,
     "bulletVelocity": 100.0,
     "reloadTime": 1.5,
+	"range": 800.0,
     "maxAmmo": 7,
     "currentAmmo": 0
   },
@@ -56,6 +59,7 @@
     "minAccuracy": 0.8,
     "bulletVelocity": 100.0,
     "reloadTime": 3.0,
+	"range": 800.0,
     "maxAmmo": 25,
     "currentAmmo": 0
   },

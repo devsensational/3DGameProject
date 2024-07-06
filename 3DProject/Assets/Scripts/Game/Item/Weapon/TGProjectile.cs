@@ -40,16 +40,19 @@ public class TGProjectile : TGObject
     }
 
     //
-    public void CommandFire(Vector3 muzzlePosition, Quaternion muzzleRotation, float velocity) // 발사가 호출됐을 때
+    public void CommandFire(Vector3 muzzlePosition, Quaternion muzzleRotation, float velocity, float mass) // 발사가 호출됐을 때
     {
-        transform.rotation  = muzzleRotation;
+        transform.rotation = muzzleRotation;
         transform.position = muzzlePosition;
-        rb.velocity         = transform.forward * velocity;
-        //rb.velocity = transform.forward *  0f;
+
+        //Rigidbody 파라미터 변경
+        rb.MovePosition(muzzlePosition);
+        rb.velocity = transform.forward * velocity;
+        rb.mass     = mass;
+
         isFlying = true;
 
-        Debug.Log($"(TGProjectile:CommandFire) muzzlePosition: {muzzlePosition}, ProjectilePositino: {transform.position}");
-        //Invoke("ReleaseProjectile", releaseTime); //
+        Invoke("ReleaseProjectile", releaseTime); // 몇 초 후 오브젝트 릴리즈
     }
 
     private void Fly() // 발사체 비행

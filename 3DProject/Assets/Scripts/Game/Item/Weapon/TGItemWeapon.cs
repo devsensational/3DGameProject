@@ -67,15 +67,12 @@ public class TGItemWeapon : TGItem
     protected virtual void FireWeapon()
     {
         Vector3     muzzlePosition  = muzzle.transform.position;
-        Quaternion  direction       = AccurateCalc(weaponStats.currentAccuracy);
+        Quaternion  direction       = CalculateAccuracy(weaponStats.currentAccuracy); // currentAccuracy를 반영하여 발사체의 방향을 결정
+        float       mass            = CalculateMass(weaponStats.bulletVelocity, weaponStats.range); 
 
-        //TGProjectile projectilePtr = objectPoolManager.GetTGObject(ETGObjectType.Projectile).GetComponent<TGProjectile>(); // 오브젝트 풀에서 발사체 활성화
-        TGProjectile projectilePtr = Instantiate(projectilePrefab, muzzlePosition, direction).GetComponent<TGProjectile>();
+        TGProjectile projectilePtr = objectPoolManager.GetTGObject(ETGObjectType.Projectile).GetComponent<TGProjectile>(); // 오브젝트 풀에서 발사체 활성화
 
-        // currentAccuracy를 반영하여 발사체의 방향을 결정
-
-        //projectilePrefab.transform.position = muzzlePosition;
-        projectilePtr.CommandFire(muzzlePosition, direction, weaponStats.bulletVelocity);
+        projectilePtr.CommandFire(muzzlePosition, direction, weaponStats.bulletVelocity, mass);
 
         Debug.Log($"(TGItemWeapon:FireWeapon) {objectName} Fires {projectilePtr}");
         // 발사 시 총알이 가운데로 가는 문제 수정 필요 
@@ -119,7 +116,7 @@ public class TGItemWeapon : TGItem
         Debug.Log($"(TGItemWeapon:Reload) End reload, current Ammo = {weaponStats.currentAmmo}");
     }
 
-    private Quaternion AccurateCalc(float accuracy)    // 명중률 계산 메소드
+    private Quaternion CalculateAccuracy(float accuracy)    // 명중률 계산 메소드
     {
         float xRotation = Random.Range(-accuracy, accuracy);
         float yRotation = Random.Range(-accuracy, accuracy);
@@ -127,5 +124,20 @@ public class TGItemWeapon : TGItem
         Quaternion deltaRotation = Quaternion.Euler(xRotation, yRotation, 0f);
 
         return transform.rotation * deltaRotation;
+    }
+
+    float CalculateMass(float velocity, float range) // 낙차 구현을 위한 발사체 질량 계산 메소드
+    {
+        // 수평 발사 시, 비행 시간 계산
+        float timeOfFlight = range / velocity;
+
+        // 질량 계산
+        // 수평 발사이므로 수직 속도는 중력만 고려하면 됨
+        // 가속도 계산: F = ma 에서 a = F/m 이므로 a = gravity
+        // m = F / a = (중력 가속도 * 비행 시간^2) / (2 * 중력 가속도)
+        // 여기서 F는 수직 방향에서의 중력과 동일하게 계산됩니다.
+        float mass = (9.81f * timeOfFlight * timeOfFlight) / 2.0f;
+
+        return mass;
     }
 }
