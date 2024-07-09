@@ -48,6 +48,7 @@ public class TGProjectile : TGObject
         //Rigidbody 파라미터 변경
         rb.MovePosition(muzzlePosition);
         rb.velocity = transform.forward * velocity;
+        rb.useGravity = true;
         rb.mass     = mass;
 
         isFlying = true;
@@ -63,6 +64,8 @@ public class TGProjectile : TGObject
     private void OnProjectileImpact() // 날아가던 도중 게임 오브젝트에 닿아 막혔을 때
     {
         rb.velocity = Vector3.zero;
+        rb.useGravity = false;
+
         isFlying = false;
     }
 

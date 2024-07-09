@@ -21,6 +21,7 @@ public class TGUIHandItemInfo : MonoBehaviour
     {
         InitReferences();
         InitEvent();
+        RemoveItemInfo(null);
     }
 
     void Update()

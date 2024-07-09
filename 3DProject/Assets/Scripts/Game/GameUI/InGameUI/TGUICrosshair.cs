@@ -64,10 +64,10 @@ public class TGUICrosshair : MonoBehaviour
         if (characterWeaponStats == null) return;
 
         // 명중률에 따른 크기 조정 (예: 명중률이 낮을수록 더 커짐)
-        float size = Mathf.Lerp(0, 200, characterWeaponStats.currentAccuracy);
-        accuracy = characterWeaponStats.currentAccuracy;
+        float size = Mathf.Lerp(0, 100, characterWeaponStats.currentAccuracy);
+        //accuracy = characterWeaponStats.currentAccuracy;
 
-        centerSquare.sizeDelta = new Vector2(size, size);
+        //centerSquare.sizeDelta = new Vector2(size, size);
 
         // 십자선 파츠 위치 업데이트
         topPart.anchoredPosition    = new Vector2(0, size / 2);

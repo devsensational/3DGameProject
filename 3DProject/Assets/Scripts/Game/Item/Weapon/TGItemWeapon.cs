@@ -5,19 +5,12 @@ using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
-enum EWeaponStateFlags
-{
-    None        = 0x00,
-    Reloading   = 0x01,
-    Empty       = 0x02, 
-}
-
 public class TGItemWeapon : TGItem
 {
     // Insepector
     public GameObject projectilePrefab;    //발사 시 생성될 총알 프리팹
     public GameObject muzzle;              //총알이 발사될 위치
-    
+
     // public
     public MWeaponStats weaponStats { get; protected set; }
 
@@ -26,9 +19,11 @@ public class TGItemWeapon : TGItem
 
     // private
     WaitForSeconds reloadWaitForSeconds;
+    WaitForSeconds fireRateWaitForSeconds;
+    WaitForSeconds recoilRecoveryForSeconds;
 
-    bool    isReloading = false;
-    int     weaponState = 0;
+    bool isReloading = false;
+    bool isWeaponReady = true;
 
     //Unity lifetime
     protected override void ChildStart()
@@ -40,10 +35,12 @@ public class TGItemWeapon : TGItem
     //Init
     void InitReferences()
     {
-        weaponStats             = TGGameManager.Instance.loadedWeaponStatDict[objectName]; // 무기 스탯 불러오기
-        objectPoolManager       = TGObjectPoolManager.Instance;
-        equipmentType           = weaponStats.weaponType;
-        reloadWaitForSeconds    = new WaitForSeconds(weaponStats.reloadTime); // 재장전 시간 코루틴용
+        weaponStats                 = TGGameManager.Instance.loadedWeaponStatDict[objectName]; // 무기 스탯 불러오기
+        objectPoolManager           = TGObjectPoolManager.Instance;
+        equipmentType               = weaponStats.weaponType;
+        reloadWaitForSeconds        = new WaitForSeconds(weaponStats.reloadTime); // 재장전 시간 코루틴용
+        fireRateWaitForSeconds      = new WaitForSeconds(60 / weaponStats.fireRate); // 연사 시간 코루틴용
+        recoilRecoveryForSeconds    = new WaitForSeconds(0.05f); // 반동 회복 시간 코루틴
 
         Debug.Log($"(TGItemWeapon:Start) Weapon stat loaded! {weaponStats.weaponName}, {weaponStats.defaultAccuracy}");
     }
@@ -56,26 +53,53 @@ public class TGItemWeapon : TGItem
     // 공격 메커니즘 관련 메소드
     public override void UseItem() // 아이템 사용
     {
-        if (weaponStats.currentAmmo <= 0) return; // 장탄 수가 0이면 실행 안함
-
-        weaponStats.currentAmmo--;
-        FireWeapon();
-        TGEventManager.Instance.TriggerEvent(EEventType.UpdateItemInfo, this);
+        StartCoroutine(FireWeapon());
         Debug.Log("(TGItemWeapon:UseItem) Used weapon");
     }
 
-    protected virtual void FireWeapon()
+    protected virtual IEnumerator FireWeapon()
     {
-        Vector3     muzzlePosition  = muzzle.transform.position;
-        Quaternion  direction       = CalculateAccuracy(weaponStats.currentAccuracy); // currentAccuracy를 반영하여 발사체의 방향을 결정
-        float       mass            = CalculateMass(weaponStats.bulletVelocity, weaponStats.range); 
+        if (weaponStats.currentAmmo <= 0) yield break; // 장탄 수가 0이면 실행 안함
+        if (isReloading) yield break; // 장전 중이면 실행 안함
+        if (!isWeaponReady) yield break;
+
+        weaponStats.currentAmmo--;
+        TGEventManager.Instance.TriggerEvent(EEventType.UpdateItemInfo, this);
+        isWeaponReady = false;
+
+        // 반동에 의한 명중률 저하 구현
+        weaponStats.currentAccuracy = Mathf.Clamp(weaponStats.currentAccuracy * weaponStats.recoilMultiplier, weaponStats.minAccuracy, weaponStats.maxAccuracy);
+
+        // 발사체 리셋
+        Vector3 muzzlePosition = muzzle.transform.position;
+        Quaternion direction = CalculateAccuracy(weaponStats.currentAccuracy); // currentAccuracy를 반영하여 발사체의 방향을 결정
+        float mass = CalculateMass(weaponStats.bulletVelocity, weaponStats.range);
 
         TGProjectile projectilePtr = objectPoolManager.GetTGObject(ETGObjectType.Projectile).GetComponent<TGProjectile>(); // 오브젝트 풀에서 발사체 활성화
 
         projectilePtr.CommandFire(muzzlePosition, direction, weaponStats.bulletVelocity, mass);
-
         Debug.Log($"(TGItemWeapon:FireWeapon) {objectName} Fires {projectilePtr}");
-        // 발사 시 총알이 가운데로 가는 문제 수정 필요 
+
+        yield return fireRateWaitForSeconds;
+
+        isWeaponReady = true;
+
+        // 자동 발사 무기를 계속 발사해야 하는 경우
+        if (weaponStats.fireMode == EGunFireMode.Auto && Input.GetKey(TGPlayerKeyManager.Instance.KeyValuePairs[EKeyValues.Fire]))
+        {
+            StartCoroutine(FireWeapon());
+        }
+        StartCoroutine(RecoilRecovery());
+    }
+    
+    protected virtual IEnumerator RecoilRecovery()
+    {
+        if(!isWeaponReady) yield break;
+
+        weaponStats.currentAccuracy = Mathf.Clamp(weaponStats.currentAccuracy * weaponStats.recoilRecoveryMultiplier, weaponStats.minAccuracy, weaponStats.maxAccuracy);
+        yield return recoilRecoveryForSeconds;
+
+        StartCoroutine(RecoilRecovery());
     }
 
     public virtual bool CommandReload()     // 장전 메소드를 외부로 부터 호출
@@ -126,17 +150,19 @@ public class TGItemWeapon : TGItem
         return transform.rotation * deltaRotation;
     }
 
-    float CalculateMass(float velocity, float range) // 낙차 구현을 위한 발사체 질량 계산 메소드
+    float CalculateMass(float velocity, float range, float gravity = 9.81f) // 낙차 구현을 위한 발사체 질량 계산 메소드
     {
-        // 수평 발사 시, 비행 시간 계산
-        float timeOfFlight = range / velocity;
+        // 비행 시간을 계산합니다.
+        float time = range / velocity;
 
-        // 질량 계산
-        // 수평 발사이므로 수직 속도는 중력만 고려하면 됨
-        // 가속도 계산: F = ma 에서 a = F/m 이므로 a = gravity
-        // m = F / a = (중력 가속도 * 비행 시간^2) / (2 * 중력 가속도)
-        // 여기서 F는 수직 방향에서의 중력과 동일하게 계산됩니다.
-        float mass = (9.81f * timeOfFlight * timeOfFlight) / 2.0f;
+        // 발사체가 중력 하에서 떨어지는 거리로부터 질량을 결정합니다.
+        // 중력 가속도 하에서의 거리 = 0.5 * g * t^2
+        // 여기서 t는 비행 시간입니다.
+        float fallDistance = 0.5f * gravity * Mathf.Pow(time, 2);
+
+        // 질량은 발사체가 낙하할 때 일정 거리를 유지하도록 중력과 균형을 맞추는 값입니다.
+        // 여기서는 단순히 비행 거리와 비행 시간, 중력으로부터 질량을 역산합니다.
+        float mass = fallDistance / (0.5f * gravity * Mathf.Pow(time, 2));
 
         return mass;
     }
