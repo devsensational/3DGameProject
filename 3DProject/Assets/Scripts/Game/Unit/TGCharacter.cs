@@ -33,6 +33,7 @@ public class TGCharacter : TGObject
 
         ChildAwake();
 
+        InitReferences();
         InitEvent();
     }
 
@@ -44,6 +45,7 @@ public class TGCharacter : TGObject
     protected virtual void InitReferences()
     {
         eventManager = TGEventManager.Instance;
+        characterStat = new MCharacterStats();
     }
 
     protected virtual void InitEvent()
@@ -131,8 +133,15 @@ public class TGCharacter : TGObject
         }
     }
 
-    
-    public EEquipmentType GetInHandItem() // getter/setter
+    public void ReceiveDamage(float damageValue)
+    {
+        characterStat.currentHp -= damageValue;
+
+        Debug.Log($"(TGCharacter:ReceiveDamage) {objectName} received {damageValue} damage!");
+    }
+
+    // getter/setter
+    public EEquipmentType GetInHandItem()
     {
         return HandInItem;
     }

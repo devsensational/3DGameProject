@@ -70,15 +70,7 @@ public class TGItemWeapon : TGItem
         // 반동에 의한 명중률 저하 구현
         weaponStats.currentAccuracy = Mathf.Clamp(weaponStats.currentAccuracy * weaponStats.recoilMultiplier, weaponStats.minAccuracy, weaponStats.maxAccuracy);
 
-        // 발사체 리셋
-        Vector3 muzzlePosition = muzzle.transform.position;
-        Quaternion direction = CalculateAccuracy(weaponStats.currentAccuracy); // currentAccuracy를 반영하여 발사체의 방향을 결정
-        float mass = CalculateMass(weaponStats.bulletVelocity, weaponStats.range);
-
-        TGProjectile projectilePtr = objectPoolManager.GetTGObject(ETGObjectType.Projectile).GetComponent<TGProjectile>(); // 오브젝트 풀에서 발사체 활성화
-
-        projectilePtr.CommandFire(muzzlePosition, direction, weaponStats.bulletVelocity, mass);
-        Debug.Log($"(TGItemWeapon:FireWeapon) {objectName} Fires {projectilePtr}");
+        projectileFire();
 
         yield return fireRateWaitForSeconds;
 
@@ -91,10 +83,23 @@ public class TGItemWeapon : TGItem
         }
         StartCoroutine(RecoilRecovery());
     }
-    
-    protected virtual IEnumerator RecoilRecovery()
+
+    protected virtual void projectileFire()    // 발사체 상태 리셋 후 발사
     {
-        if(!isWeaponReady) yield break;
+        // 발사체 리셋
+        Vector3 muzzlePosition = muzzle.transform.position;
+        Quaternion direction = CalculateAccuracy(weaponStats.currentAccuracy); // currentAccuracy를 반영하여 발사체의 방향을 결정
+        float mass = CalculateMass(weaponStats.bulletVelocity, weaponStats.range);
+
+        TGProjectile projectilePtr = objectPoolManager.GetTGObject(ETGObjectType.Projectile).GetComponent<TGProjectile>(); // 오브젝트 풀에서 발사체 활성화
+
+        projectilePtr.CommandFire(muzzlePosition, direction, weaponStats.bulletVelocity, mass, weaponStats.damage);
+        Debug.Log($"(TGItemWeapon:FireWeapon) {objectName} Fires {projectilePtr}");
+    }
+
+    protected virtual IEnumerator RecoilRecovery() // 반동에 의해 감소된 명중률 회복 메소드
+    {
+        if(!isWeaponReady) yield break; // 차탄이 발사되면 반동 회복을 중단함
 
         weaponStats.currentAccuracy = Mathf.Clamp(weaponStats.currentAccuracy * weaponStats.recoilRecoveryMultiplier, weaponStats.minAccuracy, weaponStats.maxAccuracy);
         yield return recoilRecoveryForSeconds;
