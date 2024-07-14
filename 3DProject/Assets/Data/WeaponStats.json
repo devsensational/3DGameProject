@@ -16,8 +16,7 @@
     "bulletVelocity": 300.0,
     "reloadTime": 3.0,
 	"range": 800.0,
-    "maxAmmo": 30,
-    "currentAmmo": 0
+    "maxAmmo": 30
   },
   "AK47": {
     "weaponName": "AK47",
@@ -36,8 +35,7 @@
     "bulletVelocity": 100.0,
     "reloadTime": 3.0,
 	"range": 5.0,
-    "maxAmmo": 30,
-    "currentAmmo": 0
+    "maxAmmo": 30
   },
   "EAGLE": {
     "weaponName": "EAGLE",
@@ -56,8 +54,7 @@
     "bulletVelocity": 30.0,
     "reloadTime": 1.5,
 	"range": 800.0,
-    "maxAmmo": 7,
-    "currentAmmo": 0
+    "maxAmmo": 7
   },
   "FAMAS": {
     "weaponName": "FAMAS",
@@ -76,8 +73,7 @@
     "bulletVelocity": 100.0,
     "reloadTime": 3.0,
 	"range": 800.0,
-    "maxAmmo": 25,
-    "currentAmmo": 0
+    "maxAmmo": 25
   },
 
 }

@@ -24,6 +24,7 @@ public class TGPlayerCharacterController : MonoBehaviour
     MCharacterStats                 playerStats;        // 플레이어 스탯 ref
     TGGameManager                   gameManager;        // 게임 매니저 ref      
     TGEventManager                  gameEventManager;   // 이벤트 매니저 ref
+    Camera                          cameraComponent;    // 카메라 컴포넌트 ref
 
     Vector3 targetRotation;
     Vector3 currentVel;
@@ -60,6 +61,7 @@ public class TGPlayerCharacterController : MonoBehaviour
         playerCharacter     = GetComponent<TGPlayerCharacter>();
         playerStats         = playerCharacter.characterStat;
         gameEventManager    = TGEventManager.Instance;
+        cameraComponent     = mainCamera.GetComponent<Camera>();
     }
 
     void InitEventListner()
@@ -126,9 +128,22 @@ public class TGPlayerCharacterController : MonoBehaviour
         if (mainCamera == null) return;
         if (playerCharacter.HandInItem == EEquipmentType.Default || playerCharacter.HandInItem == EEquipmentType.None) return;
 
-        Vector3 cameraRotation = mainCamera.transform.localEulerAngles;
-        playerCharacter.equipItems[playerCharacter.HandInItem].transform.localRotation = Quaternion.Euler(cameraRotation.x, 0f, 0f);
+        Ray ray = cameraComponent.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        RaycastHit hit;
 
+        if (Physics.Raycast(ray, out hit))
+        {
+            Vector3 hitPoint = hit.point;
+
+            playerCharacter.equipItems[playerCharacter.HandInItem].transform.LookAt(hitPoint); // 오브젝트가 적중 지점을 바라보도록 설정
+
+            Debug.DrawRay(ray.origin, hit.point, Color.red);
+        }
+        else // 레이케스트에 적중하지 않을 경우 카메라 회전을 따라감
+        {
+            Vector3 cameraRotation = mainCamera.transform.localEulerAngles;
+            playerCharacter.equipItems[playerCharacter.HandInItem].transform.localRotation = Quaternion.Euler(cameraRotation.x, 0f, 0f);
+        }
     }
 
     // 아이템 관련 메소드

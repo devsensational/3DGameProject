@@ -15,8 +15,11 @@ public class TGItemWeapon : TGItem
     // public
     public MWeaponStats weaponStats { get; protected set; }
 
+    public int currentAmmo = 0;
+
     // protected
     protected TGObjectPoolManager objectPoolManager;
+
 
     // private
     WaitForSeconds reloadWaitForSeconds;
@@ -43,7 +46,7 @@ public class TGItemWeapon : TGItem
         fireRateWaitForSeconds      = new WaitForSeconds(60 / weaponStats.fireRate); // 연사 시간 코루틴용
         recoilRecoveryForSeconds    = new WaitForSeconds(0.05f); // 반동 회복 시간 코루틴
 
-        Debug.Log($"(TGItemWeapon:Start) Weapon stat loaded! {weaponStats.weaponName}, {weaponStats.defaultAccuracy}");
+        Debug.Log($"(TGItemWeapon:Start) Weapon stat loaded! {weaponStats.weaponName}, {this.GetHashCode()}, {weaponStats.defaultAccuracy}");
     }
 
     void InitObjectPool()
@@ -60,12 +63,17 @@ public class TGItemWeapon : TGItem
 
     protected virtual IEnumerator FireWeapon()
     {
-        if (weaponStats.currentAmmo <= 0) yield break; // 장탄 수가 0이면 실행 안함
+        if (currentAmmo <= 0) yield break; // 장탄 수가 0이면 실행 안함
         if (isReloading) yield break; // 장전 중이면 실행 안함
         if (!isWeaponReady) yield break;
 
-        weaponStats.currentAmmo--;
-        TGEventManager.Instance.TriggerEvent(EEventType.UpdateItemInfo, this);
+        currentAmmo--;
+        
+        if(itemHolder.tag == "Player")
+        {
+            TGEventManager.Instance.TriggerEvent(EEventType.UpdateItemInfo, this);
+        }
+
         isWeaponReady = false;
 
         // 반동에 의한 명중률 저하 구현
@@ -111,7 +119,7 @@ public class TGItemWeapon : TGItem
     public virtual bool CommandReload()     // 장전 메소드를 외부로 부터 호출
     {
         if (isReloading) return false;                                   // 장전을 안하고 있을 때만 장전
-        if (weaponStats.currentAmmo >= weaponStats.maxAmmo) return false;  // 장탄 수가 최대 장탄 수 보다 적을 때만 장전
+        if (currentAmmo >= weaponStats.maxAmmo) return false;  // 장탄 수가 최대 장탄 수 보다 적을 때만 장전
 
         TGCharacter itemHolderCharacter = itemHolder.GetComponent<TGCharacter>();
 
@@ -134,16 +142,16 @@ public class TGItemWeapon : TGItem
         TGCharacter itemHolderCharacter = itemHolder.GetComponent<TGCharacter>();
         TGItem ammoItem = itemHolderCharacter.inventory[weaponStats.ammoType];
 
-        int ammoCount = Mathf.Clamp(ammoItem.itemCount, 0, weaponStats.maxAmmo - weaponStats.currentAmmo); // 아이템 갯수가 감소될 수 결정
+        int ammoCount = Mathf.Clamp(ammoItem.itemCount, 0, weaponStats.maxAmmo - currentAmmo); // 아이템 갯수가 감소될 수 결정
         ammoItem.ReduceItemCount(ammoCount);        // 최대 장탄 수 까지만 아이템 감소
-        weaponStats.currentAmmo += ammoCount;   // 최대 장탄 수 만큼만 장전, 현재 장탄 수 보존
+        currentAmmo += ammoCount;   // 최대 장탄 수 만큼만 장전, 현재 장탄 수 보존
 
         // UI 업데이트
         TGEventManager.Instance.TriggerEvent(EEventType.UpdateItemInfo, this);
         ammoItem.itemButton.SetItemName();
 
         isReloading = false;
-        Debug.Log($"(TGItemWeapon:Reload) End reload, current Ammo = {weaponStats.currentAmmo}");
+        Debug.Log($"(TGItemWeapon:Reload) End reload, current Ammo = {currentAmmo}");
     }
 
     private Quaternion CalculateAccuracy(float accuracy)    // 명중률 계산 메소드

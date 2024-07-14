@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2814927739313261583}
   - component: {fileID: 3286919096583035449}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ItemLootRadius
   m_TagString: LootableItem
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7192148608961113493}
-  - component: {fileID: 1375323134619797793}
+  - component: {fileID: 7040354076156002023}
   m_Layer: 0
   m_Name: Item_Weapon_AK47
   m_TagString: Item
@@ -110,7 +110,7 @@ Transform:
   m_GameObject: {fileID: 1402784742316536118}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.656, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -119,7 +119,7 @@ Transform:
   - {fileID: 2814927739313261583}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1375323134619797793
+--- !u!114 &7040354076156002023
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,7 +139,7 @@ MonoBehaviour:
   itemButton: {fileID: 0}
   equipmentType: 2
   itemType: 2
-  isDropped: 1
+  isDropped: 0
   projectilePrefab: {fileID: 4000347302891274641, guid: 9ebe53acbff9316429d980610452a010, type: 3}
   muzzle: {fileID: 49389282621848562}
 --- !u!1 &8913030305397602058

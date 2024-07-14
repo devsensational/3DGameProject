@@ -28,5 +28,4 @@ public class MWeaponStats
     public float range                      = 800f;     //재장전시간
 
     public int   maxAmmo                    = 30;       //탄창에 넣을 수 있는 최대 총알 갯수
-    public int   currentAmmo                = 0;        //현재 탄창의 총알 개수
 }

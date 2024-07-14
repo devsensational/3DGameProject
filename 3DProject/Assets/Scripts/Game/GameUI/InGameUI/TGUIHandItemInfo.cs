@@ -64,7 +64,7 @@ public class TGUIHandItemInfo : MonoBehaviour
         {
             TGItemWeapon weaponPtr = (TGItemWeapon)item;
             int maxCount = weaponPtr.weaponStats.maxAmmo;
-            itemCount.text = $"{weaponPtr.weaponStats.currentAmmo} / {maxCount}";
+            itemCount.text = $"{weaponPtr.currentAmmo} / {maxCount}";
         }
         Debug.Log("(TGUIHandItemInfo:OnUpdateWeaponCountStat) Updated weapon stat");
     }
