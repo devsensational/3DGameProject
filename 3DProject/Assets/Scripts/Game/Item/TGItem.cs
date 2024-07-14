@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+// 현 프로젝트의 Item을 정의하는 최상위 클래스입니다.
 public class TGItem : TGObject
 {
     //Inspector

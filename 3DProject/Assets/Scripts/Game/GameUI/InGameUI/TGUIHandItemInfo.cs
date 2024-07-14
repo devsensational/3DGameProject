@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+// 현재 플레이어가 들고 있는 무기의 정보를 표시하기 위한 UI 클래스입니다.
 public class TGUIHandItemInfo : MonoBehaviour
 {
     //inspector

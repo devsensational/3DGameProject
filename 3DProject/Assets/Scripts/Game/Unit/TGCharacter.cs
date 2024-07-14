@@ -133,7 +133,7 @@ public class TGCharacter : TGObject
         }
     }
 
-    public void ReceiveDamage(float damageValue)
+    public virtual void ReceiveDamage(float damageValue)
     {
         characterStat.currentHp -= damageValue;
 

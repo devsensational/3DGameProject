@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+// 인벤토리 UI에서 상호작용하는 버튼을 위한 클래스입니다.
 public class TGUILootableItemInterective : MonoBehaviour
 {
     //Inspector

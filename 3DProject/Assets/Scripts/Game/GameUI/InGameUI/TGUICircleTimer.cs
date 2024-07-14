@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 화면 중앙에 원형으로 표시되는 타이머UI를 정의하기 위한 클래스입니다.
 public class TGUICircleTimer : MonoBehaviour
 {
     // Insepector

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 키입력을 정의하기 위한 enum입니다.
 public enum EKeyValues
 {
     None = 0,

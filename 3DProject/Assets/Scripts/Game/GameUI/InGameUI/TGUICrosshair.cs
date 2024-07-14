@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 화면 중앙에 무기의 명중률을 표시하기 위한 UI 클래스입니다.
 public class TGUICrosshair : MonoBehaviour
 {
     //Inspector

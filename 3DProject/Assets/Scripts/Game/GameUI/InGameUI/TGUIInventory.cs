@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 현재 장비 중인 아이템을 표시하기 위한 UI 클래스입니다.
 public class TGUIInventory : MonoBehaviour
 {
     // Inspector    

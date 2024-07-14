@@ -4,6 +4,7 @@ using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// 게임의 전체적인 부분을 관리하는 클래스입니다.
 public class TGGameManager : UMonoSingleton<TGGameManager>
 {
     //Inspector

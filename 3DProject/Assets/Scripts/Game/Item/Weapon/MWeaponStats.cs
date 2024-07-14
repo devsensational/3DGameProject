@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TGItemWeapon이 가질 수 있는 무기의 Data class 입니다.
 public class MWeaponStats
 {
     // 해당 변수들은 모두 default 값으로 "Data" 폴더의 WeaponStats.Json에 의해 변경됨

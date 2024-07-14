@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 입력 키를 설정하기 위한 클래스입니다.
 public class TGPlayerKeyManager : UMonoSingleton<TGPlayerKeyManager>
 {
     //public

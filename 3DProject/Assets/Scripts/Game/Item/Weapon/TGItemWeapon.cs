@@ -5,6 +5,7 @@ using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// TGItem 중 장비 가능한 무기 아이템을 정의합니다.
 public class TGItemWeapon : TGItem
 {
     // Insepector

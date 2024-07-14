@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 무기를 통해 발사되는 발사체를 정의하는 클래스입니다.
 public class TGProjectile : TGObject
 {
     //Insepector

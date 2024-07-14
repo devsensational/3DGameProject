@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-
+// ObjectPool을 정의하고 관리하기 위한 클래스입니다.
 public class TGObjectPoolManager : UMonoSingleton<TGObjectPoolManager>
 {
     // "TGObjectType"에 따라 여러 오브젝트 풀을 레퍼런싱 하기 위한 딕셔너리
