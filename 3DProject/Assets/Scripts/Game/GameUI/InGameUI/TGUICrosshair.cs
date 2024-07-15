@@ -17,7 +17,7 @@ public class TGUICrosshair : MonoBehaviour
     // private
     // references
     TGPlayerCharacter   playerCharacter;
-    MWeaponStats        characterWeaponStats;
+    TGItemWeapon        characterWeapon;
     TGEventManager      eventManager;
 
     //Unity lifecycle
@@ -36,7 +36,7 @@ public class TGUICrosshair : MonoBehaviour
     void InitReferences()
     {
         playerCharacter = GameObject.Find("PlayerCharacter").GetComponent<TGPlayerCharacter>();
-        characterWeaponStats = playerCharacter.characterStat.weaponStats;
+        //characterWeapon = playerCharacter.characterStat.weaponStats;
         eventManager = TGEventManager.Instance;
     }
 
@@ -56,16 +56,15 @@ public class TGUICrosshair : MonoBehaviour
     {
         TGItemWeapon weaponPtr = (TGItemWeapon)parameter;
 
-        characterWeaponStats = weaponPtr.weaponStats;
-        Debug.Log($"(TGUICrosshair:OnChangeInHandItem) Set weapon stats, now default accuracy: {characterWeaponStats.currentAccuracy}");
+        characterWeapon = weaponPtr;
     }
 
     void OnCrosshairUpdate()
     {
-        if (characterWeaponStats == null) return;
+        if (characterWeapon == null) return;
 
         // 명중률에 따른 크기 조정 (예: 명중률이 낮을수록 더 커짐)
-        float size = Mathf.Lerp(0, 100, characterWeaponStats.currentAccuracy);
+        float size = Mathf.Lerp(0, 100, characterWeapon.currentAccuracy);
         //accuracy = characterWeaponStats.currentAccuracy;
 
         //centerSquare.sizeDelta = new Vector2(size, size);

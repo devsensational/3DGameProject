@@ -18,8 +18,11 @@ public class TGCharacterHitbox : MonoBehaviour
         Debug.Log($"(TGCharacterHitBox:Awake) {characterRoot.objectName} Loaded ref");
     }
 
-    public void OnReceiveDamage(float damageValue)
+    public float OnReceiveDamage(float damageValue)
     {
-        characterRoot.ReceiveDamage(damageValue * damageMultiple);
+        float finalDamage = damageValue * damageMultiple;
+        characterRoot.ReceiveDamage(finalDamage);
+
+        return finalDamage;
     }
 }

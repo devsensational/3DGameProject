@@ -15,7 +15,8 @@ public class TGItemWeapon : TGItem
     // public
     public MWeaponStats weaponStats { get; protected set; }
 
-    public int currentAmmo = 0;
+    public float currentAccuracy = 0.3f;    //현재 명중률
+    public int currentAmmo = 0;             //현재 장탄량
 
     // protected
     protected TGObjectPoolManager objectPoolManager;
@@ -45,6 +46,7 @@ public class TGItemWeapon : TGItem
         reloadWaitForSeconds        = new WaitForSeconds(weaponStats.reloadTime); // 재장전 시간 코루틴용
         fireRateWaitForSeconds      = new WaitForSeconds(60 / weaponStats.fireRate); // 연사 시간 코루틴용
         recoilRecoveryForSeconds    = new WaitForSeconds(0.05f); // 반동 회복 시간 코루틴
+        currentAccuracy             = weaponStats.minAccuracy;
 
         Debug.Log($"(TGItemWeapon:Start) Weapon stat loaded! {weaponStats.weaponName}, {this.GetHashCode()}, {weaponStats.defaultAccuracy}");
     }
@@ -77,7 +79,7 @@ public class TGItemWeapon : TGItem
         isWeaponReady = false;
 
         // 반동에 의한 명중률 저하 구현
-        weaponStats.currentAccuracy = Mathf.Clamp(weaponStats.currentAccuracy * weaponStats.recoilMultiplier, weaponStats.minAccuracy, weaponStats.maxAccuracy);
+        currentAccuracy = Mathf.Clamp(currentAccuracy * weaponStats.recoilMultiplier, weaponStats.minAccuracy, weaponStats.maxAccuracy);
 
         projectileFire();
 
@@ -97,7 +99,7 @@ public class TGItemWeapon : TGItem
     {
         // 발사체 리셋
         Vector3 muzzlePosition = muzzle.transform.position;
-        Quaternion direction = CalculateAccuracy(weaponStats.currentAccuracy); // currentAccuracy를 반영하여 발사체의 방향을 결정
+        Quaternion direction = CalculateAccuracy(currentAccuracy); // currentAccuracy를 반영하여 발사체의 방향을 결정
         float mass = CalculateMass(weaponStats.bulletVelocity, weaponStats.range);
 
         TGProjectile projectilePtr = objectPoolManager.GetTGObject(ETGObjectType.Projectile).GetComponent<TGProjectile>(); // 오브젝트 풀에서 발사체 활성화
@@ -110,7 +112,7 @@ public class TGItemWeapon : TGItem
     {
         if(!isWeaponReady) yield break; // 차탄이 발사되면 반동 회복을 중단함
 
-        weaponStats.currentAccuracy = Mathf.Clamp(weaponStats.currentAccuracy * weaponStats.recoilRecoveryMultiplier, weaponStats.minAccuracy, weaponStats.maxAccuracy);
+        currentAccuracy = Mathf.Clamp(currentAccuracy * weaponStats.recoilRecoveryMultiplier, weaponStats.minAccuracy, weaponStats.maxAccuracy);
         yield return recoilRecoveryForSeconds;
 
         StartCoroutine(RecoilRecovery());

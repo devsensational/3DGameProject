@@ -7,8 +7,7 @@ public class MCharacterStats
 {
     public string characterName = "";
 
-    public float maxHp              = 100f;
-    public float currentHp          = 100f;
+    public float maxHp              = 2500f;
     public float velocity           = 0f;
 
     public MWeaponStats weaponStats = null;

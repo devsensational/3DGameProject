@@ -11,12 +11,11 @@ public class TGCharacter : TGObject
 
     //public
     public MCharacterStats characterStat { get; protected set; } // 플레이어 캐릭터 스탯
-
     public Dictionary<EEquipmentType, TGItem> equipItems = new Dictionary<EEquipmentType, TGItem>();
-
     public Dictionary<EItemType, TGItem> inventory = new Dictionary<EItemType, TGItem>(); // 주운 아이템 리스트
-
     public EEquipmentType HandInItem = EEquipmentType.Default;   //플레이어 캐릭터가 들고 있는 아이템 type
+
+    public float currentHP = 0f;
 
     //protected
     protected TGEventManager eventManager;  //이벤트매니저
@@ -46,6 +45,7 @@ public class TGCharacter : TGObject
     {
         eventManager = TGEventManager.Instance;
         characterStat = new MCharacterStats();
+        currentHP = characterStat.maxHp;
     }
 
     protected virtual void InitEvent()
@@ -135,7 +135,7 @@ public class TGCharacter : TGObject
 
     public virtual void ReceiveDamage(float damageValue)
     {
-        characterStat.currentHp -= damageValue;
+        currentHP -= damageValue;
 
         Debug.Log($"(TGCharacter:ReceiveDamage) {objectName} received {damageValue} damage!");
     }

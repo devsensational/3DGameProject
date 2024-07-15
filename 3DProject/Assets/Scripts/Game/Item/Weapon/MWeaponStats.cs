@@ -17,7 +17,6 @@ public class MWeaponStats
     public float damage                     = 0f;       //데미지
     public float fireRate                   = 100f;     //연사속도
     public float defaultAccuracy            = 0.3f;     //명중률
-    public float currentAccuracy            = 0.3f;     //현재 명중률
     public float aimingAccuracy             = 0.1f;     //조준 명중률
     public float minAccuracy                = 0.1f;     //최대 명중률, 명중률이 최대 얼마까지 높아질 것인지 결정하는 변수
     public float maxAccuracy                = 0.8f;     //최소 명중률, 명중률이 최대 얼마까지 낮아질 것인지 결정하는 변수

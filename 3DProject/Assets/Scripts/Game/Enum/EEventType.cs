@@ -21,5 +21,7 @@ public enum EEventType
     RemoveItemInfoUIText,
     StartCircleTimerUI,
     HideCircleTimerUI,
+    UIUpdateHPBar,
+
 }
 

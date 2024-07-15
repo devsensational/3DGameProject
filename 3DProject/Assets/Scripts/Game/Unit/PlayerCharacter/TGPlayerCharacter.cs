@@ -141,4 +141,10 @@ public class TGPlayerCharacter : TGCharacter
             Debug.Log("(TGPlayerCharacter:CommandReloadInHandItem) Command reload");
         }
     }
+
+    public override void ReceiveDamage(float damageValue)
+    {
+        base.ReceiveDamage(damageValue);
+        eventManager.TriggerEvent(EEventType.UIUpdateHPBar, Mathf.Clamp01(currentHP / characterStat.maxHp));
+    }
 }
