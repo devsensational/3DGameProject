@@ -30,11 +30,34 @@ public class TGItemWeapon : TGItem
     bool isReloading = false;
     bool isWeaponReady = true;
 
+    // Recoil Pattern 관련 변수
+    // Inspector
+    [Header("Recoil pattern insepector")]
+    public TextAsset    recoilPatternFile;
+    public Camera       playerCamera        = null;
+
+    public float recoilDampingSpeed = 5.0f;
+    public float indexDampingSpeed  = 1.0f;
+
+    //private
+    private List<MRecoilPatternData> recoilDataList;
+
+    private Vector3 currentRecoil   = Vector3.zero;
+    private Vector3 targetRecoil    = Vector3.zero;
+
+    private float currentRecoilIndex = 0f;
+
     //Unity lifetime
     protected override void ChildStart()
     {
         InitReferences();
         InitObjectPool();
+        InitRecoilPattern();
+    }
+
+    private void Update()
+    {
+        DampenRecoil();
     }
 
     //Init
@@ -56,6 +79,13 @@ public class TGItemWeapon : TGItem
         objectPoolManager.CreateTGObjectPool(ETGObjectType.Projectile, projectilePrefab, 10, 100);
     }
 
+    void InitRecoilPattern()
+    {
+        if (recoilPatternFile == null) return;
+
+        recoilDataList = TGGameManager.Instance.jsonUtility.LoadJsonFile<List<MRecoilPatternData>>(recoilPatternFile);
+        Debug.Log($"(TGItemWeapon:InitRecoilPattern) Recoil pattern data loaded! {recoilDataList[0].x}, {recoilDataList[1].x}");
+    }
     // 공격 메커니즘 관련 메소드
     public override void UseItem() // 아이템 사용
     {
@@ -63,7 +93,7 @@ public class TGItemWeapon : TGItem
         Debug.Log("(TGItemWeapon:UseItem) Used weapon");
     }
 
-    protected virtual IEnumerator FireWeapon()
+    protected virtual IEnumerator FireWeapon() // 무기가 발사되는 과정
     {
         if (currentAmmo <= 0) yield break; // 장탄 수가 0이면 실행 안함
         if (isReloading) yield break; // 장전 중이면 실행 안함
@@ -80,6 +110,7 @@ public class TGItemWeapon : TGItem
 
         // 반동에 의한 명중률 저하 구현
         currentAccuracy = Mathf.Clamp(currentAccuracy * weaponStats.recoilMultiplier, weaponStats.minAccuracy, weaponStats.maxAccuracy);
+        ApplyRecoil();
 
         projectileFire();
 
@@ -181,5 +212,43 @@ public class TGItemWeapon : TGItem
         float mass = fallDistance / (0.5f * gravity * Mathf.Pow(time, 2));
 
         return mass;
+    }
+
+    // 반동 관련 메소드
+    public void ApplyRecoil()
+    {
+        if (itemHolder == null || itemHolder.tag != "Player") return;
+
+        if (recoilDataList.Count == 0)
+        {
+            Debug.Log("(TGItemWeapon:ApplyRecoil)No recoil patterns available.");
+            return;
+        }
+        Debug.Log("(TGItemWeapon:ApplyRecoil)Applied recoil.");
+
+        int currentRecoilIndexInt = Mathf.FloorToInt(currentRecoilIndex);
+        MRecoilPatternData recoilData = recoilDataList[currentRecoilIndexInt];
+        currentRecoilIndex = (currentRecoilIndexInt + 1) % recoilDataList.Count;
+
+        Vector3 recoilRotation = new Vector3(-recoilData.y, recoilData.x, 0);
+        targetRecoil += recoilRotation;
+
+        playerCamera.transform.Rotate(recoilRotation, Space.Self);
+    }
+
+    private void DampenRecoil()
+    {
+        if (itemHolder == null || itemHolder.tag != "Player") return;
+        if (targetRecoil == Vector3.zero && currentRecoilIndex == Mathf.Floor(currentRecoilIndex))
+            return;
+
+        Vector3 recoilAdjustment = Vector3.Lerp(currentRecoil, Vector3.zero, Time.deltaTime * recoilDampingSpeed);
+        playerCamera.transform.Rotate(recoilAdjustment - currentRecoil, Space.Self);
+        currentRecoil = recoilAdjustment;
+
+        targetRecoil = Vector3.Lerp(targetRecoil, Vector3.zero, Time.deltaTime * recoilDampingSpeed);
+
+        // Decrease currentRecoilIndex towards the next integer value
+        currentRecoilIndex = Mathf.Lerp(currentRecoilIndex, Mathf.Floor(currentRecoilIndex), Time.deltaTime * indexDampingSpeed);
     }
 }

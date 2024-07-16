@@ -37,7 +37,7 @@ public partial class UJsonUtility
         }
         else
         {
-            Debug.LogError("Cannot load Bezier file; TextAsset is null.");
+            Debug.LogError("Cannot load file; TextAsset is null.");
         }
 
         return objectPointer;

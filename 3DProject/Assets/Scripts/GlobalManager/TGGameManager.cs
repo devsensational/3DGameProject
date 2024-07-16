@@ -15,12 +15,12 @@ public class TGGameManager : UMonoSingleton<TGGameManager>
 
     //public
     public Dictionary<string, MWeaponStats> loadedWeaponStatDict = new Dictionary<string, MWeaponStats>();
+    public UJsonUtility jsonUtility = new UJsonUtility();
 
     //private
 
 
     //Json
-    private UJsonUtility jsonUtility = new UJsonUtility();
 
     //Unity lifecycle
     protected override void ChildAwake()
