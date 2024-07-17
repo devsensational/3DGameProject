@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
+using UnityChan;
 using UnityEngine;
 
 // TGItem 중 장비 가능한 무기 아이템을 정의합니다.
@@ -36,16 +37,15 @@ public class TGItemWeapon : TGItem
     public TextAsset    recoilPatternFile;
     public Camera       playerCamera        = null;
 
-    public float recoilDampingSpeed = 5.0f;
-    public float indexDampingSpeed  = 1.0f;
+    //public float recoilRecoverSpeed = 5.0f;
+    public float indexRecoverSpeed  = 1.0f;
+    
+    [SerializeField]private float currentRecoilIndex = 0f;
 
     //private
     private List<MRecoilPatternData> recoilDataList;
 
-    private Vector3 currentRecoil   = Vector3.zero;
     private Vector3 targetRecoil    = Vector3.zero;
-
-    private float currentRecoilIndex = 0f;
 
     //Unity lifetime
     protected override void ChildStart()
@@ -57,7 +57,10 @@ public class TGItemWeapon : TGItem
 
     private void Update()
     {
-        DampenRecoil();
+        if (isWeaponReady) //무기가 발사 중이지 않을 때
+        {
+            RecoverRecoil();
+        }
     }
 
     //Init
@@ -233,22 +236,18 @@ public class TGItemWeapon : TGItem
         Vector3 recoilRotation = new Vector3(-recoilData.y, recoilData.x, 0);
         targetRecoil += recoilRotation;
 
-        playerCamera.transform.Rotate(recoilRotation, Space.Self);
+        playerCamera.GetComponent<TGPlayerFollowMainCameraController>().ApplyRecoil(recoilRotation);
     }
 
-    private void DampenRecoil()
+    private void RecoverRecoil()
     {
         if (itemHolder == null || itemHolder.tag != "Player") return;
-        if (targetRecoil == Vector3.zero && currentRecoilIndex == Mathf.Floor(currentRecoilIndex))
-            return;
+        if (targetRecoil == Vector3.zero && currentRecoilIndex == Mathf.Floor(currentRecoilIndex)) return;
 
-        Vector3 recoilAdjustment = Vector3.Lerp(currentRecoil, Vector3.zero, Time.deltaTime * recoilDampingSpeed);
-        playerCamera.transform.Rotate(recoilAdjustment - currentRecoil, Space.Self);
-        currentRecoil = recoilAdjustment;
+        if (currentRecoilIndex > 0)
+        {
+            currentRecoilIndex = Mathf.Max(0, currentRecoilIndex - Time.deltaTime * indexRecoverSpeed);
+        }
 
-        targetRecoil = Vector3.Lerp(targetRecoil, Vector3.zero, Time.deltaTime * recoilDampingSpeed);
-
-        // Decrease currentRecoilIndex towards the next integer value
-        currentRecoilIndex = Mathf.Lerp(currentRecoilIndex, Mathf.Floor(currentRecoilIndex), Time.deltaTime * indexDampingSpeed);
     }
 }
