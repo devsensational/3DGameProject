@@ -71,7 +71,7 @@ public class TGItemWeapon : TGItem
         equipmentType               = weaponStats.weaponType;
         reloadWaitForSeconds        = new WaitForSeconds(weaponStats.reloadTime); // 재장전 시간 코루틴용
         fireRateWaitForSeconds      = new WaitForSeconds(60 / weaponStats.fireRate); // 연사 시간 코루틴용
-        recoilRecoveryForSeconds    = new WaitForSeconds(0.05f); // 반동 회복 시간 코루틴
+        recoilRecoveryForSeconds    = new WaitForSeconds(0.01f); // 반동 회복 시간 코루틴
         currentAccuracy             = weaponStats.minAccuracy;
 
         Debug.Log($"(TGItemWeapon:Start) Weapon stat loaded! {weaponStats.weaponName}, {this.GetHashCode()}, {weaponStats.defaultAccuracy}");

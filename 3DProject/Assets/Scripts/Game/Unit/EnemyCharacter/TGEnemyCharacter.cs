@@ -22,12 +22,15 @@ public class TGEnemyCharacter : TGCharacter
     {
         nextFireIntervalWaitForSeconds = new WaitForSeconds(nextFireIntervalTime);
 
-        TGItemWeapon itemPtr = Instantiate(primaryWeapon, HandPosition.transform).GetComponent<TGItemWeapon>();
+        if(primaryWeapon != null )
+        {
+            TGItemWeapon itemPtr = Instantiate(primaryWeapon, HandPosition.transform).GetComponent<TGItemWeapon>();
 
-        TakeItem(itemPtr);
-        ChangeInHandItem(null, itemPtr);
+            TakeItem(itemPtr);
+            ChangeInHandItem(null, itemPtr);
 
-        Invoke("InitEquip", 1);
+            Invoke("InitEquip", 1);
+        }
     }
 
     private void InitEquip()

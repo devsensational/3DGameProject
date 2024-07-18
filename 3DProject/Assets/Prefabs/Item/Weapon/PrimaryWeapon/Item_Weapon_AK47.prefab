@@ -139,9 +139,15 @@ MonoBehaviour:
   itemButton: {fileID: 0}
   equipmentType: 2
   itemType: 2
-  isDropped: 0
+  isDropped: 1
   projectilePrefab: {fileID: 4000347302891274641, guid: 9ebe53acbff9316429d980610452a010, type: 3}
   muzzle: {fileID: 49389282621848562}
+  currentAccuracy: 0.3
+  currentAmmo: 0
+  recoilPatternFile: {fileID: 4900000, guid: af595db6ee598a5498535f268625669d, type: 3}
+  playerCamera: {fileID: 0}
+  indexRecoverSpeed: 10
+  currentRecoilIndex: 0
 --- !u!1 &8913030305397602058
 GameObject:
   m_ObjectHideFlags: 0
