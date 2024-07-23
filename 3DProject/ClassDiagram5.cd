@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TGPlayerFollowMainCameraController" Collapsed="true">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQEBICAADQxAQAAICAACAIAgAAAAAgoASUFAAyAABA=</HashCode>
+      <FileName>Assets\Scripts\Game\Camera\TGPlayerFollowMainCameraController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGUICircleTimer" Collapsed="true">
+    <Position X="13.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAACAAgAAAAAAgAAAAAgAAAACAAAAAAAACACA=</HashCode>
+      <FileName>Assets\Scripts\Game\GameUI\InGameUI\TGUICircleTimer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGUICrosshair" Collapsed="true">
+    <Position X="15" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BIYQgAAAACAQAAgAAAAAAAAgAAAAAIAgAAAgAAgAAQA=</HashCode>
+      <FileName>Assets\Scripts\Game\GameUI\InGameUI\TGUICrosshair.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGUIHandItemInfo" Collapsed="true">
+    <Position X="16.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIYAAAAABCARAAAAAAQAAAAAAAAAAAAgAAAEAAgAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\GameUI\InGameUI\TGUIHandItemInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGUIHitDamageText" Collapsed="true">
+    <Position X="18.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAiAQAAAEAAAAIAAABAAAEEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\GameUI\InGameUI\TGUIHitDamageText.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGUIInventory" Collapsed="true">
+    <Position X="9.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QARBAAIIACQRwQAACABAAAAgAAAAEQAkQQEAAAgACAA=</HashCode>
+      <FileName>Assets\Scripts\Game\GameUI\InGameUI\TGUIInventory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGUILootableItemInterective" Collapsed="true">
+    <Position X="11.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABEEAAAACkQAAAAQAAAAAAAEAAAAKAgAAAkAAwAAAg=</HashCode>
+      <FileName>Assets\Scripts\Game\GameUI\InGameUI\TGUILootableItemInterective.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGUIProgressFillBar" Collapsed="true">
+    <Position X="13.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABACAQAAACAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\GameUI\InGameUI\TGUIProgressFillBar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGUIBase" Collapsed="true">
+    <Position X="11.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\GameUI\TGUIBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGItem" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwBEAQgACAFABBEAABAAFAAAAAAAAdADAACAAEgAEg=</HashCode>
+      <FileName>Assets\Scripts\Game\Item\TGItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGItemInteractionParentSelector" Collapsed="true">
+    <Position X="13.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Item\TGItemInteractionParentSelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MRecoilPatternData" Collapsed="true">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Item\Weapon\MRecoilPatternData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MWeaponStats" Collapsed="true">
+    <Position X="11.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAABAIQAIAoQAAAAgAAQAAAAAAEAIAAQAACAKAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Item\Weapon\MWeaponStats.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGItemWeapon" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ChQAIFQABIQAEAAAAIBAgQAQAAABAAxICBgIQCgAEBA=</HashCode>
+      <FileName>Assets\Scripts\Game\Item\Weapon\TGItemWeapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGItemWeaponGun" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Item\Weapon\TGItemWeaponGun.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGItemWeaponThrowable" Collapsed="true">
+    <Position X="15" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Item\Weapon\TGItemWeaponThrowable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGProjectile" Collapsed="true">
+    <Position X="7.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwAAAAAQAAAgAAEAAAAAAAAQAAAAAAIIAQBAAACAEA=</HashCode>
+      <FileName>Assets\Scripts\Game\Item\Weapon\TGProjectile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGObject" Collapsed="true">
+    <Position X="3.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\TGObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGEnemyCharacter" Collapsed="true">
+    <Position X="2.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAACgAAAAAAQAACAAAAQAAAAAACAAAQBAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Unit\EnemyCharacter\TGEnemyCharacter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCharacterStats" Collapsed="true">
+    <Position X="18.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAgAAAIAAAAAAAAAACAAAQIAAQAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Unit\MCharacterStats.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGPlayerCharacter" Collapsed="true">
+    <Position X="5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAQACgAAAAEAAABAQAJAAAAAIAgQAAIIAkAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Unit\PlayerCharacter\TGPlayerCharacter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGPlayerCharacterAnimation" Collapsed="true">
+    <Position X="16.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAiAQAAQECAAAAQIEAgAAAIBAAQAAQAgAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Unit\PlayerCharacter\TGPlayerCharacterAnimation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGPlayerCharacterController" Collapsed="true">
+    <Position X="18.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQEIAQAgiEDAAAAMAAAMAAAAABAEJAASBAAAAggEAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Unit\PlayerCharacter\TGPlayerCharacterController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGCharacter" Collapsed="true">
+    <Position X="3.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAQABQAgQAAIAAAAABACBAAAAIAgiAGAAAAkAAEA=</HashCode>
+      <FileName>Assets\Scripts\Game\Unit\TGCharacter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGCharacterHitbox" Collapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAIAAAAAAAAAAAAAgAAAAAAAAEAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Game\Unit\TGCharacterHitbox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGEventManager" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAEAEQAIA=</HashCode>
+      <FileName>Assets\Scripts\GlobalManager\TGEventManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGGameManager" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAoAAAAAAAAAgACAAABAAAQAAAAAAAAAAEEAAA=</HashCode>
+      <FileName>Assets\Scripts\GlobalManager\TGGameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGObjectPoolManager" Collapsed="true">
+    <Position X="5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABABQAAAgBIBAAAAAAAAAAACAAFAAAA=</HashCode>
+      <FileName>Assets\Scripts\GlobalManager\TGObjectPoolManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TGPlayerKeyManager" Collapsed="true">
+    <Position X="7.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAABBAAAAAAAAAAACAAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\GlobalManager\TGPlayerKeyManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UJsonUtility" Collapsed="true">
+    <Position X="16.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAEAAAEAAAAAIAAA=</HashCode>
+      <FileName>Assets\Scripts\Utility\UJsonUtility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMonoSingleton&lt;T&gt;" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAABAABAAAAAQAAAAAEAAEA=</HashCode>
+      <FileName>Assets\Scripts\Utility\UMonoSingleton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityChan.AutoBlink" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAUBAAAgACAAAEAACAAAIBDAAAhAAiCAAAEAAEAAAEA=</HashCode>
+      <FileName>Assets\ThirdParty\unity-chan!\Unity-chan! Model\Scripts\AutoBlink.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityChan.CameraController" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAuEAAAgCAAAAAAAAAAAEAAAAAACAAAIgIAA=</HashCode>
+      <FileName>Assets\ThirdParty\unity-chan!\Unity-chan! Model\Scripts\CameraController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityChan.FaceUpdate" Collapsed="true">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACASAAAAAAAAAAAAhAAAEAAAAQCAQAAAAAA=</HashCode>
+      <FileName>Assets\ThirdParty\unity-chan!\Unity-chan! Model\Scripts\FaceUpdate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityChan.IdleChanger" Collapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAIAAAAABAAAAIAAAAAQiAAAAAAAE=</HashCode>
+      <FileName>Assets\ThirdParty\unity-chan!\Unity-chan! Model\Scripts\IdleChanger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityChan.IKCtrlRightHand" Collapsed="true">
+    <Position X="16.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQAAAAAAEAAAAAAAAAAAAAAAAAAAAQCEAAgAAEA=</HashCode>
+      <FileName>Assets\ThirdParty\unity-chan!\Unity-chan! Model\Scripts\IKCtrlRightHand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityChan.RandomWind" Collapsed="true">
+    <Position X="13.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAACAAAAAAAAAAAAACAAAAABAA=</HashCode>
+      <FileName>Assets\ThirdParty\unity-chan!\Unity-chan! Model\Scripts\RandomWind.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityChan.SpringBone" Collapsed="true">
+    <Position X="16.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAGCAAACCAAAAAAAACAhBAAACBYACAAEABEEAAAAEA=</HashCode>
+      <FileName>Assets\ThirdParty\unity-chan!\Unity-chan! Model\Scripts\SpringBone.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityChan.SpringCollider" Collapsed="true">
+    <Position X="18.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\ThirdParty\unity-chan!\Unity-chan! Model\Scripts\SpringCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityChan.SpringManager" Collapsed="true">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAACAAAAAQAAAAKAAAAAAAAAAAAADEAAAAAFA=</HashCode>
+      <FileName>Assets\ThirdParty\unity-chan!\Unity-chan! Model\Scripts\SpringManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityChan.ThirdPersonCamera" Collapsed="true">
+    <Position X="15" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEACAAAiAAAAAAAIEAAAAgAAAAQBAAEAAAAAAAAAA=</HashCode>
+      <FileName>Assets\ThirdParty\unity-chan!\Unity-chan! Model\Scripts\ThirdPersonCamera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityChan.UnityChanControlScriptWithRgidBody" Collapsed="true">
+    <Position X="18.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABJAAjACAAAEGAAAKQKEAABAAABBAUSAAAAAAAQ=</HashCode>
+      <FileName>Assets\ThirdParty\unity-chan!\Unity-chan! Model\Scripts\UnityChanControlScriptWithRgidBody.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityChan.SplashScreen" Collapsed="true">
+    <Position X="15" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\ThirdParty\unity-chan!\Unity-chan! Model\SplashScreen\Scripts\SplashScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="EEquipmentType" Collapsed="true">
+    <Position X="9.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAIAAACAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Enum\EEquipmentType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EEventType" Collapsed="true">
+    <Position X="11.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgEAgAgAAAAAAAAAQIAgAAQAAAAAABAAAjgAAAFAAAI=</HashCode>
+      <FileName>Assets\Scripts\Game\Enum\EEventType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EGunFireMode" Collapsed="true">
+    <Position X="13.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAIAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Enum\EGunFireMode.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EHitboxType" Collapsed="true">
+    <Position X="15" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAABAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Enum\EHitboxType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EItemType" Collapsed="true">
+    <Position X="16.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAIACQAAAAAAIAAAAAAAAABAAAAAAAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Enum\EItemType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EKeyValues" Collapsed="true">
+    <Position X="18.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAIBAACAAoBAAAAAAYAgAAAAAAAEAAAACACQCAkAAAI=</HashCode>
+      <FileName>Assets\Scripts\Game\Enum\EKeyValues.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ETGObjectType" Collapsed="true">
+    <Position X="9.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IACAAAAAAAAAAAAAAAAAgAAAAAAAQAAAAAAAAAEAIAA=</HashCode>
+      <FileName>Assets\Scripts\Game\Enum\ETGObjectType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="UnityChan.MouseButtonDown" Collapsed="true">
+    <Position X="11.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAQgAAAAAA=</HashCode>
+      <FileName>Assets\ThirdParty\unity-chan!\Unity-chan! Model\Scripts\CameraController.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

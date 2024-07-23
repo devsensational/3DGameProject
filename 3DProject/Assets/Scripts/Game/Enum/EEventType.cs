@@ -22,6 +22,7 @@ public enum EEventType
     StartCircleTimerUI,
     HideCircleTimerUI,
     UIUpdateHPBar,
+    PlayerCharacterReload,
 
 }
 

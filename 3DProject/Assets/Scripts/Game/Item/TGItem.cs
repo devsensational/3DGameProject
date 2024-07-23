@@ -52,7 +52,10 @@ public class TGItem : TGObject
 
     private void OnDestroy()
     {
-        Destroy(itemButton.gameObject);
+        if(itemButton != null)
+        {
+            Destroy(itemButton.gameObject);
+        }
     }
 
     // 아이템 상호작용 관련 메소드
@@ -111,6 +114,8 @@ public class TGItem : TGObject
 
     public void UpdateButtonUI()     // 해당 아이템에 해당하는 UI 버튼 갱신
     {
+        if (itemButton == null) return;
+
         itemButton.SetItemName();
         Debug.Log($"(TGItem:OnHandInThisItem) Updated item button UI");
     }

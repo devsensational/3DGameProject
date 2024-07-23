@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -18,9 +19,11 @@ public class TGCharacter : TGObject
     public float currentHP = 0f;
 
     //protected
-    protected TGEventManager eventManager;  //이벤트매니저
-    //private
+    protected TGEventManager                eventManager;  //이벤트매니저
+    protected TGCharacterAnimation    anim;
 
+    //private
+    
 
     //Unity lifecycle
     private void Awake()
@@ -43,9 +46,10 @@ public class TGCharacter : TGObject
     //Init
     protected virtual void InitReferences()
     {
-        eventManager = TGEventManager.Instance;
-        characterStat = new MCharacterStats();
-        currentHP = characterStat.maxHp;
+        eventManager    = TGEventManager.Instance;
+        characterStat   = new MCharacterStats();
+        currentHP       = characterStat.maxHp;
+        anim            = GetComponent<TGCharacterAnimation>();
     }
 
     protected virtual void InitEvent()
@@ -93,6 +97,7 @@ public class TGCharacter : TGObject
     {
         TGItem ptrItem = inventory[itemType];
 
+        if (ptrItem == null) return;
         if (ptrItem.equipmentType != EEquipmentType.None) //장비 아이템일 경우 장비아이템 해제
         {
             equipItems[ptrItem.equipmentType] = null;
@@ -133,11 +138,49 @@ public class TGCharacter : TGObject
         }
     }
 
-    public virtual void ReceiveDamage(float damageValue)
+    public virtual void CommandReloadInHandItem() // 손에 들고 있는 무기 재장전 수행
+    {
+        if (equipItems[HandInItem] == null) return;
+
+        if (equipItems[HandInItem].equipmentType != EEquipmentType.None)
+        {
+            TGItemWeapon weaponPtr = (TGItemWeapon)equipItems[HandInItem];
+            if (weaponPtr.CommandReload()) // 재장전이 성공적으로 실행됐을 때 수행
+            {
+                eventManager.TriggerEvent(EEventType.StartCircleTimerUI, weaponPtr.weaponStats.reloadTime);
+                anim.OnReloadAnimation(null);
+            }
+
+            Debug.Log("(TGPlayerCharacter:CommandReloadInHandItem) Command reload");
+        }
+    }
+
+    public virtual void ReceiveDamage(float damageValue) // 데미지 리시브
     {
         currentHP -= damageValue;
-
         Debug.Log($"(TGCharacter:ReceiveDamage) {objectName} received {damageValue} damage!");
+
+        if( currentHP <= 0 )
+        {
+            OnDeadCharacter(); //체력이 0 이하면 캐릭터 사망 처리
+        }
+    }
+
+    protected virtual void OnDeadCharacter() // 캐릭터가 사망 처리 될때 실행되는 메소드
+    {
+        foreach (EItemType itemType in Enum.GetValues(typeof(EItemType)))
+        {
+            if (inventory.ContainsKey(itemType))
+            {
+                DropItem(itemType);
+            }
+        }
+
+        if (anim != null)
+        {
+            anim.OnDeadAnimation(null);
+        }
+
     }
 
     // getter/setter

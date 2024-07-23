@@ -184,7 +184,11 @@ public class TGItemWeapon : TGItem
 
         // UI 업데이트
         TGEventManager.Instance.TriggerEvent(EEventType.UpdateItemInfo, this);
-        ammoItem.itemButton.SetItemName();
+
+        if(itemButton != null)
+        {
+            ammoItem.itemButton.SetItemName();
+        }
 
         isReloading = false;
         Debug.Log($"(TGItemWeapon:Reload) End reload, current Ammo = {currentAmmo}");

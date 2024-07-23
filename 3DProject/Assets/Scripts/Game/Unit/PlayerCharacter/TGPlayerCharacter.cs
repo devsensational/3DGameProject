@@ -126,22 +126,6 @@ public class TGPlayerCharacter : TGCharacter
         equipItems[HandInItem].UseItem();
     }
 
-    public void CommandReloadInHandItem()
-    {
-        if (equipItems[HandInItem] == null) return;
-
-        if (equipItems[HandInItem].equipmentType != EEquipmentType.None)
-        {
-            TGItemWeapon weaponPtr = (TGItemWeapon)equipItems[HandInItem];
-            if (weaponPtr.CommandReload()) // 재장전이 성공적으로 실행됐을 때 수행
-            {
-                eventManager.TriggerEvent(EEventType.StartCircleTimerUI, weaponPtr.weaponStats.reloadTime);
-            }
-
-            Debug.Log("(TGPlayerCharacter:CommandReloadInHandItem) Command reload");
-        }
-    }
-
     public override void ReceiveDamage(float damageValue)
     {
         base.ReceiveDamage(damageValue);

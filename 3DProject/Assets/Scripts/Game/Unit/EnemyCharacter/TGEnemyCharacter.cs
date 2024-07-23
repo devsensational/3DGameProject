@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class TGEnemyCharacter : TGCharacter
     // Inspector
     public GameObject damageText;
     public GameObject primaryWeapon;
+    public List<GameObject> inventoryInitList = new List<GameObject>();
 
     public float nextFireIntervalTime = 2f;
     public float burstCount = 5f;
@@ -17,10 +19,18 @@ public class TGEnemyCharacter : TGCharacter
     WaitForSeconds autoWeaponFireWaitForSeconds;
     WaitForSeconds nextFireIntervalWaitForSeconds;
 
+    float timer = 5f;
+
     // Unity lifecycle
-    private void Start()
+    void Start()
     {
         nextFireIntervalWaitForSeconds = new WaitForSeconds(nextFireIntervalTime);
+
+        for(int i = 0; i < inventoryInitList.Count; i++) 
+        {
+            TGItem itemPtr = Instantiate(inventoryInitList[i].GetComponent<TGItem>());
+            TakeItem(itemPtr);
+        }
 
         if(primaryWeapon != null )
         {
@@ -33,25 +43,52 @@ public class TGEnemyCharacter : TGCharacter
         }
     }
 
+    void Update()
+    {
+        if (timer > 0f) timer -= Time.deltaTime;
+        else if (timer < 0f)
+        {
+            DetermineFire();
+        }
+    }
+
+    // Init
     private void InitEquip()
     {
         TGItemWeapon itemPtr = (TGItemWeapon)equipItems[HandInItem];
-        itemPtr.currentAmmo = 200;
+        itemPtr.currentAmmo = 0;
         autoWeaponFireWaitForSeconds = new WaitForSeconds(60 / itemPtr.weaponStats.fireRate );
+    }
 
-        StartCoroutine(Fireintermittently());
+    // 유닛 AI 관련
+    private void DetermineFire()
+    {
+        if (HandInItem == EEquipmentType.None || HandInItem == EEquipmentType.Default) return;
+
+        TGItemWeapon itemPtr = (TGItemWeapon)equipItems[HandInItem];
+
+        if (itemPtr.currentAmmo <= 0) // 탄이 없을 경우 재장전
+        {
+            CommandReloadInHandItem();
+            timer = itemPtr.weaponStats.reloadTime + 1;
+            return;
+        }
+
+        if (itemPtr.currentAmmo >= 0)
+        {
+            StartCoroutine(Fireintermittently());
+        }
+
+        timer = nextFireIntervalTime;
     }
 
     private IEnumerator Fireintermittently()
     {
-        for(int i = 0; i < burstCount; i++)
+        for (int i = 0; i < burstCount; i++)
         {
             equipItems[HandInItem].UseItem();
             yield return autoWeaponFireWaitForSeconds;
         }
-
-        yield return nextFireIntervalWaitForSeconds;
-        StartCoroutine(Fireintermittently());
     }
 
     public override void ReceiveDamage(float damageValue)
@@ -61,4 +98,10 @@ public class TGEnemyCharacter : TGCharacter
         text.text = damageValue.ToString();
     }
 
+    protected override void OnDeadCharacter()
+    {
+        base.OnDeadCharacter();
+
+
+    }
 }

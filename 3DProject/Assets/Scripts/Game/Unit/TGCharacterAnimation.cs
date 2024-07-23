@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //플레이어 캐릭터의 애니메이션 컨트롤을 위한 클래스입니다
-public class TGPlayerCharacterAnimation : MonoBehaviour
+public class TGCharacterAnimation : MonoBehaviour
 {
     //public
     // 애니메이션 재생 속도 조절
     public float animSpeed = 1.5f;
     //private
     //ref
-    private TGPlayerCharacter       playerCharacter;
-    private MCharacterStats   playerStats;
+    private TGCharacter character;
+    private MCharacterStats playerStats;
 
-    private CapsuleCollider     col;
-    private Rigidbody           rb;
-    private Animator            anim;   // 캐릭터 애니메이션 ref
+    private CapsuleCollider col;
+    private Rigidbody rb;
+    private Animator anim;   // 캐릭터 애니메이션 ref
 
     // CapsuleCollider에서 설정된 Collider의 Heiht, Center의 초기값을 담는 변수
     private float orgColHight;
@@ -23,22 +23,35 @@ public class TGPlayerCharacterAnimation : MonoBehaviour
 
     private AnimatorStateInfo currentBaseState;                   // base layer에서 사용되는 애니메이터의 현재 상태 참조
 
+    private TGEventManager eventManager;
+
 
     //Unity lifecycle
     void Start()
     {
-        playerCharacter = GetComponent<TGPlayerCharacter>();
-        playerStats     = playerCharacter.characterStat;
-        AnimationInit();
+        InitReferences();
+        InitAnimations();
+        InitEvents();
     }
 
     void FixedUpdate()
     {
         OnMoveAnimation();
     }
+    //Init
+    void InitReferences()
+    {
+        character = GetComponent<TGCharacter>();
+        eventManager = TGEventManager.Instance;
+        playerStats = character.characterStat;
+    }
 
-    //animation 관련 method
-    private void AnimationInit()
+    void InitEvents()
+    {
+        eventManager.StartListening(EEventType.PlayerCharacterReload, OnReloadAnimation);
+    }
+
+    void InitAnimations() //animation 관련 method
     {
         anim = GetComponent<Animator>();
         col = GetComponent<CapsuleCollider>();
@@ -49,7 +62,7 @@ public class TGPlayerCharacterAnimation : MonoBehaviour
         orgVectColCenter = col.center;
 
     }
-    private void OnMoveAnimation()
+    void OnMoveAnimation()
     {
         anim.SetFloat("Speed", playerStats.velocity);           // Animator 측에서 설정한 "Speed" 파라미터에 v를 전달
         //anim.SetFloat("Direction", h);                        // Animator 측에서 설정한 "Direction" 파라미터에 h를 전달
@@ -60,5 +73,16 @@ public class TGPlayerCharacterAnimation : MonoBehaviour
         {
             playerStats.velocity = 0;
         }
+    }
+
+    public void OnReloadAnimation(object parameter)
+    {
+        Debug.Log("(TGCharacterAnimation:OnReloadAnimation) Start reload animation");
+        anim.SetTrigger("OnReload");
+    }
+
+    public void OnDeadAnimation(object parameter)
+    {
+        anim.SetTrigger("OnDead");
     }
 }
