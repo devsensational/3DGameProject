@@ -39,6 +39,7 @@ public class TGPlayerKeyManager : UMonoSingleton<TGPlayerKeyManager>
         KeyValuePairs.Add(EKeyValues.ToggleCameraView,   KeyCode.V);
         KeyValuePairs.Add(EKeyValues.ToggleInventoryUI,  KeyCode.Tab);
         KeyValuePairs.Add(EKeyValues.Reload,             KeyCode.R);
+        KeyValuePairs.Add(EKeyValues.Aim,                KeyCode.Mouse1);
     }
 
     // 키 할당 변경 시 사용되는 메소드

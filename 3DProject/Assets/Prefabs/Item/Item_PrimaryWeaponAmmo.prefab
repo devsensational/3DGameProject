@@ -103,7 +103,7 @@ MonoBehaviour:
   objectType: 3
   itemModel: {fileID: 8418859199116612780}
   groundTag: Terrain
-  itemCount: 400
+  itemCount: 100
   itemButton: {fileID: 0}
   equipmentType: 0
   itemType: 5

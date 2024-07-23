@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 // 사용자 인풋을 이용하여 플레이어 캐릭터를 조종하기 위한 클래스입니다
 public class TGPlayerCharacterController : MonoBehaviour
@@ -19,12 +18,13 @@ public class TGPlayerCharacterController : MonoBehaviour
     public float jumpHeight = 3.0f;
 
     //private
-    Dictionary<EKeyValues, KeyCode>  keyValuePairs;      // KeyValuePair map ref
-    TGPlayerCharacter               playerCharacter;    // 플레이어 캐릭터 ref
-    MCharacterStats                 playerStats;        // 플레이어 스탯 ref
-    TGGameManager                   gameManager;        // 게임 매니저 ref      
-    TGEventManager                  gameEventManager;   // 이벤트 매니저 ref
-    Camera                          cameraComponent;    // 카메라 컴포넌트 ref
+    TGPlayerFollowMainCameraController  cameraController; // 카메라 컨트롤러 ref
+    Dictionary<EKeyValues, KeyCode>     keyValuePairs;              // KeyValuePair map ref
+    TGPlayerCharacter                   playerCharacter;            // 플레이어 캐릭터 ref
+    MCharacterStats                     playerStats;                // 플레이어 스탯 ref
+    TGGameManager                       gameManager;                // 게임 매니저 ref      
+    TGEventManager                      gameEventManager;           // 이벤트 매니저 ref
+    Camera                              cameraComponent;            // 카메라 컴포넌트 ref
 
     Vector3 targetRotation;
     Vector3 currentVel;
@@ -56,12 +56,14 @@ public class TGPlayerCharacterController : MonoBehaviour
     //Init
     void InitReferences()
     {
+        cameraController    = mainCamera.GetComponent<TGPlayerFollowMainCameraController>();
         keyValuePairs       = TGPlayerKeyManager.Instance.KeyValuePairs;
         gameManager         = TGGameManager.Instance;
         playerCharacter     = GetComponent<TGPlayerCharacter>();
         playerStats         = playerCharacter.characterStat;
         gameEventManager    = TGEventManager.Instance;
         cameraComponent     = mainCamera.GetComponent<Camera>();
+        
     }
 
     void InitEventListner()
@@ -161,6 +163,16 @@ public class TGPlayerCharacterController : MonoBehaviour
         if (Input.GetKeyDown(keyValuePairs[EKeyValues.Fire]))
         {
             playerCharacter.CommandUseInHandItem();
+        }
+        if (Input.GetKeyDown(keyValuePairs[EKeyValues.Aim]))
+        {
+            playerCharacter.CommandAimWeaponItem();
+            cameraController.EnableAim();
+        }
+        if (Input.GetKeyUp(keyValuePairs[EKeyValues.Aim]))
+        {
+            playerCharacter.CommandDisableAimWeaponItem();
+            cameraController.DisableAim();
         }
         if (Input.GetKeyDown(keyValuePairs[EKeyValues.Reload]))
         {

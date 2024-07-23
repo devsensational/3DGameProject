@@ -166,6 +166,16 @@ public class TGPlayerFollowMainCameraController : MonoBehaviour
         }
     }
 
+    // 조준 관련 메소드
+    public void EnableAim()
+    {
+        cameraCurrentDistance = minCameraZoomDistance;
+    }
+
+    public void DisableAim()
+    {
+        cameraCurrentDistance = maxCameraZoomDistance;
+    }
 
     // 반동 관련 메소드
     public void ApplyRecoil(Vector3 recoilVector)

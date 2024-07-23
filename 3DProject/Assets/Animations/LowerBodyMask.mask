@@ -6,89 +6,89 @@ AvatarMask:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UpperBodyMask
-  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
+  m_Name: LowerBodyMask
+  m_Mask: 01000000000000000000000001000000010000000000000000000000000000000000000001000000010000000000000000000000
   m_Elements:
   - m_Path: 
     m_Weight: 1
   - m_Path: Backpack2
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Backpack2_handle
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Backpack3
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: BackPack3_handle
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Boots3
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Boots4
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Boots5
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Cap4
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Cap5
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Cap6
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Cap7
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR1_Head
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR1_Top
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR2_Head
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR2_Top
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR3_Head
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR3_Top
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR4_Head
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR4_Top
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR5_Head
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR5_Top
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR6_Head
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR6_Top
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR7_Head
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR7_Top
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR8_Head
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR8_Top
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR_Balaclava1
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR_Female_Bottom
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: CHR_Female_Foot
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: CHR_Female_Gloves
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR_Female_Hands
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR_Female_Palm_hands
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR_Male_Bottom
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: CHR_Male_Foot
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: CHR_Male_Gloves
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR_Male_Hands
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: CHR_Male_Palm_hands
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Decals
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Decals/Decal_Arab
     m_Weight: 0
   - m_Path: Decals/Decal_Carabin
@@ -126,55 +126,55 @@ AvatarMask:
   - m_Path: Decals/Decal_UN
     m_Weight: 0
   - m_Path: Gasmask2
-    m_Weight: 1
-  - m_Path: Goggles1
-    m_Weight: 1
-  - m_Path: Goggles2_for_helmet
-    m_Weight: 1
-  - m_Path: Goggles2_up
-    m_Weight: 1
-  - m_Path: Headset1
-    m_Weight: 1
-  - m_Path: Headset2
-    m_Weight: 1
-  - m_Path: Headset3
-    m_Weight: 1
-  - m_Path: Helmet1
-    m_Weight: 1
-  - m_Path: Helmet1_Fastering
-    m_Weight: 1
-  - m_Path: Helmet1_For_goggles
-    m_Weight: 1
-  - m_Path: Helmet2
-    m_Weight: 1
-  - m_Path: Helmet2_fastening
-    m_Weight: 1
-  - m_Path: Helmet2_For_goggles
-    m_Weight: 1
-  - m_Path: Helmet3
-    m_Weight: 1
-  - m_Path: Helmet3_fastering
-    m_Weight: 1
-  - m_Path: Helmet3_Visor_close
-    m_Weight: 1
-  - m_Path: Helmet3_Visor_open
-    m_Weight: 1
-  - m_Path: Holster1_empty
-    m_Weight: 1
-  - m_Path: Holster1_Pistol__for_Pants2_5_
-    m_Weight: 1
-  - m_Path: Kneepad1_Left
-    m_Weight: 1
-  - m_Path: Kneepad1_Right
-    m_Weight: 1
-  - m_Path: Military
-    m_Weight: 1
-  - m_Path: NVG_disabled
-    m_Weight: 1
-  - m_Path: NVG_enabled
-    m_Weight: 1
-  - m_Path: Outfits
     m_Weight: 0
+  - m_Path: Goggles1
+    m_Weight: 0
+  - m_Path: Goggles2_for_helmet
+    m_Weight: 0
+  - m_Path: Goggles2_up
+    m_Weight: 0
+  - m_Path: Headset1
+    m_Weight: 0
+  - m_Path: Headset2
+    m_Weight: 0
+  - m_Path: Headset3
+    m_Weight: 0
+  - m_Path: Helmet1
+    m_Weight: 0
+  - m_Path: Helmet1_Fastering
+    m_Weight: 0
+  - m_Path: Helmet1_For_goggles
+    m_Weight: 0
+  - m_Path: Helmet2
+    m_Weight: 0
+  - m_Path: Helmet2_fastening
+    m_Weight: 0
+  - m_Path: Helmet2_For_goggles
+    m_Weight: 0
+  - m_Path: Helmet3
+    m_Weight: 0
+  - m_Path: Helmet3_fastering
+    m_Weight: 0
+  - m_Path: Helmet3_Visor_close
+    m_Weight: 0
+  - m_Path: Helmet3_Visor_open
+    m_Weight: 0
+  - m_Path: Holster1_empty
+    m_Weight: 0
+  - m_Path: Holster1_Pistol__for_Pants2_5_
+    m_Weight: 0
+  - m_Path: Kneepad1_Left
+    m_Weight: 0
+  - m_Path: Kneepad1_Right
+    m_Weight: 0
+  - m_Path: Military
+    m_Weight: 0
+  - m_Path: NVG_disabled
+    m_Weight: 0
+  - m_Path: NVG_enabled
+    m_Weight: 0
+  - m_Path: Outfits
+    m_Weight: 1
   - m_Path: Outfits/Outfit1
     m_Weight: 0
   - m_Path: Outfits/Outfit2
@@ -194,13 +194,13 @@ AvatarMask:
   - m_Path: Outfits/Outfit9
     m_Weight: 0
   - m_Path: Pants1
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: Pants4
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: Pants5
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: Radio
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: Radio/Head_Wire
     m_Weight: 0
   - m_Path: Radio/Radio1
@@ -218,7 +218,7 @@ AvatarMask:
   - m_Path: Radio/Radio7
     m_Weight: 0
   - m_Path: root
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: root/pelvis
     m_Weight: 0
   - m_Path: root/pelvis/spine_01
@@ -340,22 +340,22 @@ AvatarMask:
   - m_Path: root/pelvis/thigh_r/thigh_twist_01_r
     m_Weight: 0
   - m_Path: Shirt4
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Shirt5
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Shirt6
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Vest1
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Vest1_Belt
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Vest2
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Vest2_Bottom
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Vest2_collar
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Vest2_Shoulder_L
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Vest2_Shoulder_R
-    m_Weight: 1
+    m_Weight: 0

@@ -19,7 +19,7 @@ public class TGCharacter : TGObject
     public float currentHP = 0f;
 
     //protected
-    protected TGEventManager                eventManager;  //이벤트매니저
+    protected TGEventManager          eventManager;  //이벤트매니저
     protected TGCharacterAnimation    anim;
 
     //private
@@ -43,6 +43,12 @@ public class TGCharacter : TGObject
     {
         ChildOnDestroy();   
     }
+
+    protected virtual void Start()
+    {
+
+    }
+
     //Init
     protected virtual void InitReferences()
     {
@@ -104,6 +110,7 @@ public class TGCharacter : TGObject
             if (HandInItem == ptrItem.equipmentType)
             {
                 HandInItem = EEquipmentType.Default; // 손에 들고 있는 장비일 경우 handInItem 해제
+                anim.DisableUpperBody();
             }
         }
 
@@ -133,6 +140,7 @@ public class TGCharacter : TGObject
             if (weaponPtr != null)
             {
                 characterStat.weaponStats = weaponPtr.weaponStats; //
+                anim.EnableUpperBody();
                 Debug.Log($"(TGCharacter:ChangeInHandItem) Weapon switch");
             }
         }
@@ -147,12 +155,21 @@ public class TGCharacter : TGObject
             TGItemWeapon weaponPtr = (TGItemWeapon)equipItems[HandInItem];
             if (weaponPtr.CommandReload()) // 재장전이 성공적으로 실행됐을 때 수행
             {
-                eventManager.TriggerEvent(EEventType.StartCircleTimerUI, weaponPtr.weaponStats.reloadTime);
                 anim.OnReloadAnimation(null);
             }
 
             Debug.Log("(TGPlayerCharacter:CommandReloadInHandItem) Command reload");
         }
+    }
+
+    public virtual void OnReloadComplete()
+    {
+
+    }
+
+    public virtual void OnFire()
+    {
+        anim.OnFireAnimation(null);
     }
 
     public virtual void ReceiveDamage(float damageValue) // 데미지 리시브

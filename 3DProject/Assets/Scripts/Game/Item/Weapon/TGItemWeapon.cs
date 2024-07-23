@@ -31,6 +31,8 @@ public class TGItemWeapon : TGItem
     bool isReloading = false;
     bool isWeaponReady = true;
 
+    float currentMinAccuracy = 0.3f;
+
     // Recoil Pattern 관련 변수
     // Inspector
     [Header("Recoil pattern insepector")]
@@ -73,6 +75,8 @@ public class TGItemWeapon : TGItem
         fireRateWaitForSeconds      = new WaitForSeconds(60 / weaponStats.fireRate); // 연사 시간 코루틴용
         recoilRecoveryForSeconds    = new WaitForSeconds(0.01f); // 반동 회복 시간 코루틴
         currentAccuracy             = weaponStats.minAccuracy;
+        currentMinAccuracy          = weaponStats.minAccuracy;
+        playerCamera                = GameObject.Find("MainCamera").GetComponent<Camera>();
 
         Debug.Log($"(TGItemWeapon:Start) Weapon stat loaded! {weaponStats.weaponName}, {this.GetHashCode()}, {weaponStats.defaultAccuracy}");
     }
@@ -89,6 +93,7 @@ public class TGItemWeapon : TGItem
         recoilDataList = TGGameManager.Instance.jsonUtility.LoadJsonFile<List<MRecoilPatternData>>(recoilPatternFile);
         Debug.Log($"(TGItemWeapon:InitRecoilPattern) Recoil pattern data loaded! {recoilDataList[0].x}, {recoilDataList[1].x}");
     }
+
     // 공격 메커니즘 관련 메소드
     public override void UseItem() // 아이템 사용
     {
@@ -111,8 +116,10 @@ public class TGItemWeapon : TGItem
 
         isWeaponReady = false;
 
+        itemHolder.OnFire();
+
         // 반동에 의한 명중률 저하 구현
-        currentAccuracy = Mathf.Clamp(currentAccuracy * weaponStats.recoilMultiplier, weaponStats.minAccuracy, weaponStats.maxAccuracy);
+        currentAccuracy = Mathf.Clamp(currentAccuracy * weaponStats.recoilMultiplier, currentMinAccuracy, weaponStats.maxAccuracy);
         ApplyRecoil();
 
         projectileFire();
@@ -126,7 +133,7 @@ public class TGItemWeapon : TGItem
         {
             StartCoroutine(FireWeapon());
         }
-        StartCoroutine(RecoilRecovery());
+        //StartCoroutine(RecoilRecovery());
     }
 
     protected virtual void projectileFire()    // 발사체 상태 리셋 후 발사
@@ -146,7 +153,7 @@ public class TGItemWeapon : TGItem
     {
         if(!isWeaponReady) yield break; // 차탄이 발사되면 반동 회복을 중단함
 
-        currentAccuracy = Mathf.Clamp(currentAccuracy * weaponStats.recoilRecoveryMultiplier, weaponStats.minAccuracy, weaponStats.maxAccuracy);
+        currentAccuracy = Mathf.Clamp(currentAccuracy * weaponStats.recoilRecoveryMultiplier, currentMinAccuracy, weaponStats.maxAccuracy);
         yield return recoilRecoveryForSeconds;
 
         StartCoroutine(RecoilRecovery());
@@ -183,7 +190,7 @@ public class TGItemWeapon : TGItem
         currentAmmo += ammoCount;   // 최대 장탄 수 만큼만 장전, 현재 장탄 수 보존
 
         // UI 업데이트
-        TGEventManager.Instance.TriggerEvent(EEventType.UpdateItemInfo, this);
+        itemHolder.OnReloadComplete();
 
         if(itemButton != null)
         {
@@ -222,7 +229,7 @@ public class TGItemWeapon : TGItem
     }
 
     // 반동 관련 메소드
-    public void ApplyRecoil()
+    public void ApplyRecoil() // 카메라 반동 수행 메소드
     {
         if (itemHolder == null || itemHolder.tag != "Player") return;
 
@@ -243,7 +250,7 @@ public class TGItemWeapon : TGItem
         playerCamera.GetComponent<TGPlayerFollowMainCameraController>().ApplyRecoil(recoilRotation);
     }
 
-    private void RecoverRecoil()
+    private void RecoverRecoil() // 반동 인덱스 감소 메소드
     {
         if (itemHolder == null || itemHolder.tag != "Player") return;
         if (targetRecoil == Vector3.zero && currentRecoilIndex == Mathf.Floor(currentRecoilIndex)) return;
@@ -253,5 +260,29 @@ public class TGItemWeapon : TGItem
             currentRecoilIndex = Mathf.Max(0, currentRecoilIndex - Time.deltaTime * indexRecoverSpeed);
         }
 
+        if (currentAccuracy > currentMinAccuracy)
+        {
+            currentAccuracy -= weaponStats.recoilRecoveryMultiplier * Time.deltaTime;
+        }
+
+        if (currentAccuracy < currentMinAccuracy)
+        {
+            currentAccuracy = currentMinAccuracy;
+        }
+    }
+
+    public override void EnableAim() // 캐릭터가 총을 조준할 때 명중률 보정해주는 메소드
+    {
+        base.EnableAim();
+
+        currentMinAccuracy = weaponStats.aimingAccuracy;
+        
+    }
+
+    public override void DisableAim()
+    {
+        base.DisableAim();
+
+        currentMinAccuracy = weaponStats.minAccuracy;
     }
 }

@@ -22,8 +22,10 @@ public class TGEnemyCharacter : TGCharacter
     float timer = 5f;
 
     // Unity lifecycle
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         nextFireIntervalWaitForSeconds = new WaitForSeconds(nextFireIntervalTime);
 
         for(int i = 0; i < inventoryInitList.Count; i++) 

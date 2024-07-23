@@ -23,15 +23,19 @@ public class TGCharacterAnimation : MonoBehaviour
 
     private AnimatorStateInfo currentBaseState;                   // base layer에서 사용되는 애니메이터의 현재 상태 참조
 
-    private TGEventManager eventManager;
+    //private TGEventManager eventManager;
 
 
     //Unity lifecycle
-    void Start()
+    void Awake()
     {
         InitReferences();
         InitAnimations();
-        InitEvents();
+    }
+
+    private void Start()
+    {
+        playerStats = character.characterStat;
     }
 
     void FixedUpdate()
@@ -42,13 +46,6 @@ public class TGCharacterAnimation : MonoBehaviour
     void InitReferences()
     {
         character = GetComponent<TGCharacter>();
-        eventManager = TGEventManager.Instance;
-        playerStats = character.characterStat;
-    }
-
-    void InitEvents()
-    {
-        eventManager.StartListening(EEventType.PlayerCharacterReload, OnReloadAnimation);
     }
 
     void InitAnimations() //animation 관련 method
@@ -75,6 +72,16 @@ public class TGCharacterAnimation : MonoBehaviour
         }
     }
 
+    public void EnableUpperBody()
+    {
+        anim.SetLayerWeight(1, 1);
+    }
+
+    public void DisableUpperBody()
+    {
+        anim.SetLayerWeight(1, 0);
+    }
+
     public void OnReloadAnimation(object parameter)
     {
         Debug.Log("(TGCharacterAnimation:OnReloadAnimation) Start reload animation");
@@ -84,5 +91,10 @@ public class TGCharacterAnimation : MonoBehaviour
     public void OnDeadAnimation(object parameter)
     {
         anim.SetTrigger("OnDead");
+    }
+
+    public void OnFireAnimation(object parameter)
+    {
+        anim.SetTrigger("OnFire");
     }
 }

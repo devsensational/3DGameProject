@@ -9,6 +9,7 @@ TagManager:
   - LootableItem
   - Projectile
   - Hitbox
+  - EnemyCharacter
   layers:
   - Default
   - TransparentFX

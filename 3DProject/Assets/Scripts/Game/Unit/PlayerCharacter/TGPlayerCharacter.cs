@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 // 플레이어가 직접 조종하는 캐릭터의 스탯 및 상호작용을 위한 클래스입니다
 public class TGPlayerCharacter : TGCharacter
@@ -28,8 +27,9 @@ public class TGPlayerCharacter : TGCharacter
         eventManager.StopListening(EEventType.DropItemFromInventory, CommandDropItem);
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         eventManager = TGEventManager.Instance;
     }
 
@@ -118,17 +118,53 @@ public class TGPlayerCharacter : TGCharacter
         TakeItem(itemPtr);
 
     }
+    public override void CommandReloadInHandItem() // 손에 들고 있는 무기 재장전 수행
+    {
+        if (equipItems[HandInItem] == null) return;
+
+        if (equipItems[HandInItem].equipmentType != EEquipmentType.None)
+        {
+            TGItemWeapon weaponPtr = (TGItemWeapon)equipItems[HandInItem];
+            if (weaponPtr.CommandReload()) // 재장전이 성공적으로 실행됐을 때 수행
+            {
+                eventManager.TriggerEvent(EEventType.StartCircleTimerUI, weaponPtr.weaponStats.reloadTime);
+                anim.OnReloadAnimation(null);
+            }
+
+            Debug.Log("(TGPlayerCharacter:CommandReloadInHandItem) Command reload");
+        }
+    }
 
     public void CommandUseInHandItem()
     {
         if (equipItems[HandInItem] == null) return;
 
         equipItems[HandInItem].UseItem();
+        
+    }
+
+    public void CommandAimWeaponItem()
+    {
+        if (equipItems[HandInItem] == null) return;
+
+        equipItems[HandInItem].EnableAim();
+    }
+
+    public void CommandDisableAimWeaponItem()
+    {
+        if (equipItems[HandInItem] == null) return;
+
+        equipItems[HandInItem].DisableAim();
     }
 
     public override void ReceiveDamage(float damageValue)
     {
         base.ReceiveDamage(damageValue);
         eventManager.TriggerEvent(EEventType.UIUpdateHPBar, Mathf.Clamp01(currentHP / characterStat.maxHp));
+    }
+
+    public override void OnReloadComplete()
+    {
+        TGEventManager.Instance.TriggerEvent(EEventType.UpdateItemInfo, equipItems[HandInItem]);
     }
 }
