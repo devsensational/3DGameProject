@@ -22,6 +22,7 @@ public class TGUIHitDamageText : MonoBehaviour
 
         
         Jump();
+        Destroy(gameObject, 2);
     }
 
     void Update()

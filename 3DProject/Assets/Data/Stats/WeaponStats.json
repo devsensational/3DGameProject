@@ -15,6 +15,7 @@
     "bulletVelocity": 300.0,
     "reloadTime": 3.0,
 	"range": 800.0,
+	"shotCount": 1,
     "maxAmmo": 30
   },
   "AK47": {
@@ -33,6 +34,7 @@
     "bulletVelocity": 100.0,
     "reloadTime": 3.0,
 	"range": 5.0,
+	"shotCount": 1,
     "maxAmmo": 30
   },
   "EAGLE": {
@@ -51,6 +53,7 @@
     "bulletVelocity": 30.0,
     "reloadTime": 1.5,
 	"range": 800.0,
+	"shotCount": 1,
     "maxAmmo": 7
   },
   "FAMAS": {
@@ -69,7 +72,26 @@
     "bulletVelocity": 100.0,
     "reloadTime": 3.0,
 	"range": 800.0,
+	"shotCount": 1,
     "maxAmmo": 25
   },
-
+  "Shotgun": {
+    "weaponName": "Shotgun",
+    "weaponType": "PrimaryWeapon",
+    "ammoType": "ShotgunAmmo",
+	"fireMode": "Semi",
+    "damage": 12.0,
+    "fireRate": 200.0,
+    "defaultAccuracy": 1.0,
+    "aimingAccuracy": 0.9,
+    "minAccuracy": 1.0,
+    "maxAccuracy": 1.4,
+	"recoilMultiplier": 1.12,
+	"recoilRecoveryMultiplier":0.95,
+    "bulletVelocity": 100.0,
+    "reloadTime": 4.0,
+	"range": 500.0,
+	"shotCount": 8,
+    "maxAmmo": 7
+  },
 }

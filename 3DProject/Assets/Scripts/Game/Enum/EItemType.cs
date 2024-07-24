@@ -12,7 +12,9 @@ public enum EItemType
     AK47,
     FAMAS,
     DEAGLE,
+    Shotgun,
     PrimaryWeaponAmmo, 
     SecondaryWeaponAmmo,
+    ShotgunAmmo,
 
 }

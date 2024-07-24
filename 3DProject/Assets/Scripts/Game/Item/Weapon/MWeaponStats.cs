@@ -26,5 +26,6 @@ public class MWeaponStats
     public float reloadTime                 = 3.0f;     //재장전시간
     public float range                      = 800f;     //재장전시간
 
+    public int   shotCount                  = 1;       //발사 될 자탄의 갯수
     public int   maxAmmo                    = 30;       //탄창에 넣을 수 있는 최대 총알 갯수
 }

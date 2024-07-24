@@ -22,16 +22,14 @@ public class TGItemWeapon : TGItem
     // protected
     protected TGObjectPoolManager objectPoolManager;
 
+    protected WaitForSeconds reloadWaitForSeconds;
+    protected WaitForSeconds fireRateWaitForSeconds;
+    protected WaitForSeconds recoilRecoveryForSeconds;
 
-    // private
-    WaitForSeconds reloadWaitForSeconds;
-    WaitForSeconds fireRateWaitForSeconds;
-    WaitForSeconds recoilRecoveryForSeconds;
+    protected bool isReloading = false;
+    protected bool isWeaponReady = true;
 
-    bool isReloading = false;
-    bool isWeaponReady = true;
-
-    float currentMinAccuracy = 0.3f;
+    protected float currentMinAccuracy = 0.3f;
 
     // Recoil Pattern 관련 변수
     // Inspector
@@ -122,7 +120,10 @@ public class TGItemWeapon : TGItem
         currentAccuracy = Mathf.Clamp(currentAccuracy * weaponStats.recoilMultiplier, currentMinAccuracy, weaponStats.maxAccuracy);
         ApplyRecoil();
 
-        projectileFire();
+        for(int i = 0; i < weaponStats.shotCount; i++)
+        {
+            projectileFire();
+        }
 
         yield return fireRateWaitForSeconds;
 
@@ -133,7 +134,6 @@ public class TGItemWeapon : TGItem
         {
             StartCoroutine(FireWeapon());
         }
-        //StartCoroutine(RecoilRecovery());
     }
 
     protected virtual void projectileFire()    // 발사체 상태 리셋 후 발사
