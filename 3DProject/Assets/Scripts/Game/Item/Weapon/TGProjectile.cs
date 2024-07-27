@@ -37,7 +37,7 @@ public class TGProjectile : TGObject
     {
         Debug.Log($"(TGProjectile:OnTriggerEnter) {transform.name}'s projectile collides with {collision.gameObject.name}");
 
-        if (collision.gameObject.tag == "Hitbox")
+        if (collision.gameObject.layer == 11)
         {
             collision.gameObject.GetComponent<TGCharacterHitbox>().OnReceiveDamage(damage);
         }

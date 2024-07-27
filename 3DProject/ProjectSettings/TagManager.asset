@@ -10,6 +10,7 @@ TagManager:
   - Projectile
   - Hitbox
   - EnemyCharacter
+  - CoverableObject
   layers:
   - Default
   - TransparentFX
