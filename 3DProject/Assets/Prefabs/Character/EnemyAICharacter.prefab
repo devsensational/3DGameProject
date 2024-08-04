@@ -2940,6 +2940,7 @@ GameObject:
   - component: {fileID: 2898276381174086601}
   - component: {fileID: 5976390601940141465}
   - component: {fileID: 1001709308184278624}
+  - component: {fileID: 3781246314695441996}
   m_Layer: 8
   m_Name: EnemyAICharacter
   m_TagString: Hitbox
@@ -3135,9 +3136,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coverableObjectList: []
   playerCharacterList: []
+  speed: 0
   stoppingDistance: 10
   nextFireIntervalTime: 2
   burstCount: 5
+--- !u!114 &3781246314695441996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6463612939688958961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eab395e73344b546ad6d1b64f092b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conditionNodes: []
+  nodePtr: {fileID: 0}
 --- !u!1 &6629003857796738140
 GameObject:
   m_ObjectHideFlags: 0

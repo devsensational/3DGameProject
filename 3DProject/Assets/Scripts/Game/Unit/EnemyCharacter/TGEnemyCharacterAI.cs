@@ -13,12 +13,14 @@ enum CharacterStatus
 
 
 // 적 캐릭터의 AI를 구성합니다
+// 더 이상 사용하지 않습니다.
 public class TGEnemyCharacterAI : MonoBehaviour
 {
     //Inspector
-    [Header("List of objects in scope")]
+    [Header("Checking parameters")]
     [SerializeField] List<GameObject> coverableObjectList = new List<GameObject>();
     [SerializeField] List<GameObject> playerCharacterList = new List<GameObject>();
+    [SerializeField] float speed = 0;
 
     [Header("AI Options")]
     public float stoppingDistance       = 1.0f; // 일정 거리에 도달할 경우 이동 중단을 위한 파라미터
@@ -54,6 +56,8 @@ public class TGEnemyCharacterAI : MonoBehaviour
         MoveToPlayer(); // 
         AIStatusControl();
 
+        speed = nav.speed;
+
         if (RaycastObstacleCheck())
         {
             DetermineFire();
@@ -62,7 +66,8 @@ public class TGEnemyCharacterAI : MonoBehaviour
         }
         else
         {
-            nav.stoppingDistance = 1f;
+            
+            //nav.stoppingDistance = 1f;
         }
     }
 
@@ -98,7 +103,6 @@ public class TGEnemyCharacterAI : MonoBehaviour
         animator        = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider>();
 
-        layerMask  = 1 << LayerMask.NameToLayer("Terriain"); // AI와 플레이어 간 장애물이 있는지 확인하기 위한 레이어마스크
     }
 
 
@@ -178,10 +182,29 @@ public class TGEnemyCharacterAI : MonoBehaviour
     void HideToCoverableObject() // 엄폐가능한 장애물로 이동시키는 메소드 (여기서 부터 수정 필요)
     {
         if (playerCharacterList.Count < 1) return;
+        if (coverableObjectList.Count < 1) return;
         if (nav == null) return;
 
-        Vector3 obstaclePosition = coverableObjectList[0].transform.position - playerCharacterList[0].transform.position;
-        nav.SetDestination(obstaclePosition);
+        // 가장 가까운 장애물을 검색
+        Vector3 pos = coverableObjectList[0].transform.position;
+        float distance = Vector3.Distance(transform.position, coverableObjectList[0].transform.position);
+
+        for(int i = 1; i < coverableObjectList.Count; i++)
+        {
+            Vector3 comparePos = coverableObjectList[i].transform.position;
+            float compareDist = Vector3.Distance(transform.position, comparePos);
+            if (distance > compareDist)
+            {
+                pos = comparePos;
+                distance = compareDist;
+            }
+        }
+
+        Vector3 obstaclePosition = (pos - playerCharacterList[0].transform.position) * 1.1f;
+        Debug.Log($"(TGEnemyCharacterAI:HideToCoverableObject) move at position: {obstaclePosition}");
+
+        nav.stoppingDistance = 0f;
+        nav.SetDestination(pos);
     }
 
     bool RaycastObstacleCheck() // Player와 AI간 장애물 유무 체크 메소드, 존재하지 않으면 true 반환
@@ -193,7 +216,6 @@ public class TGEnemyCharacterAI : MonoBehaviour
 
         if (Physics.Raycast(transform.position, direction, out hit, direction.magnitude, layerMask))
         {
-            Debug.Log("asd" + hit.transform.gameObject);
             if (hit.transform.gameObject.layer == 6)
             {
                 return false;
