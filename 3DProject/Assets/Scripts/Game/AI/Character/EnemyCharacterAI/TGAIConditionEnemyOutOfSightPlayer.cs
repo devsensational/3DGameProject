@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TGAIConditionDetectPlayer : TGAIConditionNodeBase
+public class TGAIConditionEnemyOutOfSightPlayer : TGAIConditionNodeBase
 {
-    // private
+    //private
     List<GameObject> playerCharacterList;
     RaycastHit hit;
     int layerMask;
@@ -17,12 +17,11 @@ public class TGAIConditionDetectPlayer : TGAIConditionNodeBase
         layerMask = 1 << LayerMask.NameToLayer("Terriain"); // AI와 플레이어 간 장애물이 있는지 확인하기 위한 레이어마스크
     }
 
-    //
     public override bool TriggerAction(out TGAIActionNodeBase ptrNode)
     {
         ptrNode = null;
         if (playerCharacterList.Count <= 0) { return false; }
-        if (RaycastObstacleCheck())
+        if (!RaycastObstacleCheck())
         {
             ptrNode = action;
             return true;

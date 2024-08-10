@@ -94,4 +94,23 @@
 	"shotCount": 8,
     "maxAmmo": 7
   },
+  "Toy Gun": {
+    "weaponName": "Toy Gun",
+    "weaponType": "PrimaryWeapon",
+    "ammoType": "PrimaryWeaponAmmo",
+	"fireMode": "Auto",
+    "damage": 3.0,
+    "fireRate": 800.0,
+    "defaultAccuracy": 2.0,
+    "aimingAccuracy": 2.0,
+    "minAccuracy": 1.0,
+    "maxAccuracy": 3.0,
+	"recoilMultiplier": 1.12,
+	"recoilRecoveryMultiplier":0.95,
+    "bulletVelocity": 100.0,
+    "reloadTime": 2.5,
+	"range": 500.0,
+	"shotCount": 1,
+    "maxAmmo": 20
+  },
 }

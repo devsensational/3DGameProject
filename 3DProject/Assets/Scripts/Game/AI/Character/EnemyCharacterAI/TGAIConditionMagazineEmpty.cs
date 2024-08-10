@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TGAIConditionMagazineEmpty : TGAIConditionNode
+public class TGAIConditionMagazineEmpty : TGAIConditionNodeBase
 {
+    //private
     TGCharacter character;
 
+    // Unity Lifecycle
     public override void Start()
     {
         base.Start();
         character = controller.character;
     }
 
-    public override bool TriggerAction(out TGAIActionNode ptrNode)
+    public override bool TriggerAction(out TGAIActionNodeBase ptrNode)
     {
-        TGItemWeapon weapon = (TGItemWeapon)character.equipItems[character.HandInItem];
+        TGItemWeapon weapon = character.GetInHandWeapon();
 
         if (weapon.currentAmmo == 0)
         {

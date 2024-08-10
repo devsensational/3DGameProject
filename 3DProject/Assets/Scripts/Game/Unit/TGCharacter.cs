@@ -17,6 +17,7 @@ public class TGCharacter : TGObject
     public EEquipmentType HandInItem = EEquipmentType.Default;   //플레이어 캐릭터가 들고 있는 아이템 type
 
     public float currentHP = 0f;
+    public float currnetSpeed = 0f;
 
     //protected
     protected TGEventManager          eventManager;  //이벤트매니저
@@ -204,6 +205,11 @@ public class TGCharacter : TGObject
     public EEquipmentType GetInHandItem()
     {
         return HandInItem;
+    }
+
+    public TGItemWeapon GetInHandWeapon()
+    {
+        return (TGItemWeapon)equipItems[HandInItem];
     }
 
     // child

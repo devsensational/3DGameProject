@@ -4,10 +4,10 @@ using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public class TGAIController : TGAIActionNode
+public class TGAIController : TGAIActionNodeBase
 {
     //Inspector
-    public TGAIActionNode nodePtr = null;
+    public TGAIActionNodeBase nodePtr = null;
 
     [Header("Checking parameters (Don't add object here)")]
     public List<GameObject> coverableObjectList = new List<GameObject>();
@@ -17,7 +17,7 @@ public class TGAIController : TGAIActionNode
     public TGCharacter character { get; private set; }
     public bool isConditionCheckPaused { get; set; } // true면 조건문 체크를 수행하지 않습니다. 노드의 Run을 수행하는 동안 상태를 변경하고 싶지 않을 때 사용
 
-    // Unity lifecycle
+    // Unity Lifecycle
     void Awake()
     {
         if (nodePtr == null) { nodePtr = this; }
@@ -26,6 +26,7 @@ public class TGAIController : TGAIActionNode
 
     void Update()
     {
+        
         CheckConditions();
     }
 
@@ -63,9 +64,9 @@ public class TGAIController : TGAIActionNode
         if(nodePtr == null) { return; }
         if(isConditionCheckPaused) { return; }
 
-        foreach (TGAIConditionNode condition in nodePtr.conditionNodes)
+        foreach (TGAIConditionNodeBase condition in nodePtr.conditionNodes)
         {
-            if (condition.TriggerAction(out TGAIActionNode node))
+            if (condition.TriggerAction(out TGAIActionNodeBase node))
             {
                 if(node.isNextStatus)
                 {

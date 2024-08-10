@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class TGAIConditionEnemyFoundPlayer : TGAIConditionNode
+public class TGAIConditionEnemyRadiusCheck : TGAIConditionNodeBase
 {
-    public override bool TriggerAction(out TGAIActionNode ptrNode)
+    public override bool TriggerAction(out TGAIActionNodeBase ptrNode)
     {
         if (controller.playerCharacterList.Count > 0)
         {

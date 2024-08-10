@@ -78,22 +78,22 @@ public class TGPlayerCharacterController : MonoBehaviour
         if (Input.GetKey(keyValuePairs[EKeyValues.Forward])) //앞으로 이동
         {
             playerCharacter.CommandMove(Vector3.forward, forwardSpeed);
-            playerStats.velocity = forwardSpeed;
+            playerCharacter.currnetSpeed = forwardSpeed;
         }
         if (Input.GetKey(keyValuePairs[EKeyValues.Backward])) //뒤로 이동
         {
             playerCharacter.CommandMove(Vector3.back, backwardSpeed);
-            playerStats.velocity = -backwardSpeed;
+            playerCharacter.currnetSpeed = -backwardSpeed;
         }
         if (Input.GetKey(keyValuePairs[EKeyValues.Left])) //왼쪽으로 이동
         {
             playerCharacter.CommandMove(Vector3.left, sidestepSpeed);
-            playerStats.velocity = -sidestepSpeed;
+            playerCharacter.currnetSpeed = -sidestepSpeed;
         }
         if (Input.GetKey(keyValuePairs[EKeyValues.Right])) //오른쪽으로 이동
         {
             playerCharacter.CommandMove(Vector3.right, sidestepSpeed);
-            playerStats.velocity = -sidestepSpeed;
+            playerCharacter.currnetSpeed = -sidestepSpeed;
         }
 
         if (!Input.GetKey(keyValuePairs[EKeyValues.Forward]) && !Input.GetKey(keyValuePairs[EKeyValues.Backward])
@@ -104,7 +104,7 @@ public class TGPlayerCharacterController : MonoBehaviour
     }
     public void OnStopCharacter()
     {
-        playerStats.velocity /= 2f;
+        playerCharacter.currnetSpeed /= 2f;
     }
 
     //카메라 관련 메소드
